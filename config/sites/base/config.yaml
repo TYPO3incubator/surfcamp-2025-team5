@@ -1,0 +1,14 @@
+base: '%env(SITE_BASE)%'
+dependencies:
+  - typo3-incubator/surfcamp-base
+languages:
+  -
+    title: English
+    enabled: true
+    languageId: 0
+    base: /
+    locale: en_US.UTF-8
+    navigationTitle: English
+    flag: us
+rootPageId: 98
+websiteTitle: 'Surfcamp Base'

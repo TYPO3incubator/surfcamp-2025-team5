@@ -1,0 +1,10 @@
+indexedsearch:
+  targetPid: 3
+fcbigfoot:
+  pages:
+    privacy: 2
+    contact: 4
+  socialmedia:
+    channels:
+      instagram:
+        link: 'https://www.instagram.com/typo3_official/'

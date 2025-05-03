@@ -1,0 +1,5 @@
+name: typo3-incubator/surfcamp-base
+label: 'Surfcamp Base'
+dependencies:
+  - typo3/fluid-styled-content
+  - typo3/fluid-styled-content-css

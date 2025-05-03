@@ -1,0 +1,5 @@
+styles:
+  templates:
+    layoutRootPath: 'EXT:surfcamp_base/Resources/Private/ContentElements/Layouts/'
+    partialRootPath: 'EXT:surfcamp_base/Resources/Private/ContentElements/Partials/'
+    templateRootPath: 'EXT:surfcamp_base/Resources/Private/ContentElements/Templates/'
