@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffcd25ce8392371b25789f790af3b99f",
+    "content-hash": "951ed527665047321d8c67fcd6debc49",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5300,6 +5300,36 @@
             "time": "2025-03-03T07:12:39+00:00"
         },
         {
+            "name": "typo3-incubator/member-management",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/member-management",
+                "reference": "812336b5765b410fba997d74cd7c644889912b09"
+            },
+            "require": {
+                "typo3/cms-core": "^13.4"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "member_management"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3Incubator\\MemberManagement\\": "Classes/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Member management",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "typo3-incubator/surfcamp-base",
             "version": "dev-main",
             "dist": {
@@ -7391,6 +7421,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "typo3-incubator/member-management": 20,
         "typo3-incubator/surfcamp-base": 20
     },
     "prefer-stable": true,

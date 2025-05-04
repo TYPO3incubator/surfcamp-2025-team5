@@ -37,6 +37,7 @@
     "require": {
         "php": ">=8.3.0",
         "bk2k/bootstrap-package": "^15.0",
+        "typo3-incubator/member-management": "dev-main",
         "typo3-incubator/surfcamp-base": "dev-main",
         "typo3-incubator/theme-fcbigfoot": "^0.0.1",
         "typo3/cms-backend": "^13.4",
