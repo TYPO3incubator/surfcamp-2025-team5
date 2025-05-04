@@ -1,0 +1,77 @@
+categories:
+  MemberManagement:
+    label: 'Member Management'
+  MemberManagement.organization:
+    label: 'Organization'
+    parent: MemberManagement
+  MemberManagement.organization.address:
+    label: 'Organization address'
+    parent: MemberManagement.organization
+  MemberManagement.organization.paymentInformation:
+    label: 'Payment information'
+    parent: MemberManagement.organization
+
+settings:
+  memberManagement.organization.name:
+    label: 'Organization name'
+    category: MemberManagement.organization
+    type: string
+    default: ''
+  memberManagement.organization.personInCharge:
+    label: 'Person in charge'
+    category: MemberManagement.organization
+    type: string
+    default: ''
+  memberManagement.organization.emailOfPersonInCharge:
+    label: 'E-Mail of person in charge'
+    category: MemberManagement.organization
+    type: string
+    default: ''
+  memberManagement.organization.address.streetAndHouseNumber:
+    label: 'Street and house number'
+    category: MemberManagement.organization.address
+    type: string
+    default: ''
+  memberManagement.organization.address.city:
+    label: 'City'
+    category: MemberManagement.organization.address
+    type: string
+    default: ''
+  memberManagement.organization.address.zip:
+    label: 'Zip'
+    category: MemberManagement.organization.address
+    type: string
+    default: ''
+  memberManagement.organization.address.country:
+    label: 'Country'
+    category: MemberManagement.organization.address
+    type: string
+    default: ''
+  memberManagement.organization.paymentInformation.iban:
+      label: 'IBAN'
+      category: MemberManagement.organization.paymentInformation
+      type: string
+      default: ''
+  memberManagement.organization.paymentInformation.bic:
+      label: 'BIC'
+      category: MemberManagement.organization.paymentInformation
+      type: string
+      default: ''
+  memberManagement.organization.paymentInformation.paymentDueMonth:
+      label: 'Payment due month'
+      category: MemberManagement.organization.paymentInformation
+      default: 'January'
+      type: string
+      enum:
+        1: 'January'
+        2: 'February'
+        3: 'March'
+        4: 'April'
+        5: 'May'
+        6: 'June'
+        7: 'July'
+        8: 'August'
+        9: 'September'
+        10: 'October'
+        11: 'November'
+        12: 'December'
