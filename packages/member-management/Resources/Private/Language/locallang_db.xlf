@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2025-05-04UTC09:57:000">
+        <header />
+        <body>
+            <trans-unit id="plugins.create_membership.title">
+                <source>Create Membership</source>
+            </trans-unit>
+            <trans-unit id="plugins.create_membership.description">
+                <source>Insert plugin that includes a form to create a new membership.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
