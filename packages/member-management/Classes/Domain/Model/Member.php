@@ -35,6 +35,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Member extends AbstractEntity
 {
+    protected string $title = '';
     protected string $firstName = '';
     protected string $lastName = '';
     protected string $email = '';
@@ -57,6 +58,24 @@ class Member extends AbstractEntity
 
     /** @var ObjectStorage<Payment> */
     protected ObjectStorage $payments;
+
+    protected string $password = '';
+    protected string $passwordRepeat = '';
+
+    public function __construct()
+    {
+        $this->payments = new ObjectStorage();
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
 
     public function getFirstName(): string
     {
@@ -246,5 +265,25 @@ class Member extends AbstractEntity
     public function setPayments(ObjectStorage $payments): void
     {
         $this->payments = $payments;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(#[\SensitiveParameter] string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getPasswordRepeat(): string
+    {
+        return $this->passwordRepeat;
+    }
+
+    public function setPasswordRepeat(#[\SensitiveParameter] string $passwordRepeat): void
+    {
+        $this->passwordRepeat = $passwordRepeat;
     }
 }
