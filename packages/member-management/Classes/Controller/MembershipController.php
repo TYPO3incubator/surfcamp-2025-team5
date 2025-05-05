@@ -63,6 +63,7 @@ final class MembershipController extends ActionController
 
     protected function saveAction(Member $member): ResponseInterface
     {
+        $member->setPrivacyAcceptedAt(new \DateTime());
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
 
