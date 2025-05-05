@@ -7,13 +7,9 @@ $tmp_membermanagement_columns = [
         'exclude' => true,
         'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.date_of_birth',
         'config' => [
-            'type' => 'input',
-            'renderType' => 'inputDateTime',
-            'eval' => 'date',
+            'type' => 'datetime',
+            'format' => 'date',
             'default' => 0,
-            'size' => 12,
-            'maxitems' => 1,
-            'placeholder' => 'YYYY-MM-DD',
         ],
     ],
     'gender' => [
