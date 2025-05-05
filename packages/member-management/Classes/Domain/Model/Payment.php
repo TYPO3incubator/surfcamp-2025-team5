@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the TYPO3 CMS extension "member_management".
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace TYPO3Incubator\MemberManagement\Domain\Model;
+
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+class Payment extends AbstractEntity
+{
+    protected Member $member;
+    protected ?\DateTime $paidAt = null;
+    protected float $amount = 0.0;
+
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(Member $member): void
+    {
+        $this->member = $member;
+    }
+
+    public function getPaidAt(): ?\DateTime
+    {
+        return $this->paidAt;
+    }
+
+    public function setPaidAt(?\DateTime $paidAt): void
+    {
+        $this->paidAt = $paidAt;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+}
