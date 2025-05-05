@@ -26,6 +26,7 @@ namespace TYPO3Incubator\MemberManagement\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 
 /**
@@ -45,6 +46,19 @@ final class MembershipController extends ActionController
         $this->view->assign('member', $member ?? new Member());
 
         return $this->htmlResponse();
+    }
+
+    protected function initializeSaveAction(): void
+    {
+        $this->arguments->getArgument('member')
+            ->getPropertyMappingConfiguration()
+            ->forProperty('dateOfBirth')
+            ->setTypeConverterOption(
+                DateTimeConverter::class,
+                DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                'Y-m-d',
+            )
+        ;
     }
 
     protected function saveAction(Member $member): ResponseInterface
