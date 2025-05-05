@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" original="" datatype="plaintext" date="2025-05-04UTC09:57:000">
+		<header/>
+		<body>
+			<trans-unit id="select-choose">
+				<source>Select option</source>
+			</trans-unit>
+			<trans-unit id="input-optional">
+				<source>(optional)</source>
+			</trans-unit>
+			<trans-unit id="firstname">
+				<source>First name</source>
+			</trans-unit>
+			<trans-unit id="lastname">
+				<source>Last name</source>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Titel</source>
+			</trans-unit>
+			<trans-unit id="gender">
+				<source>Gender</source>
+			</trans-unit>
+			<trans-unit id="gender-other">
+				<source>Other</source>
+			</trans-unit>
+			<trans-unit id="gender-female">
+				<source>Female</source>
+			</trans-unit>
+			<trans-unit id="gender-male">
+				<source>Male</source>
+			</trans-unit>
+			<trans-unit id="email">
+				<source>Email address</source>
+			</trans-unit>
+			<trans-unit id="telephone">
+				<source>Phone number</source>
+			</trans-unit>
+			<trans-unit id="date_of_birth">
+				<source>Date of birth</source>
+			</trans-unit>
+			<trans-unit id="street">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="zip">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="country">
+				<source>Country</source>
+			</trans-unit>
+			<trans-unit id="iban">
+				<source>IBAN</source>
+			</trans-unit>
+			<trans-unit id="bic">
+				<source>BIC</source>
+			</trans-unit>
+			<trans-unit id="password">
+				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="password-repeat">
+				<source>Repeat password</source>
+			</trans-unit>
+			<trans-unit id="membership">
+				<source>Membership</source>
+			</trans-unit>
+			<trans-unit id="submit">
+				<source>Register</source>
+			</trans-unit>
+			<trans-unit id="information-personal">
+				<source>Personal information</source>
+			</trans-unit>
+			<trans-unit id="information-payment">
+				<source>Payment information</source>
+			</trans-unit>
+			<trans-unit id="information-address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="information-contact">
+				<source>Contact information</source>
+			</trans-unit>
+			<trans-unit id="information-membership">
+				<source>Membership details</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
