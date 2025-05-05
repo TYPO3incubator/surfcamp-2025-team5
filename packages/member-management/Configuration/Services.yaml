@@ -6,3 +6,5 @@ services:
 
   TYPO3Incubator\MemberManagement\:
     resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
