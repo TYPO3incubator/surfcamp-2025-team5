@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'Payment',
+        'title' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_payment',
         'label' => 'member',
         'label_alt' => 'paid_at, amount',
         'label_alt_force' => true,
@@ -16,7 +16,7 @@ return [
     'columns' => [
         'member' => [
             'exclude' => true,
-            'label' => 'Member',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_payment.member',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -28,7 +28,7 @@ return [
         ],
         'paid_at' => [
             'exclude' => true,
-            'label' => 'Paid at',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_payment.paid_at',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,
@@ -37,7 +37,7 @@ return [
         ],
         'amount' => [
             'exclude' => true,
-            'label' => 'Amount',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_payment.amount',
             'config' => [
                 'type' => 'input',
                 'size' => 10,
