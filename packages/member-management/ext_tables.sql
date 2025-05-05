@@ -10,7 +10,7 @@ CREATE TABLE fe_users
     membership          int(11) DEFAULT '0' NOT NULL,
     membership_status   int(11) DEFAULT '0' NOT NULL,
     payments            int(11) DEFAULT '0' NOT NULL,
-    notes               text    DEFAULT '' NOT NULL,
+    notes               text         DEFAULT '' NOT NULL,
 );
 
 CREATE TABLE tx_membermanagement_membership
@@ -22,7 +22,7 @@ CREATE TABLE tx_membermanagement_membership
 
 CREATE TABLE tx_membermanagement_payment
 (
-    user    int(11) DEFAULT '0' NOT NULL,
+    member  int(11) DEFAULT '0' NOT NULL,
     paid_at int(11) DEFAULT '0' NOT NULL,
     amount  decimal(10, 2) DEFAULT '0.00' NOT NULL,
 );

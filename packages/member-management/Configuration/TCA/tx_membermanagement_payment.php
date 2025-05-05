@@ -3,7 +3,7 @@
 return [
     'ctrl' => [
         'title' => 'Payment',
-        'label' => 'user',
+        'label' => 'member',
         'label_alt' => 'paid_at, amount',
         'label_alt_force' => true,
         'tstamp' => 'tstamp',
@@ -11,12 +11,12 @@ return [
         'iconfile' => 'EXT:member_management/Resources/Public/Icons/payment.svg',
     ],
     'types' => [
-        1 => ['showitem' => 'user, paid_at, amount'],
+        1 => ['showitem' => 'member, paid_at, amount'],
     ],
     'columns' => [
-        'user' => [
+        'member' => [
             'exclude' => true,
-            'label' => 'User',
+            'label' => 'Member',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
