@@ -60,6 +60,9 @@
 			<trans-unit id="password">
 				<source>Password</source>
 			</trans-unit>
+			<trans-unit id="password-repeat">
+				<source>Repeat password</source>
+			</trans-unit>
 			<trans-unit id="membership">
 				<source>Membership</source>
 			</trans-unit>

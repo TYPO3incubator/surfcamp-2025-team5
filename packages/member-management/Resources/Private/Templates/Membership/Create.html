@@ -34,7 +34,6 @@
             <label for="country" class="form-label">{f:translate(key: 'country')} - @todo</label>
             <input class="form-control" id="country" name="country" required/>
         </div>
-        
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-contact')}</legend>
@@ -51,9 +50,9 @@
             arguments="{ type: 'text', id: 'bic', name: 'bic', required: true}" />
     </fieldset>
     <fieldset>
-        <legend>{f:translate(key: 'information-membership')} - @todo</legend>
+        <legend>{f:translate(key: 'information-membership')}</legend>
         <div class="mb-3">
-            <label for="membership" class="form-label">{f:translate(key: 'membership')}</label>
+            <label for="membership" class="form-label">{f:translate(key: 'membership')} - @todo</label>
             <select class="form-select" id="membership" name="membership" required>
                 <option selected>{f:translate(key: 'select-choose')}</option>
                 <option value="0">xxx</option>
@@ -63,6 +62,8 @@
         </div>
         <f:render partial="Input" 
             arguments="{ type: 'password', id: 'password', name: 'password', required: true}" />
+        <f:render partial="Input"
+            arguments="{ type: 'password', id: 'password-repeat', name: 'password-repeat', required: true}" />
     </fieldset>
     <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="privacy">
