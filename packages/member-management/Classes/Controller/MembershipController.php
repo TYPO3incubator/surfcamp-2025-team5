@@ -42,6 +42,8 @@ final class MembershipController extends ActionController
 
     protected function createAction(): ResponseInterface
     {
+        $this->view->assign('member', $member ?? new Member());
+
         return $this->htmlResponse();
     }
 

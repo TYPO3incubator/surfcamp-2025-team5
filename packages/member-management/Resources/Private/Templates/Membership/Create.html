@@ -1,56 +1,57 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:form action="save" method="post">
+<f:form action="save" controller="Membership" method="post" object="{member}" objectName="member">
     <fieldset>
         <legend>{f:translate(key: 'information-personal')}</legend>
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'title', name: 'title', required: false}" />
         <div class="mb-3">
             <label for="gender" class="form-label">{f:translate(key: 'gender')} <small>{f:translate(key: 'input-optional')}</small></label>
-            <select class="form-select" id="gender" name="gender">
-                <option selected>{f:translate(key: 'select-choose')}</option>
-                <option value="0">{f:translate(key: 'gender-other')}</option>
-                <option value="1">{f:translate(key: 'gender-female')}</option>
-                <option value="2">{f:translate(key: 'gender-male')}</option>
-            </select>
+            <f:comment><!-- @todo fix options --></f:comment>
+            <f:form.select class="form-select" id="gender" property="gender"
+                           options="{1: 'female', 2: 'male', 3: 'diverse'}"
+                           prependOptionLabel="{f:translate(key: 'select-choose')}"
+            />
         </div>
-        <f:render partial="Input" 
-            arguments="{ type: 'text', id: 'firstname', name: 'first_name', required: true}" />
-        <f:render partial="Input" 
-            arguments="{ type: 'text', id: 'lastname', name: 'last_name', required: true}" />
-        <f:render partial="Input" 
-            arguments="{ type: 'date', id: 'date_of_birth', name: 'date_of_birth', required: true}" />
+        <f:render partial="Input"
+            arguments="{ type: 'text', id: 'firstname', name: 'firstName', required: true}" />
+        <f:render partial="Input"
+            arguments="{ type: 'text', id: 'lastname', name: 'lastName', required: true}" />
+        <f:render partial="Input"
+            arguments="{ type: 'date', id: 'date_of_birth', name: 'dateOfBirth', required: true}" />
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-address')}</legend>
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'street', name: 'address', required: true}" />
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'zip', name: 'zip', required: true}" />
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'city', name: 'city', required: true}" />
         <div class="mb-3">
-            <label for="country" class="form-label">{f:translate(key: 'country')} - @todo</label>
-            <input class="form-control" id="country" name="country" required/>
+            <label for="country" class="form-label">{f:translate(key: 'country')}</label>
+            <f:form.countrySelect id="country" property="country" value="GB" class="form-select"/>
         </div>
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-contact')}</legend>
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'email', id: 'email', name: 'email', required: true}" />
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'tel', id: 'telephone', name: 'telephone', required: true}" />
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-payment')}</legend>
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'iban', name: 'iban', required: true}" />
-        <f:render partial="Input" 
+        <f:render partial="Input"
             arguments="{ type: 'text', id: 'bic', name: 'bic', required: true}" />
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-membership')}</legend>
+        <f:comment><!-- @todo fetch available memberships --></f:comment>
+        <!--
         <div class="mb-3">
             <label for="membership" class="form-label">{f:translate(key: 'membership')} - @todo</label>
             <select class="form-select" id="membership" name="membership" required>
@@ -60,10 +61,11 @@
                 <option value="2">xxx</option>
             </select>
         </div>
-        <f:render partial="Input" 
+        -->
+        <f:render partial="Input"
             arguments="{ type: 'password', id: 'password', name: 'password', required: true}" />
         <f:render partial="Input"
-            arguments="{ type: 'password', id: 'password-repeat', name: 'password-repeat', required: true}" />
+            arguments="{ type: 'password', id: 'password-repeat', name: 'passwordRepeat', required: true}" />
     </fieldset>
     <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="privacy">
