@@ -1,0 +1,17 @@
+name: typo3-incubator/member-management
+label: 'Member Management'
+settings:
+  memberManagement:
+    organization:
+      name: ''
+      personInCharge: ''
+      emailOfPersonInCharge: ''
+      address:
+        streetAndHouseNumber: ''
+        city: ''
+        zip: ''
+        country: ''
+      paymentInformation:
+        iban: ''
+        bic: ''
+        paymentDueMonth: ''
