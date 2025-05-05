@@ -9,10 +9,10 @@ ExtensionUtility::configurePlugin(
     'MemberManagement',
     'CreateMembership',
     [
-        MembershipController::class => 'create, submit',
+        MembershipController::class => 'create, save',
     ],
     [
-        MembershipController::class => 'create, submit',
+        MembershipController::class => 'create, save',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
