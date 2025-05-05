@@ -5,7 +5,7 @@ defined('TYPO3') || die();
 $tmp_membermanagement_columns = [
     'date_of_birth' => [
         'exclude' => true,
-        'label' => 'Date of Birth',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.date_of_birth',
         'config' => [
             'type' => 'input',
             'renderType' => 'inputDateTime',
@@ -18,14 +18,14 @@ $tmp_membermanagement_columns = [
     ],
     'gender' => [
         'exclude' => true,
-        'label' => 'Gender',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['label' => 'Other', 'value' => 0],
-                ['label' => 'Male', 'value' => 1],
-                ['label' => 'Female', 'value' => 2],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.other', 'value' => 0],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.male', 'value' => 1],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.female', 'value' => 2],
             ],
             'default' => 0,
             'size' => 1,
@@ -34,7 +34,7 @@ $tmp_membermanagement_columns = [
     ],
     'iban' => [
         'exclude' => true,
-        'label' => 'IBAN',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.iban',
         'config' => [
             'type' => 'input',
             'size' => 36,
@@ -43,7 +43,7 @@ $tmp_membermanagement_columns = [
     ],
     'bic' => [
         'exclude' => true,
-        'label' => 'BIC',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.bic',
         'config' => [
             'type' => 'input',
             'size' => 11,
@@ -52,7 +52,7 @@ $tmp_membermanagement_columns = [
     ],
     'privacy_accepted_at' => [
         'exclude' => true,
-        'label' => 'Privacy terms accepted on',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.privacy_accepted_at',
         'config' => [
             'type' => 'datetime',
             'default' => 0,
@@ -60,7 +60,7 @@ $tmp_membermanagement_columns = [
     ],
     'member_since' => [
         'exclude' => true,
-        'label' => 'Member since',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.member_since',
         'config' => [
             'type' => 'datetime',
             'default' => 0,
@@ -68,7 +68,7 @@ $tmp_membermanagement_columns = [
     ],
     'member_until' => [
         'exclude' => true,
-        'label' => 'Member until',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.member_until',
         'config' => [
             'type' => 'datetime',
             'default' => 0,
@@ -76,7 +76,7 @@ $tmp_membermanagement_columns = [
     ],
     'membership' => [
         'exclude' => true,
-        'label' => 'Membership',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -84,33 +84,33 @@ $tmp_membermanagement_columns = [
             'minitems' => 0,
             'maxitems' => 1,
             'items' => [
-                ['label' => 'No Membership', 'value' => 0],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership.no_membership', 'value' => 0],
             ],
         ],
     ],
     'membership_status' => [
         'exclude' => true,
-        'label' => 'Membership Status',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'minitems' => 1,
             'maxitems' => 1,
             'items' => [
-                ['label' => 'Pending', 'value' => 0],
-                ['label' => 'Active', 'value' => 1],
-                ['label' => 'Inactive', 'value' => 2],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.pending', 'value' => 0],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.active', 'value' => 1],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.inactive', 'value' => 2],
             ],
             'default' => 0,
         ],
     ],
     'payments' => [
         'exclude' => true,
-        'label' => 'Payments',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.payments',
         'config' => [
             'type' => 'inline',
             'foreign_table' => 'tx_membermanagement_payment',
-            'foreign_field' => 'user',
+            'foreign_field' => 'member',
             'maxitems' => 9999,
             'appearance' => [
                 'collapseAll' => true,
@@ -120,7 +120,7 @@ $tmp_membermanagement_columns = [
     ],
     'notes' => [
         'exclude' => true,
-        'label' => 'Notes',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.notes',
         'config' => [
             'type' => 'text',
             'cols' => 30,
