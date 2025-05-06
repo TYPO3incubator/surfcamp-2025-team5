@@ -3,7 +3,7 @@ memberManagement:
     name: 'Bootstrap Test'
     personInCharge: 'Jane Doe'
     emailOfPersonInCharge: jane.doe@typo3.org
-    defaultCountry: 'DE'
+    defaultCountry: 'GB'
     address:
       streetAndHouseNumber: 'Emanuel-Leutze-Str. 11'
       city: 'Düsseldorf'
