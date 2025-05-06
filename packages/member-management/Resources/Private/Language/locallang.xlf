@@ -87,9 +87,26 @@
 			<trans-unit id="save.message">
 				<source>You will receive an e-mail shortly, please click on the link to confirm your registration.</source>
 			</trans-unit>
-
+			<trans-unit id="confirm.message">
+				<source>Your registration has been successfully saved, our contact person will check your enquiry and approve you as a new member soon.</source>
+			</trans-unit>
             <trans-unit id="email.createMembership.title">
                 <source>Please confirm your membership</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.salutation">
+                <source>Dear %s</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.body">
+                <source>You are only one step away from your registration. Please click on the following button to confirm your registration.</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.body.txt">
+                <source>You are only one step away from your registration. Please use the following link to confirm your registration.</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.button">
+                <source>Confirm registration</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.button.information">
+                <source>If you are not able to click on the button, please copy the following link and open the page manually: </source>
             </trans-unit>
 		</body>
 	</file>
