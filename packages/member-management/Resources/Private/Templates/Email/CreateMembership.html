@@ -26,9 +26,9 @@
     </p>
 
     <p>
-        <a href="{f:uri.action(action:'confirm', arguments: {hash: hash, email: member.email}, absolute: 1)}" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+        <f:link.action action="confirm" arguments="{hash: hash, email: member.email}" absolute="1" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
             <f:translate key="email.createMembership.main.button"/>
-        </a>
+        </f:link.action>
     </p>
     <br />
     <p>
