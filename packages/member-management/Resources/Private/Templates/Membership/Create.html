@@ -9,8 +9,8 @@
             arguments="{ type: 'text', id: 'title', name: 'title', required: false}" />
         <div class="mb-3">
             <label for="gender" class="form-label">{f:translate(key: 'gender')} <small>{f:translate(key: 'input-optional')}</small></label>
-            <f:form.select class="form-select" 
-                id="gender" 
+            <f:form.select class="form-select"
+                id="gender"
                 property="gender"
                 options="{0: '{f:translate(key: \'gender-other\')}', 1: '{f:translate(key: \'gender-male\')}', 2: '{f:translate(key: \'gender-female\')}'}"
                 prependOptionLabel="{f:translate(key: 'select-choose')}"
@@ -70,7 +70,8 @@
             arguments="{ type: 'password', id: 'password-repeat', name: 'passwordRepeat', required: true}" />
     </fieldset>
     <div class="mb-3 form-check">
-        <f:form.checkbox name="privacyAcceptedAt" value="1" class="form-check-input" id="privacy" required="true" />
+        <f:form.checkbox property="privacyAcceptedAt" value="{currentDateFormatted}" class="form-check-input"
+                         id="privacy" additionalAttributes="{required: 'required'}" />
         <label class="form-check-label" for="privacy">@todo</label>
     </div>
     <button type="submit" class="btn btn-primary">{f:translate(key: 'submit')}</button>

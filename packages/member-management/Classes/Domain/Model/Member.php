@@ -61,6 +61,7 @@ class Member extends AbstractEntity
 
     protected string $password = '';
     protected string $passwordRepeat = '';
+    protected string $createHash = '';
 
     public function __construct()
     {
@@ -285,5 +286,15 @@ class Member extends AbstractEntity
     public function setPasswordRepeat(#[\SensitiveParameter] string $passwordRepeat): void
     {
         $this->passwordRepeat = $passwordRepeat;
+    }
+
+    public function getCreateHash(): string
+    {
+        return $this->createHash;
+    }
+
+    public function setCreateHash(string $createHash): void
+    {
+        $this->createHash = $createHash;
     }
 }

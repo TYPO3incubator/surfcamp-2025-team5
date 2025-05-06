@@ -87,6 +87,10 @@
 			<trans-unit id="save.message">
 				<source>You will receive an e-mail shortly, please click on the link to confirm your registration.</source>
 			</trans-unit>
+
+            <trans-unit id="email.createMembership.title">
+                <source>Please confirm your membership</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

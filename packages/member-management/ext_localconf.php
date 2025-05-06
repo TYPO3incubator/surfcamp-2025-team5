@@ -9,10 +9,13 @@ ExtensionUtility::configurePlugin(
     'MemberManagement',
     'CreateMembership',
     [
-        MembershipController::class => 'create, save',
+        MembershipController::class => 'create, save, confirm',
     ],
     [
-        MembershipController::class => 'create, save',
+        MembershipController::class => 'create, save, confirm',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1746439249]
+    = 'EXT:member_management/Resources/Private/Templates/Email/';

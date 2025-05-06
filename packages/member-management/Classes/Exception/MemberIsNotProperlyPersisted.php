@@ -21,32 +21,21 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace TYPO3Incubator\MemberManagement\Domain\Repository;
-
-use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+namespace TYPO3Incubator\MemberManagement\Exception;
 
 /**
- * MemberRepository
+ * MemberIsNotProperlyPersisted
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- *
- * @extends Repository<Member>
  */
-final class MemberRepository extends Repository
+final class MemberIsNotProperlyPersisted extends Exception
 {
-    public function findOneByHash(string $hash): ?Member
+    public function __construct()
     {
-        $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-
-        // @todo Limit to storage page of current site
-
-        $query->matching(
-            $query->equals('createHash', $hash),
+        parent::__construct(
+            'The member is either not complete or not yet persisted.',
+            1746438103,
         );
-
-        return $query->execute()->getFirst();
     }
 }
