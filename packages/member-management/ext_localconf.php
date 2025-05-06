@@ -9,10 +9,22 @@ ExtensionUtility::configurePlugin(
     'MemberManagement',
     'CreateMembership',
     [
-        MembershipController::class => 'create, save, confirm',
+        MembershipController::class => 'create, save',
     ],
     [
-        MembershipController::class => 'create, save, confirm',
+        MembershipController::class => 'create, save',
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'MemberManagement',
+    'ConfirmMembership',
+    [
+        MembershipController::class => 'confirm',
+    ],
+    [
+        MembershipController::class => 'confirm',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );

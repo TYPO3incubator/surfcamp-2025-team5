@@ -60,7 +60,7 @@ final class MembershipService
      * @throws MemberIsNoLongerInAnActiveMembership
      * @throws MemberIsNotProperlyPersisted
      */
-    public function create(Member $member): bool
+    public function create(Member $member, int $confirmationPid = 0): bool
     {
         $uid = $member->getUid();
         $email = $member->getEmail();
@@ -93,7 +93,10 @@ final class MembershipService
             'Please confirm your membership',
             $member,
         );
-        $email->assign('hash', $hash);
+        $email->assignMultiple([
+            'confirmationPid' => $confirmationPid,
+            'hash' => $hash,
+        ]);
 
         try {
             $this->mailer->send($email);

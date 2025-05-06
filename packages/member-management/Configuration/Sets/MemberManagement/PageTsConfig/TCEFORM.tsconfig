@@ -1,5 +1,5 @@
 TCEFORM {
     tt_content {
-        CType.keepItems := addToList(membermanagement_createmembership)
+        CType.keepItems := addToList(membermanagement_createmembership, membermanagement_confirmmembership)
     }
 }

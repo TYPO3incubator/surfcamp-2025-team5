@@ -66,6 +66,12 @@
             <trans-unit id="plugins.create_membership.title">
                 <source>Create Membership</source>
             </trans-unit>
+            <trans-unit id="plugins.confirm_membership.description">
+                <source>Insert plugin to confirm a new membership.</source>
+            </trans-unit>
+            <trans-unit id="plugins.confirm_membership.title">
+                <source>Confirm Membership</source>
+            </trans-unit>
             <trans-unit id="tx_membermanagement_domain_model_membership">
                 <source>Membership</source>
             </trans-unit>
@@ -93,6 +99,9 @@
 
             <trans-unit id="tt_content.bodytext.membermanagement_createmember">
                 <source>Privacy policy statement</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_membermanagement_confirmation_pid">
+                <source>Confirmation page</source>
             </trans-unit>
         </body>
     </file>

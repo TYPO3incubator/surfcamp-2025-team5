@@ -4,5 +4,5 @@
 <f:translate key="email.createMembership.main.salutation" arguments="{0: '{member.firstName} {member.lastName}'}" />,
 
 <f:comment><!-- @todo Continue here... --></f:comment>
-<f:uri.action action="confirm" arguments="{hash: hash, email: member.email}" absolute="1" />
+<f:uri.action action="confirm" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
 </f:section>
