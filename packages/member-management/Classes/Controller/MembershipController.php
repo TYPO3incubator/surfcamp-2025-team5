@@ -96,10 +96,17 @@ final class MembershipController extends ActionController
     protected function saveAction(Member $member): ResponseInterface
     {
         $member->setPrivacyAcceptedAt(new \DateTime());
+
+        // Hash given password
         $member->setPassword(
             $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
         );
+
+        // Reset password repeat since we don't need it anymore
         $member->setPasswordRepeat('');
+
+        // Disable member until consent was given
+        $member->setDisabled(true);
 
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
@@ -121,10 +128,8 @@ final class MembershipController extends ActionController
         $this->persistenceManager->remove($member);
         $this->persistenceManager->persistAll();
 
-        // Obfuscate submitted passwords
+        // Obfuscate submitted password for rendering in frontend
         $member->setPassword('');
-
-
 
         return (new ForwardResponse('create'))->withArguments([
             'member' => $member
@@ -147,6 +152,7 @@ final class MembershipController extends ActionController
 
         // Confirm membership
         $member->setCreateHash('');
+        $member->setDisabled(false);
 
         // Update member in database
         $this->persistenceManager->update($member);
