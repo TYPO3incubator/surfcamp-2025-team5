@@ -45,6 +45,9 @@
             <trans-unit id="fe_users.membership_status.pending">
                 <source>Pending</source>
             </trans-unit>
+            <trans-unit id="fe_users.membership_status.unconfirmed">
+                <source>Unconfirmed</source>
+            </trans-unit>
             <trans-unit id="fe_users.notes">
                 <source>Notes</source>
             </trans-unit>

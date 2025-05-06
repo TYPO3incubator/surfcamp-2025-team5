@@ -1,5 +1,7 @@
 <?php
 
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+
 defined('TYPO3') || die();
 
 if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
@@ -121,11 +123,24 @@ $tmp_membermanagement_columns = [
             'minitems' => 1,
             'maxitems' => 1,
             'items' => [
-                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.pending', 'value' => 0],
-                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.active', 'value' => 1],
-                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.inactive', 'value' => 2],
+                [
+                    'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.unconfirmed',
+                    'value' => MembershipStatus::Unconfirmed->value,
+                ],
+                [
+                    'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.pending',
+                    'value' => MembershipStatus::Pending->value,
+                ],
+                [
+                    'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.active',
+                    'value' => MembershipStatus::Active->value,
+                ],
+                [
+                    'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.inactive',
+                    'value' => MembershipStatus::Inactive->value,
+                ],
             ],
-            'default' => 0,
+            'default' => MembershipStatus::Unconfirmed->value,
         ],
     ],
     'payments' => [
