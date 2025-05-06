@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_membership',
+        'title' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_membership',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -14,7 +14,7 @@ return [
     'columns' => [
         'title' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_membership.title',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_membership.title',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -24,7 +24,7 @@ return [
         ],
         'description' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_membership.description',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_membership.description',
             'config' => [
                 'type' => 'text',
                 'cols' => 30,
@@ -34,7 +34,7 @@ return [
         ],
         'price' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_membership.price',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_membership.price',
             'config' => [
                 'type' => 'input',
                 'size' => 10,
