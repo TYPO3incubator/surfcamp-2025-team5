@@ -24,8 +24,10 @@ declare(strict_types=1);
 namespace TYPO3Incubator\MemberManagement\Domain\Model;
 
 use DateTime;
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3Incubator\MemberManagement\Domain\Validator\IbanValidator;
 
 /**
  * Member
@@ -36,21 +38,40 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Member extends AbstractEntity
 {
     protected string $title = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $firstName = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $lastName = '';
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'EmailAddress'])]
     protected string $email = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $telephone = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $address = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $zip = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $city = '';
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $country = '';
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate([
+        'validator' => IbanValidator::class,
+    ])]
     protected string $iban = '';
     protected string $bic = '';
     protected string $notes = '';
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $dateOfBirth = null;
     protected Gender $gender = Gender::Other;
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $privacyAcceptedAt = null;
+    #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $memberSince = null;
+    #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $memberUntil = null;
 
     protected ?Membership $membership = null;
