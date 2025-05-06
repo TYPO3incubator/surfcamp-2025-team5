@@ -21,12 +21,16 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Membership extends AbstractEntity
 {
+    #[Validate(['validator' => 'NotEmpty'])]
     protected string $title = '';
     protected string $description = '';
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'Float'])]
     protected float $price = 0.0;
 
     public function getTitle(): string

@@ -21,12 +21,17 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Payment extends AbstractEntity
 {
     protected Member $member;
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'DateTime'])]
     protected ?\DateTime $paidAt = null;
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'Float'])]
     protected float $amount = 0.0;
 
     public function getMember(): Member
