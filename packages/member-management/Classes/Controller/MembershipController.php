@@ -100,6 +100,7 @@ final class MembershipController extends ActionController
             $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
         );
         $member->setPasswordRepeat('');
+        $member->setUsername($member->getEmail());
 
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
