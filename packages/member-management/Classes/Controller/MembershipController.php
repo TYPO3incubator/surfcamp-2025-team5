@@ -24,9 +24,15 @@ declare(strict_types=1);
 namespace TYPO3Incubator\MemberManagement\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Exception\Exception;
+use TYPO3Incubator\MemberManagement\Service\MembershipService;
 
 /**
  * MembershipController
@@ -37,29 +43,121 @@ use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 final class MembershipController extends ActionController
 {
     public function __construct(
+        private readonly MemberRepository $memberRepository,
+        private readonly MembershipService $membershipService,
+        private readonly PasswordHashFactory $passwordHashFactory,
         private readonly PersistenceManagerInterface $persistenceManager,
     ) {}
 
-    protected function createAction(): ResponseInterface
+    protected function initializeAction(): void
     {
+        $this->membershipService->setRequest($this->request);
+    }
+
+    protected function initializeCreateAction(): void
+    {
+        // Allow "member" only as internal argument when forwarding from "save" action
+        if ($this->request->hasArgument('member') &&
+            !($this->request->getArgument('member') instanceof Member)
+        ) {
+            $this->request->withArgument('member', null);
+        }
+    }
+
+    protected function createAction(?Member $member = null): ResponseInterface
+    {
+        $this->view->assignMultiple([
+            'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
+            'member' => $member ?? new Member(),
+            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll()
+        ]);
+
         return $this->htmlResponse();
+    }
+
+    protected function initializeSaveAction(): void
+    {
+        $this->arguments->getArgument('member')
+            ->getPropertyMappingConfiguration()
+            ->forProperty('dateOfBirth')
+            ->setTypeConverterOption(
+                DateTimeConverter::class,
+                DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                'Y-m-d',
+            )
+        ;
     }
 
     protected function saveAction(Member $member): ResponseInterface
     {
+        $member->setPrivacyAcceptedAt(new \DateTime());
+        $member->setPassword(
+            $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
+        );
+        $member->setPasswordRepeat('');
+
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
 
-        // @todo create full membership
-        // @todo send double opt-in mail
+        try {
+            $created = $this->membershipService->create($member);
+        } catch (Exception $exception) {
+            $created = false;
+
+            // @todo Use better error message, not only exception message
+            $this->addFlashMessage($exception->getMessage());
+        }
+
+        if ($created) {
+            return $this->htmlResponse();
+        }
+
+        // Remove already persisted member if membership could not be created
+        $this->persistenceManager->remove($member);
+        $this->persistenceManager->persistAll();
+
+        // Obfuscate submitted passwords
+        $member->setPassword('');
+
+
+
+        return (new ForwardResponse('create'))->withArguments([
+            'member' => $member
+        ]);
+    }
+
+    protected function confirmAction(string $hash, string $email): ResponseInterface
+    {
+        $member = $this->memberRepository->findOneByHash($hash);
+
+        // Show error if no member with associated hash is found
+        if ($member === null) {
+            return $this->errorResponse('memberNotFound', 404);
+        }
+
+        // Show error if email does not match
+        if ($member->getEmail() !== $email) {
+            return $this->errorResponse('invalidEmailAddress');
+        }
+
+        // Confirm membership
+        $member->setCreateHash('');
+
+        // Update member in database
+        $this->persistenceManager->update($member);
+        $this->persistenceManager->persistAll();
 
         return $this->htmlResponse();
     }
 
-    protected function confirmationAction(string $hash): ResponseInterface
+    private function errorResponse(string $reason, int $statusCode = 400): ResponseInterface
     {
-        // @todo validate hash
+        $this->view->assign('error', $reason);
 
-        return $this->htmlResponse();
+        $response = $this->htmlResponse(
+            $this->view->render('Error'),
+        );
+
+        return $response->withStatus($statusCode);
     }
 }

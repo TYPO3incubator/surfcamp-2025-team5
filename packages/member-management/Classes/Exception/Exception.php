@@ -21,32 +21,14 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace TYPO3Incubator\MemberManagement\Domain\Repository;
-
-use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+namespace TYPO3Incubator\MemberManagement\Exception;
 
 /**
- * MemberRepository
+ * Exception
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- *
- * @extends Repository<Member>
  */
-final class MemberRepository extends Repository
+abstract class Exception extends \Exception
 {
-    public function findOneByHash(string $hash): ?Member
-    {
-        $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-
-        // @todo Limit to storage page of current site
-
-        $query->matching(
-            $query->equals('createHash', $hash),
-        );
-
-        return $query->execute()->getFirst();
-    }
 }

@@ -35,13 +35,9 @@ $tmp_membermanagement_columns = [
         'exclude' => true,
         'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.date_of_birth',
         'config' => [
-            'type' => 'input',
-            'renderType' => 'inputDateTime',
-            'eval' => 'date',
+            'type' => 'datetime',
+            'format' => 'date',
             'default' => 0,
-            'size' => 12,
-            'maxitems' => 1,
-            'placeholder' => 'YYYY-MM-DD',
         ],
     ],
     'gender' => [
@@ -156,13 +152,23 @@ $tmp_membermanagement_columns = [
             'eval' => 'trim',
         ],
     ],
+    'create_hash' => [
+        'exclude' => true,
+        'label' => 'Create hash',
+        'config' => [
+            'type' => 'input',
+            'size' => 255,
+            'readOnly' => true,
+            'eval' => 'trim',
+        ],
+    ],
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
-    'date_of_birth, gender, iban, bic, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes',
+    'date_of_birth, gender, iban, bic, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes, create_hash',
 );
 
 $GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['items'][] = ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member', 'value' => 'tx_member_management_member'];

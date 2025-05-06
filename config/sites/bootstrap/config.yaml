@@ -1,6 +1,7 @@
 base: '%env(SITE_BOOTSTRAP_BASE)%'
 dependencies:
   - bootstrap-package/full
+  - typo3-incubator/member-management
 languages:
   -
     title: English

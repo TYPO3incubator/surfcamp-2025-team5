@@ -37,7 +37,7 @@ use TYPO3Incubator\MemberManagement\Domain\Validator\IbanValidator;
  */
 class Member extends AbstractEntity
 {
-
+    protected string $title = '';
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $firstName = '';
     #[Validate(['validator' => 'NotEmpty'])]
@@ -79,6 +79,25 @@ class Member extends AbstractEntity
 
     /** @var ObjectStorage<Payment> */
     protected ObjectStorage $payments;
+
+    protected string $password = '';
+    protected string $passwordRepeat = '';
+    protected string $createHash = '';
+
+    public function __construct()
+    {
+        $this->payments = new ObjectStorage();
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
 
     public function getFirstName(): string
     {
@@ -268,5 +287,35 @@ class Member extends AbstractEntity
     public function setPayments(ObjectStorage $payments): void
     {
         $this->payments = $payments;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(#[\SensitiveParameter] string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getPasswordRepeat(): string
+    {
+        return $this->passwordRepeat;
+    }
+
+    public function setPasswordRepeat(#[\SensitiveParameter] string $passwordRepeat): void
+    {
+        $this->passwordRepeat = $passwordRepeat;
+    }
+
+    public function getCreateHash(): string
+    {
+        return $this->createHash;
+    }
+
+    public function setCreateHash(string $createHash): void
+    {
+        $this->createHash = $createHash;
     }
 }
