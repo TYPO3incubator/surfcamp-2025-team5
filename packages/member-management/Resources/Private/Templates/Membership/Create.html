@@ -72,7 +72,9 @@
     <div class="mb-3 form-check">
         <f:form.checkbox property="privacyAcceptedAt" value="{currentDateFormatted}" class="form-check-input"
                          id="privacy" additionalAttributes="{required: 'required'}" />
-        <label class="form-check-label" for="privacy">@todo</label>
+        <label class="form-check-label" for="privacy">
+            <f:format.html>{data.bodytext}</f:format.html>
+        </label>
     </div>
     <button type="submit" class="btn btn-primary">{f:translate(key: 'submit')}</button>
 </f:form>

@@ -90,6 +90,10 @@
             <trans-unit id="tx_membermanagement_domain_model_payment.paid_at">
                 <source>Paid at</source>
             </trans-unit>
+
+            <trans-unit id="tt_content.bodytext.membermanagement_createmember">
+                <source>Privacy policy statement</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -29,6 +29,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Exception\Exception;
@@ -66,10 +67,14 @@ final class MembershipController extends ActionController
 
     protected function createAction(?Member $member = null): ResponseInterface
     {
+        /** @var ContentObjectRenderer $contentObject */
+        $contentObject = $this->request->getAttribute('currentContentObject');
+
         $this->view->assignMultiple([
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
             'member' => $member ?? new Member(),
-            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll()
+            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll(),
+            'data' => $contentObject->data,
         ]);
 
         return $this->htmlResponse();
