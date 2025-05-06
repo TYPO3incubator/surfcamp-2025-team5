@@ -8,3 +8,17 @@ fcbigfoot:
     channels:
       instagram:
         link: 'https://www.instagram.com/typo3_official/'
+memberManagement:
+  organization:
+    name: 'FC Bigfoot'
+    personInCharge: 'Muster Person'
+    emailOfPersonInCharge: muster.person@typo3.org
+    address:
+      streetAndHouseNumber: 'Street X 12'
+      city: 'La Oliva'
+      zip: '11010'
+      country: Fuerteventura
+    paymentInformation:
+      iban: DE75512108001245126199
+      bic: AUTOATW1XXX
+      paymentDueMonth: '2'

@@ -1,0 +1,169 @@
+<?php
+
+defined('TYPO3') || die();
+
+if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
+    // no type field defined, so we define it here. This will only happen the first time the extension is installed!!
+    $GLOBALS['TCA']['fe_users']['ctrl']['type'] = 'tx_extbase_type';
+    $tempColumns_tx_membermanagement_fe_users = [];
+    $tempColumns_tx_membermanagement_fe_users[$GLOBALS['TCA']['fe_users']['ctrl']['type']] = [
+        'exclude' => true,
+        'label'   => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member.member', 'value' => 'tx_member_management_member'],
+            ],
+            'default' => 'tx_member_management_member',
+            'size' => 1,
+            'maxitems' => 1,
+        ],
+    ];
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
+}
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    'fe_users',
+    $GLOBALS['TCA']['fe_users']['ctrl']['type'],
+    '',
+    'after:' . $GLOBALS['TCA']['fe_users']['ctrl']['label']
+);
+
+$tmp_membermanagement_columns = [
+    'date_of_birth' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.date_of_birth',
+        'config' => [
+            'type' => 'input',
+            'renderType' => 'inputDateTime',
+            'eval' => 'date',
+            'default' => 0,
+            'size' => 12,
+            'maxitems' => 1,
+            'placeholder' => 'YYYY-MM-DD',
+        ],
+    ],
+    'gender' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.other', 'value' => 0],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.male', 'value' => 1],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.female', 'value' => 2],
+            ],
+            'default' => 0,
+            'size' => 1,
+            'maxitems' => 1,
+        ],
+    ],
+    'iban' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.iban',
+        'config' => [
+            'type' => 'input',
+            'size' => 36,
+            'eval' => 'trim',
+        ],
+    ],
+    'bic' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.bic',
+        'config' => [
+            'type' => 'input',
+            'size' => 11,
+            'eval' => 'trim',
+        ],
+    ],
+    'privacy_accepted_at' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.privacy_accepted_at',
+        'config' => [
+            'type' => 'datetime',
+            'default' => 0,
+        ],
+    ],
+    'member_since' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.member_since',
+        'config' => [
+            'type' => 'datetime',
+            'default' => 0,
+        ],
+    ],
+    'member_until' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.member_until',
+        'config' => [
+            'type' => 'datetime',
+            'default' => 0,
+        ],
+    ],
+    'membership' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'foreign_table' => 'tx_membermanagement_domain_model_membership',
+            'minitems' => 0,
+            'maxitems' => 1,
+            'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership.no_membership', 'value' => 0],
+            ],
+        ],
+    ],
+    'membership_status' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'minitems' => 1,
+            'maxitems' => 1,
+            'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.pending', 'value' => 0],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.active', 'value' => 1],
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership_status.inactive', 'value' => 2],
+            ],
+            'default' => 0,
+        ],
+    ],
+    'payments' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.payments',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_membermanagement_domain_model_payment',
+            'foreign_field' => 'member',
+            'maxitems' => 9999,
+            'appearance' => [
+                'collapseAll' => true,
+                'levelLinksPosition' => 'bottom',
+            ],
+        ],
+    ],
+    'notes' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.notes',
+        'config' => [
+            'type' => 'text',
+            'cols' => 30,
+            'rows' => 5,
+            'eval' => 'trim',
+        ],
+    ],
+];
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    'fe_users',
+    'date_of_birth, gender, iban, bic, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes',
+);
+
+$GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['items'][] = ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member', 'value' => 'tx_member_management_member'];
+$GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['default'] = 'tx_member_management_member';
