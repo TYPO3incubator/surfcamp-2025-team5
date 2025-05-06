@@ -2,6 +2,34 @@
 
 defined('TYPO3') || die();
 
+if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
+    // no type field defined, so we define it here. This will only happen the first time the extension is installed!!
+    $GLOBALS['TCA']['fe_users']['ctrl']['type'] = 'tx_extbase_type';
+    $tempColumns_tx_membermanagement_fe_users = [];
+    $tempColumns_tx_membermanagement_fe_users[$GLOBALS['TCA']['fe_users']['ctrl']['type']] = [
+        'exclude' => true,
+        'label'   => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member.member', 'value' => 'tx_member_management_member'],
+            ],
+            'default' => 'tx_member_management_member',
+            'size' => 1,
+            'maxitems' => 1,
+        ],
+    ];
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
+}
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    'fe_users',
+    $GLOBALS['TCA']['fe_users']['ctrl']['type'],
+    '',
+    'after:' . $GLOBALS['TCA']['fe_users']['ctrl']['label']
+);
+
 $tmp_membermanagement_columns = [
     'date_of_birth' => [
         'exclude' => true,
@@ -76,7 +104,7 @@ $tmp_membermanagement_columns = [
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
-            'foreign_table' => 'tx_membermanagement_membership',
+            'foreign_table' => 'tx_membermanagement_domain_model_membership',
             'minitems' => 0,
             'maxitems' => 1,
             'items' => [
@@ -105,7 +133,7 @@ $tmp_membermanagement_columns = [
         'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.payments',
         'config' => [
             'type' => 'inline',
-            'foreign_table' => 'tx_membermanagement_payment',
+            'foreign_table' => 'tx_membermanagement_domain_model_payment',
             'foreign_field' => 'member',
             'maxitems' => 9999,
             'appearance' => [
@@ -132,3 +160,6 @@ $tmp_membermanagement_columns = [
     'fe_users',
     'date_of_birth, gender, iban, bic, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes',
 );
+
+$GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['items'][] = ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member', 'value' => 'tx_member_management_member'];
+$GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['default'] = 'tx_member_management_member';
