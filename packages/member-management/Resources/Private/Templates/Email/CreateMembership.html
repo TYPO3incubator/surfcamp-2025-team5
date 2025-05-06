@@ -6,13 +6,36 @@
 <f:section name="Title"><f:translate key="email.createMembership.title" /></f:section>
 
 <f:section name="Main">
+    
+    <style type="text/css">
+        .bodyContainer .textContent p .button {
+            margin: 10px 0;
+            padding: 7px 10px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
     <p>
         <f:translate key="email.createMembership.main.salutation" arguments="{0: '{member.firstName} {member.lastName}'}" />,
     </p>
 
     <p>
-        <f:comment><!-- @todo Continue here... --></f:comment>
-        <f:uri.action action="confirm" arguments="{hash: hash, email: member.email}" absolute="1" />
+        <f:translate key="email.createMembership.main.body"/>
+    </p>
+
+    <p>
+        <a href="{f:uri.action(action:'confirm', arguments: {hash: hash, email: member.email}, absolute: 1)}" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+            <f:translate key="email.createMembership.main.button"/>
+        </a>
+    </p>
+    <br />
+    <p>
+        <small>
+            <f:translate key="email.createMembership.main.button.information"/>
+            <f:uri.action action="confirm" arguments="{hash: hash, email: member.email}" absolute="1" />
+        </small>
     </p>
 </f:section>
 
