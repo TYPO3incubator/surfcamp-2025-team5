@@ -1,0 +1,15 @@
+memberManagement:
+  organization:
+    name: 'Bootstrap Test'
+    personInCharge: 'Jane Doe'
+    emailOfPersonInCharge: jane.doe@typo3.org
+    defaultCountry: 'DE'
+    address:
+      streetAndHouseNumber: 'Emanuel-Leutze-Str. 11'
+      city: 'Düsseldorf'
+      zip: '40547'
+      country: Germany
+    paymentInformation:
+      iban: DE75512108001245126199
+      bic: AUTOATW1XXX
+      paymentDueMonth: '9'

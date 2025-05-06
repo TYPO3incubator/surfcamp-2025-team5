@@ -10,7 +10,6 @@ categories:
   MemberManagement.organization.paymentInformation:
     label: 'Payment information'
     parent: MemberManagement.organization
-
 settings:
   memberManagement.organization.name:
     label: 'Organization name'
@@ -24,6 +23,12 @@ settings:
     default: ''
   memberManagement.organization.emailOfPersonInCharge:
     label: 'E-Mail of person in charge'
+    category: MemberManagement.organization
+    type: string
+    default: ''
+  memberManagement.organization.defaultCountry:
+    label: 'Default country for member registration'
+    description: 'Please use a country code e.g. GB'
     category: MemberManagement.organization
     type: string
     default: ''

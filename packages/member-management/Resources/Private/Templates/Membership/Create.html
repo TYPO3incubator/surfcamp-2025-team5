@@ -33,7 +33,7 @@
             arguments="{ type: 'text', id: 'city', name: 'city', required: true}" />
         <div class="mb-3">
             <label for="country" class="form-label">{f:translate(key: 'country')}</label>
-            <f:form.countrySelect id="country" property="country" value="GB" class="form-select"/>
+            <f:form.countrySelect id="country" property="country" value="{f:if(condition:sitesets.memberManagement.organization.defaultCountry, then:sitesets.memberManagement.organization.defaultCountry)}" class="form-select"/>
         </div>
     </fieldset>
     <fieldset>

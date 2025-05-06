@@ -25,6 +25,7 @@ namespace TYPO3Incubator\MemberManagement\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Site\Set\SetRegistry;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
@@ -69,6 +70,7 @@ final class MembershipController extends ActionController
         $this->view->assignMultiple([
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
             'member' => $member ?? new Member(),
+            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll()
         ]);
 
         return $this->htmlResponse();
@@ -118,8 +120,10 @@ final class MembershipController extends ActionController
         // Obfuscate submitted passwords
         $member->setPassword('');
 
+
+
         return (new ForwardResponse('create'))->withArguments([
-            'member' => $member,
+            'member' => $member
         ]);
     }
 
