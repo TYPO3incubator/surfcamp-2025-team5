@@ -5,8 +5,8 @@ defined('TYPO3') || die();
 if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
     // no type field defined, so we define it here. This will only happen the first time the extension is installed!!
     $GLOBALS['TCA']['fe_users']['ctrl']['type'] = 'tx_extbase_type';
-    $tempColumnstx_membermanagement_fe_users = [];
-    $tempColumnstx_membermanagement_fe_users[$GLOBALS['TCA']['fe_users']['ctrl']['type']] = [
+    $tempColumns_tx_membermanagement_fe_users = [];
+    $tempColumns_tx_membermanagement_fe_users[$GLOBALS['TCA']['fe_users']['ctrl']['type']] = [
         'exclude' => true,
         'label'   => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member',
         'config' => [
@@ -20,7 +20,7 @@ if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
             'maxitems' => 1,
         ],
     ];
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumnstx_membermanagement_fe_users);
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
 }
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
