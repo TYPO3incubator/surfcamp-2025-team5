@@ -2,7 +2,14 @@
       data-namespace-typo3-fluid="true">
 
 <f:form action="save" controller="Membership" method="post" object="{member}" objectName="member">
-    <f:flashMessages />
+    <f:form.validationResults for="member">
+        <f:for each="{validationResults.flattenedErrors}" as="errors">
+            <f:for each="{errors}" as="error">
+                <p>{error}</p>
+            </f:for>
+        </f:for>
+    </f:form.validationResults>
+
     <fieldset>
         <legend>{f:translate(key: 'information-personal')}</legend>
         <f:render partial="Input"
