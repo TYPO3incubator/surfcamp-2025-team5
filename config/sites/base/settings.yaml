@@ -13,3 +13,6 @@ memberManagement:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
       paymentDueMonth: '9'
+felogin:
+  view: 
+    templateRootPath: EXT:member_management/Resources/Private/Templates
