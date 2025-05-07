@@ -75,7 +75,7 @@ class Member extends AbstractEntity
     protected ?DateTime $memberUntil = null;
 
     protected ?Membership $membership = null;
-    protected MembershipStatus $membershipStatus = MembershipStatus::Pending;
+    protected MembershipStatus $membershipStatus = MembershipStatus::Unconfirmed;
 
     /** @var ObjectStorage<Payment> */
     protected ObjectStorage $payments;

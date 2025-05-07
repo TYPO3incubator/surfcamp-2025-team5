@@ -31,6 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Exception\Exception;
 use TYPO3Incubator\MemberManagement\Service\MembershipService;
@@ -105,6 +106,7 @@ final class MembershipController extends ActionController
 
         // Disable member until consent was given
         $member->setDisabled(true);
+        $member->setMembershipStatus(MembershipStatus::Unconfirmed);
 
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
@@ -154,6 +156,7 @@ final class MembershipController extends ActionController
         // Confirm membership
         $member->setCreateHash('');
         $member->setDisabled(false);
+        $member->setMembershipStatus(MembershipStatus::Pending);
 
         // Update member in database
         $this->persistenceManager->update($member);
