@@ -1,6 +1,8 @@
 base: '%env(SITE_BASE)%'
 dependencies:
   - typo3-incubator/surfcamp-base
+  - typo3-incubator/member-management
+  - typo3/felogin
 languages:
   -
     title: English

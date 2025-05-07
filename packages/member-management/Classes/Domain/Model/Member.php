@@ -75,14 +75,16 @@ class Member extends AbstractEntity
     protected ?DateTime $memberUntil = null;
 
     protected ?Membership $membership = null;
-    protected MembershipStatus $membershipStatus = MembershipStatus::Pending;
+    protected MembershipStatus $membershipStatus = MembershipStatus::Unconfirmed;
 
     /** @var ObjectStorage<Payment> */
     protected ObjectStorage $payments;
 
+    protected string $username = '';
     protected string $password = '';
     protected string $passwordRepeat = '';
     protected string $createHash = '';
+    protected bool $disabled = true;
 
     public function __construct()
     {
@@ -289,6 +291,16 @@ class Member extends AbstractEntity
         $this->payments = $payments;
     }
 
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
     public function getPassword(): string
     {
         return $this->password;
@@ -317,5 +329,28 @@ class Member extends AbstractEntity
     public function setCreateHash(string $createHash): void
     {
         $this->createHash = $createHash;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    public function setDisabled(bool $disabled): void
+    {
+        $this->disabled = $disabled;
+    }
+
+    public function getMembershipStatusLabel(): string
+    {
+        return $this->membershipStatus->label();
+    }
+
+    public function getLastPayment(): ?Payment
+    {
+        $payments = $this->getPayments()->toArray();
+        return empty($payments)
+            ? null
+            : max($payments, fn(Payment $a, Payment $b) => $a->getPaidAt() <=> $b->getPaidAt());
     }
 }

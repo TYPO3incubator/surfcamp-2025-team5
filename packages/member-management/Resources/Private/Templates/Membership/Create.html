@@ -2,7 +2,16 @@
       data-namespace-typo3-fluid="true">
 
 <f:form action="save" controller="Membership" method="post" object="{member}" objectName="member">
-    <f:flashMessages />
+    <f:form.validationResults for="member">
+        <f:for each="{validationResults.flattenedErrors}" as="errors">
+            <f:for each="{errors}" as="error">
+                <div class="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            </f:for>
+        </f:for>
+    </f:form.validationResults>
+
     <fieldset>
         <legend>{f:translate(key: 'information-personal')}</legend>
         <f:render partial="Input"
@@ -64,7 +73,9 @@
     <div class="mb-3 form-check">
         <f:form.checkbox property="privacyAcceptedAt" value="{currentDateFormatted}" class="form-check-input"
                          id="privacy" additionalAttributes="{required: 'required'}" />
-        <label class="form-check-label" for="privacy">@todo</label>
+        <label class="form-check-label" for="privacy">
+            <f:format.html>{data.bodytext}</f:format.html>
+        </label>
     </div>
     <button type="submit" class="btn btn-primary">{f:translate(key: 'submit')}</button>
 </f:form>

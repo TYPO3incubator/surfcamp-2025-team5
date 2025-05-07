@@ -29,7 +29,9 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
 use TYPO3Incubator\MemberManagement\Exception\Exception;
@@ -77,7 +79,8 @@ final class MembershipController extends ActionController
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
             'member' => $member ?? new Member(),
             'memberships' => $memberships,
-            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll()
+            'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll(),
+            'data' => $this->getContentObjectData(),
         ]);
 
         return $this->htmlResponse();
@@ -99,16 +102,28 @@ final class MembershipController extends ActionController
     protected function saveAction(Member $member): ResponseInterface
     {
         $member->setPrivacyAcceptedAt(new \DateTime());
+
+        // Hash given password
         $member->setPassword(
             $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
         );
+
+        // Reset password repeat since we don't need it anymore
         $member->setPasswordRepeat('');
+        $member->setUsername($member->getEmail());
+
+        // Disable member until consent was given
+        $member->setDisabled(true);
+        $member->setMembershipStatus(MembershipStatus::Unconfirmed);
 
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
 
+        $data = $this->getContentObjectData();
+        $confirmationPid = (int)($data['tx_membermanagement_confirmation_pid'] ?? 0);
+
         try {
-            $created = $this->membershipService->create($member);
+            $created = $this->membershipService->create($member, $confirmationPid);
         } catch (Exception $exception) {
             $created = false;
 
@@ -124,10 +139,8 @@ final class MembershipController extends ActionController
         $this->persistenceManager->remove($member);
         $this->persistenceManager->persistAll();
 
-        // Obfuscate submitted passwords
+        // Obfuscate submitted password for rendering in frontend
         $member->setPassword('');
-
-
 
         return (new ForwardResponse('create'))->withArguments([
             'member' => $member
@@ -150,10 +163,14 @@ final class MembershipController extends ActionController
 
         // Confirm membership
         $member->setCreateHash('');
+        $member->setDisabled(false);
+        $member->setMembershipStatus(MembershipStatus::Pending);
 
         // Update member in database
         $this->persistenceManager->update($member);
         $this->persistenceManager->persistAll();
+
+        // @todo send mail to manager
 
         return $this->htmlResponse();
     }
@@ -167,5 +184,19 @@ final class MembershipController extends ActionController
         );
 
         return $response->withStatus($statusCode);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getContentObjectData(): array
+    {
+        $contentObject = $this->request->getAttribute('currentContentObject');
+
+        if (!($contentObject instanceof ContentObjectRenderer)) {
+            return [];
+        }
+
+        return $contentObject->data;
     }
 }

@@ -1,0 +1,18 @@
+memberManagement:
+  organization:
+    name: 'Membership Management Test'
+    personInCharge: 'Team High 5'
+    emailOfPersonInCharge: surfcamp@typo3.org
+    defaultCountry: 'GB'
+    address:
+      streetAndHouseNumber: 'Calle Gran Canaria, 13 Urb. Butihondo'
+      city: 'Las Palmas'
+      zip: '35625'
+      country: España
+    paymentInformation:
+      iban: DE75512108001245126199
+      bic: AUTOATW1XXX
+      paymentDueMonth: '9'
+felogin:
+  view: 
+    templateRootPath: EXT:member_management/Resources/Private/Templates
