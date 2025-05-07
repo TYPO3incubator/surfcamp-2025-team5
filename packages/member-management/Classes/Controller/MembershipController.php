@@ -67,14 +67,11 @@ final class MembershipController extends ActionController
 
     protected function createAction(?Member $member = null): ResponseInterface
     {
-        /** @var ContentObjectRenderer $contentObject */
-        $contentObject = $this->request->getAttribute('currentContentObject');
-
         $this->view->assignMultiple([
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
             'member' => $member ?? new Member(),
             'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll(),
-            'data' => $contentObject->data,
+            'data' => $this->getContentObjectData(),
         ]);
 
         return $this->htmlResponse();
@@ -112,8 +109,11 @@ final class MembershipController extends ActionController
         $this->persistenceManager->add($member);
         $this->persistenceManager->persistAll();
 
+        $data = $this->getContentObjectData();
+        $confirmationPid = (int)($data['tx_membermanagement_confirmation_pid'] ?? 0);
+
         try {
-            $created = $this->membershipService->create($member);
+            $created = $this->membershipService->create($member, $confirmationPid);
         } catch (Exception $exception) {
             $created = false;
 
@@ -159,6 +159,8 @@ final class MembershipController extends ActionController
         $this->persistenceManager->update($member);
         $this->persistenceManager->persistAll();
 
+        // @todo send mail to manager
+
         return $this->htmlResponse();
     }
 
@@ -171,5 +173,19 @@ final class MembershipController extends ActionController
         );
 
         return $response->withStatus($statusCode);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getContentObjectData(): array
+    {
+        $contentObject = $this->request->getAttribute('currentContentObject');
+
+        if (!($contentObject instanceof ContentObjectRenderer)) {
+            return [];
+        }
+
+        return $contentObject->data;
     }
 }
