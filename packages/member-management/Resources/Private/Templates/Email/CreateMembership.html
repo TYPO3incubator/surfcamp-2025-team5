@@ -26,7 +26,7 @@
     </p>
 
     <p>
-        <f:link.action action="confirm" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+        <f:link.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
             <f:translate key="email.createMembership.main.button"/>
         </f:link.action>
     </p>
@@ -34,7 +34,7 @@
     <p>
         <small>
             <f:translate key="email.createMembership.main.button.information"/>
-            <f:uri.action action="confirm" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
+            <f:uri.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
         </small>
     </p>
 </f:section>

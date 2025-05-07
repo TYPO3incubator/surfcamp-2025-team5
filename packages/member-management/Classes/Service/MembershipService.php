@@ -30,8 +30,11 @@ use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\Entity\SiteSettings;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyConfirmed;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyCreated;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsNoLongerInAnActiveMembership;
@@ -72,7 +75,7 @@ final class MembershipService
         if ($member->getCreateHash() !== '') {
             throw new MemberIsAlreadyCreated($member);
         }
-        if ($member->getMemberSince() !== null) {
+        if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
             throw new MemberIsAlreadyConfirmed($member);
         }
         if ($member->getMemberUntil()?->getTimestamp() > time()) {
@@ -112,12 +115,95 @@ final class MembershipService
         return $this->mailer->getSentMessage() !== null;
     }
 
-    private function createEmail(string $template, string $subject, Member $member): FluidEmail
+    /**
+     * @throws MemberIsAlreadyConfirmed
+     * @throws MemberIsNoLongerInAnActiveMembership
+     */
+    public function confirm(Member $member): bool
     {
-        $recipient = new Address(
-            $member->getEmail(),
-            $member->getFirstName() . ' ' . $member->getLastName(),
+        $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
+
+        if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
+            throw new MemberIsAlreadyConfirmed($member);
+        }
+        if ($member->getMemberUntil()?->getTimestamp() > time()) {
+            throw new MemberIsNoLongerInAnActiveMembership($member);
+        }
+
+        // Confirm membership
+        $member->setCreateHash('');
+        $member->setDisabled(false);
+        $member->setMembershipStatus(MembershipStatus::Pending);
+
+        // Update member in database
+        $this->persistenceManager->update($member);
+        $this->persistenceManager->persistAll();
+
+        // Send mail to manager if email address is configured
+        if (is_string($managerEmailAddress) && trim($managerEmailAddress) !== '') {
+            $managerEmail = $this->createEmail(
+                'NewMembership',
+                'New member registration',
+                $member,
+                new Address($managerEmailAddress),
+            );
+
+            try {
+                $this->mailer->send($managerEmail);
+
+                if ($this->mailer->getSentMessage() === null) {
+                    return false;
+                }
+            } catch (TransportExceptionInterface $exception) {
+                $this->logger->error(
+                    'Error while sending membership confirmation mail to manager: {message}',
+                    ['message' => $exception->getMessage()],
+                );
+
+                return false;
+            }
+        } else {
+            $this->logger->warning(
+                'No email address configured for person in charge of member management, manager email skipped.',
+            );
+        }
+
+        $memberEmail = $this->createEmail(
+            'MembershipConfirmed',
+            'Thank you for your membership registration',
+            $member,
         );
+
+        try {
+            $this->mailer->send($memberEmail);
+
+            if ($this->mailer->getSentMessage() === null) {
+                return false;
+            }
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error(
+                'Error while sending membership confirmation mail to member: {message}',
+                ['message' => $exception->getMessage()],
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private function createEmail(
+        string $template,
+        string $subject,
+        Member $member,
+        ?Address $recipient = null,
+    ): FluidEmail {
+        if ($recipient === null) {
+            $recipient = new Address(
+                $member->getEmail(),
+                $member->getFirstName() . ' ' . $member->getLastName(),
+            );
+        }
 
         $email = new FluidEmail();
         $email
@@ -138,5 +224,16 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
+    }
+
+    private function getSiteSettings(): ?SiteSettings
+    {
+        $site = $this->request?->getAttribute('site');
+
+        if (!($site instanceof Site)) {
+            return null;
+        }
+
+        return $site->getSettings();
     }
 }
