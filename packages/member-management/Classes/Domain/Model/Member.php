@@ -80,6 +80,7 @@ class Member extends AbstractEntity
     /** @var ObjectStorage<Payment> */
     protected ObjectStorage $payments;
 
+    protected string $username = '';
     protected string $password = '';
     protected string $passwordRepeat = '';
     protected string $createHash = '';
@@ -287,6 +288,16 @@ class Member extends AbstractEntity
     public function setPayments(ObjectStorage $payments): void
     {
         $this->payments = $payments;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
     }
 
     public function getPassword(): string
