@@ -23,8 +23,11 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 
 /**
  * MemberRepository
@@ -36,6 +39,14 @@ use TYPO3Incubator\MemberManagement\Domain\Model\Member;
  */
 final class MemberRepository extends Repository
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(false);
+        $this->setDefaultQuerySettings($querySettings);
+    }
+
     public function findOneByHash(string $hash, bool $includeDisabled = false): ?Member
     {
         $query = $this->createQuery();
@@ -54,5 +65,19 @@ final class MemberRepository extends Repository
         );
 
         return $query->execute()->getFirst();
+    }
+
+    public function findActiveInFolder(int $folderId): array
+    {
+        $query = $this->createQuery();
+
+        $query = $query->matching(
+            $query->logicalAnd(
+                $query->equals('pid', $folderId),
+                $query->equals('membership_status', MembershipStatus::Active),
+            ),
+        );
+
+        return $query->execute()->toArray();
     }
 }
