@@ -1,6 +1,0 @@
-<f:layout name="SystemEmail" />
-<f:comment><!-- @todo Add localization --></f:comment>
-<f:section name="Title"><f:translate key="email.membershipConfirmed.title" /></f:section>
-<f:section name="Main">
-<f:comment><!-- @todo Mail template for successful membership registration, sent to member --></f:comment>
-</f:section>

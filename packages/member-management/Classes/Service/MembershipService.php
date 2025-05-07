@@ -139,57 +139,34 @@ final class MembershipService
         $this->persistenceManager->update($member);
         $this->persistenceManager->persistAll();
 
-        // Send mail to manager if email address is configured
-        if (is_string($managerEmailAddress) && trim($managerEmailAddress) !== '') {
-            $managerEmail = $this->createEmail(
-                'NewMembership',
-                'New member registration',
-                $member,
-                new Address($managerEmailAddress),
-            );
-
-            try {
-                $this->mailer->send($managerEmail);
-
-                if ($this->mailer->getSentMessage() === null) {
-                    return false;
-                }
-            } catch (TransportExceptionInterface $exception) {
-                $this->logger->error(
-                    'Error while sending membership confirmation mail to manager: {message}',
-                    ['message' => $exception->getMessage()],
-                );
-
-                return false;
-            }
-        } else {
+        // Early return if no manager email address is configured
+        if (!is_string($managerEmailAddress) || trim($managerEmailAddress) === '') {
             $this->logger->warning(
                 'No email address configured for person in charge of member management, manager email skipped.',
             );
+
+            return true;
         }
 
-        $memberEmail = $this->createEmail(
-            'MembershipConfirmed',
-            'Thank you for your membership registration',
+        $email = $this->createEmail(
+            'NewMembership',
+            'New member registration',
             $member,
+            new Address($managerEmailAddress),
         );
 
         try {
-            $this->mailer->send($memberEmail);
-
-            if ($this->mailer->getSentMessage() === null) {
-                return false;
-            }
+            $this->mailer->send($email);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
-                'Error while sending membership confirmation mail to member: {message}',
+                'Error while sending membership confirmation mail to manager: {message}',
                 ['message' => $exception->getMessage()],
             );
 
             return false;
         }
 
-        return true;
+        return $this->mailer->getSentMessage() === null;
     }
 
     private function createEmail(
