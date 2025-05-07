@@ -10,6 +10,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 
 #[AsController]
@@ -24,13 +25,13 @@ final class BackendMemberController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $members = $this->memberRepository->findAll()->toArray();
-        $itemsPerPage = 20;
+        $members = $this->memberRepository->findAll();
+        $itemsPerPage = 1;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')
             : 1;
         $maximumLinks = 15;
-        $paginator = new ArrayPaginator($members, $currentPage, $itemsPerPage);
+        $paginator = new QueryResultPaginator($members, $currentPage, $itemsPerPage);
         $pagination = new SlidingWindowPagination(
             $paginator,
             $maximumLinks,
