@@ -83,7 +83,7 @@ class Member extends AbstractEntity
     protected string $password = '';
     protected string $passwordRepeat = '';
     protected string $createHash = '';
-    protected bool $disabled = false;
+    protected bool $disabled = true;
 
     public function __construct()
     {
