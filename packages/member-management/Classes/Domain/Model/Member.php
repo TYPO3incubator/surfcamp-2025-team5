@@ -84,6 +84,7 @@ class Member extends AbstractEntity
     protected string $password = '';
     protected string $passwordRepeat = '';
     protected string $createHash = '';
+    protected bool $disabled = true;
 
     public function __construct()
     {
@@ -328,5 +329,15 @@ class Member extends AbstractEntity
     public function setCreateHash(string $createHash): void
     {
         $this->createHash = $createHash;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    public function setDisabled(bool $disabled): void
+    {
+        $this->disabled = $disabled;
     }
 }
