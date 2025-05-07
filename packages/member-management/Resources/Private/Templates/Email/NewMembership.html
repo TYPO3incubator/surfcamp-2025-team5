@@ -3,11 +3,36 @@
 
 <f:layout name="SystemEmail" />
 
-<f:comment><!-- @todo Add localization --></f:comment>
 <f:section name="Title"><f:translate key="email.newMembership.title" /></f:section>
 
 <f:section name="Main">
-    <f:comment><!-- @todo Mail template for successful membership registration, sent to manager --></f:comment>
+    <style type="text/css">
+        .bodyContainer .textContent p .button {
+            margin: 10px 0;
+            padding: 7px 10px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
+
+    <p>
+        <f:translate key="email.newMembership.main.body"/>
+    </p>
+
+    <p>
+        <f:be.link route="member_management" referenceType="share" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+            <f:translate key="email.newMembership.main.button"/>
+        </f:be.link>
+    </p>
+    <br />
+    <p>
+        <small>
+            <f:translate key="email.main.button.information"/>
+            <f:be.uri route="member_management" referenceType="share"/>
+        </small>
+    </p>
 </f:section>
 
 </html>
