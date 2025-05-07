@@ -2,6 +2,10 @@ name: typo3-incubator/member-management
 label: 'Member Management'
 settings:
   memberManagement:
+    storage:
+      membershipsFolderPid: 0
+      membersFolderPid: 0
+      paymentsFolderPid: 0
     organization:
       name: ''
       personInCharge: ''

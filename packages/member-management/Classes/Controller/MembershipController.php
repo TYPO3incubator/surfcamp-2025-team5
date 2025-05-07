@@ -31,6 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
 use TYPO3Incubator\MemberManagement\Exception\Exception;
 use TYPO3Incubator\MemberManagement\Service\MembershipService;
 
@@ -44,6 +45,7 @@ final class MembershipController extends ActionController
 {
     public function __construct(
         private readonly MemberRepository $memberRepository,
+        private readonly MembershipRepository $membershipRepository,
         private readonly MembershipService $membershipService,
         private readonly PasswordHashFactory $passwordHashFactory,
         private readonly PersistenceManagerInterface $persistenceManager,
@@ -66,9 +68,15 @@ final class MembershipController extends ActionController
 
     protected function createAction(?Member $member = null): ResponseInterface
     {
+        // Get memberships by pid
+        $siteSettings = $this->request->getAttribute('site')->getSettings();
+        $membershipPid = $siteSettings->get('memberManagement.storage.membershipsFolderPid', null);
+        $memberships = ($membershipPid !== null) ? $this->membershipRepository->findAllByStorageId((int)$membershipPid) : [];
+
         $this->view->assignMultiple([
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
             'member' => $member ?? new Member(),
+            'memberships' => $memberships,
             'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll()
         ]);
 

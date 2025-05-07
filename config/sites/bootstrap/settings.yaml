@@ -3,13 +3,17 @@ memberManagement:
     name: 'Bootstrap Test'
     personInCharge: 'Jane Doe'
     emailOfPersonInCharge: jane.doe@typo3.org
-    defaultCountry: 'DE'
+    defaultCountry: DE
     address:
       streetAndHouseNumber: 'Emanuel-Leutze-Str. 11'
-      city: 'Düsseldorf'
+      city: Düsseldorf
       zip: '40547'
       country: Germany
     paymentInformation:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
       paymentDueMonth: '9'
+  storage:
+    membershipsFolderPid: 104
+    membersFolderPid: 16
+    paymentsFolderPid: 105
