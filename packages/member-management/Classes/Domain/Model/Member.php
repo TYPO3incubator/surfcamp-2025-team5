@@ -340,4 +340,17 @@ class Member extends AbstractEntity
     {
         $this->disabled = $disabled;
     }
+
+    public function getMembershipStatusLabel(): string
+    {
+        return $this->membershipStatus->label();
+    }
+
+    public function getLastPayment(): ?Payment
+    {
+        $payments = $this->getPayments()->toArray();
+        return empty($payments)
+            ? null
+            : max($payments, fn(Payment $a, Payment $b) => $a->getPaidAt() <=> $b->getPaidAt());
+    }
 }
