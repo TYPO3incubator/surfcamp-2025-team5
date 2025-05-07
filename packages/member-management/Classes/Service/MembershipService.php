@@ -28,6 +28,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
@@ -67,6 +68,7 @@ final class MembershipService
     {
         $uid = $member->getUid();
         $email = $member->getEmail();
+        $languageService = $this->getLanguageService();
 
         // Throw on invalid member(ship) state
         if ($uid === null || $email === '') {
@@ -93,7 +95,7 @@ final class MembershipService
         // Send mail to new member
         $email = $this->createEmail(
             'CreateMembership',
-            'Please confirm your membership',
+            $languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
             $member,
         );
         $email->assignMultiple([
@@ -122,6 +124,7 @@ final class MembershipService
     public function confirm(Member $member): bool
     {
         $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
+        $languageService = $this->getLanguageService();
 
         if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
             throw new MemberIsAlreadyConfirmed($member);
@@ -150,7 +153,7 @@ final class MembershipService
 
         $email = $this->createEmail(
             'NewMembership',
-            'New member registration',
+            $languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject'),
             $member,
             new Address($managerEmailAddress),
         );
@@ -212,5 +215,10 @@ final class MembershipService
         }
 
         return $site->getSettings();
+    }
+
+    private function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 }

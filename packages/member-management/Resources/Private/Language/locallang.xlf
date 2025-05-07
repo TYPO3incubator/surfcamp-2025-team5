@@ -42,6 +42,9 @@
 			<trans-unit id="email">
 				<source>Email address</source>
 			</trans-unit>
+			<trans-unit id="email.createMembership.subject">
+				<source>Please confirm your membership</source>
+			</trans-unit>
 			<trans-unit id="email.createMembership.main.body">
 				<source>You are only one step away from your registration. Please click on the following button to confirm your registration.</source>
 			</trans-unit>
@@ -60,6 +63,9 @@
 			<trans-unit id="email.createMembership.title">
 				<source>Please confirm your membership</source>
 			</trans-unit>
+            <trans-unit id="email.newMembership.subject">
+                <source>New member registration</source>
+            </trans-unit>
 			<trans-unit id="firstname">
 				<source>First name</source>
 			</trans-unit>
