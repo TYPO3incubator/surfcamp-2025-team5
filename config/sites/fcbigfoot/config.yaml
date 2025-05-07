@@ -2,6 +2,7 @@ base: '%env(SITE_FCBIGFOOT_BASE)%'
 dependencies:
   - typo3-incubator/theme-fcbigfoot
   - typo3-incubator/member-management
+  - typo3/felogin
 languages:
   -
     title: English
