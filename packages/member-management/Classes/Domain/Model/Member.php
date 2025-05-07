@@ -60,8 +60,9 @@ class Member extends AbstractEntity
     ])]
     protected string $iban = '';
     protected string $bic = '';
+    protected string $sepaDebtorMandate = '';
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTime $sepaAcceptedAt = null;
+    protected ?DateTime $sepaDebtorMandateSignDate = null;
     protected string $notes = '';
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
@@ -204,14 +205,24 @@ class Member extends AbstractEntity
         $this->bic = $bic;
     }
 
-    public function getSepaAcceptedAt(): ?DateTime
+    public function getSepaDebtorMandate(): string
     {
-        return $this->sepaAcceptedAt;
+        return $this->sepaDebtorMandate;
     }
 
-    public function setSepaAcceptedAt(?DateTime $sepaAcceptedAt): void
+    public function setSepaDebtorMandate(string $sepaDebtorMandate): void
     {
-        $this->sepaAcceptedAt = $sepaAcceptedAt;
+        $this->sepaDebtorMandate = $sepaDebtorMandate;
+    }
+
+    public function getSepaDebtorMandateSignDate(): ?DateTime
+    {
+        return $this->sepaDebtorMandateSignDate;
+    }
+
+    public function setSepaDebtorMandateSignDate(?DateTime $sepaDebtorMandateSignDate): void
+    {
+        $this->sepaDebtorMandateSignDate = $sepaDebtorMandateSignDate;
     }
 
     public function getNotes(): string
