@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 
 defined('TYPO3') || die();
@@ -22,10 +25,10 @@ if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
             'maxitems' => 1,
         ],
     ];
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     $GLOBALS['TCA']['fe_users']['ctrl']['type'],
     '',
@@ -196,9 +199,9 @@ $tmp_membermanagement_columns = [
     ],
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
+ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     'date_of_birth, gender, iban, bic, sepa_debtor_mandate, sepa_debtor_mandate_sign_date, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes, create_hash',
 );
