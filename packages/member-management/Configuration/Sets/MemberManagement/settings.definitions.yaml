@@ -13,6 +13,7 @@ categories:
   MemberManagement.organization.paymentInformation:
     label: 'Payment information'
     parent: MemberManagement.organization
+
 settings:
   memberManagement.storage.membershipsFolderPid:
     label: 'Memberships folder PID'
