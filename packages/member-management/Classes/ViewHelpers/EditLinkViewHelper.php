@@ -13,6 +13,10 @@ class EditLinkViewHelper extends AbstractViewHelper
 {
     protected $escapeOutput = false;
 
+    public function __construct(
+        protected readonly UriBuilder $uriBuilder,
+    ) {}
+
     public function initializeArguments(): void
     {
         $this->registerArgument('table', 'string', 'Table', true);
@@ -26,9 +30,7 @@ class EditLinkViewHelper extends AbstractViewHelper
     {
         $table = $this->arguments['table'];
         $uid = $this->arguments['uid'];
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        return (string)$uriBuilder->buildUriFromRoute('record_edit', [
+        return (string)$this->uriBuilder->buildUriFromRoute('record_edit', [
             'edit' => [
                 $table => [
                     $uid => 'edit',
