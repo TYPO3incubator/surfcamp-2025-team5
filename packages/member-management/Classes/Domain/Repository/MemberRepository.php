@@ -36,10 +36,16 @@ use TYPO3Incubator\MemberManagement\Domain\Model\Member;
  */
 final class MemberRepository extends Repository
 {
-    public function findOneByHash(string $hash): ?Member
+    public function findOneByHash(string $hash, bool $includeDisabled = false): ?Member
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
+
+        if ($includeDisabled) {
+            $querySettings->setIgnoreEnableFields(true);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        }
 
         // @todo Limit to storage page of current site
 
