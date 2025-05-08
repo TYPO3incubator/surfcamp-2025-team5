@@ -11,10 +11,11 @@
 <f:section name="Content">
     <ul class="pagination">
         <f:for each="{pagination.allPageNumbers}" as="page">
-            <li class="page-item {page == paginator.currentPageNumber ? 'active'}">
+            <li class="page-item">
                 <f:link.action
                     action="index"
                     arguments="{currentPageNumber: page}"
+                    addQueryString="true"
                     class="page-link"
                 >
                     {page}
