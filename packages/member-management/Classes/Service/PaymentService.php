@@ -262,4 +262,25 @@ class PaymentService
     {
         $this->request = $request;
     }
+
+    public function markMembersAsPaid(array $memberUids)
+    {
+        foreach ($memberUids as $memberUid) {
+            $member = $this->memberRepository->findByUid($memberUid);
+            if ($member === null) {
+                continue;
+            }
+
+            $payment = $member->getLastPayment();
+            if ($payment === null) {
+                $payment = $this->createPayment($member, true);
+                $this->persistenceManager->add($payment);
+            }
+
+            $payment->setState(PaymentState::Paid);
+            $payment->setPaidAt(new DateTime());
+            $this->persistenceManager->update($payment);
+        }
+        $this->persistenceManager->persistAll();
+    }
 }

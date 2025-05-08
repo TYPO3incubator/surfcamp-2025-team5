@@ -56,6 +56,15 @@
                 <f:form.button
                     type="submit"
                     name="memberAction"
+                    value="markAsPaid"
+                    class="btn btn-sm btn-default">
+                    <core:icon identifier="actions-check-badge" size="small"/>
+                    <span class="ms-1">Mark as Paid</span>
+                </f:form.button>
+
+                <f:form.button
+                    type="submit"
+                    name="memberAction"
                     value="setActive"
                     class="btn btn-sm btn-default">
                     <core:icon identifier="actions-toggle-on" size="small"/>
@@ -152,12 +161,29 @@
                             </td>
                             <td>{member.membershipStatusLabel}</td>
                             <td>{member.email}</td>
-                            <td>{member.lastPayment.stateLabel}</td>
+                            <td>
+                                <f:switch expression="{member.lastPayment.stateLabel}">
+                                    <f:case value="Pending">
+                                        <core:icon identifier="actions-clock" size="small"/>
+                                    </f:case>
+                                    <f:case value="Paid">
+                                        <core:icon identifier="actions-check-badge" size="small"/>
+                                    </f:case>
+                                    <f:case value="Overdue">
+                                        <core:icon identifier="actions-exclamation-triangle" size="small"/>
+                                    </f:case>
+                                    <f:case value="Cancelled">
+                                        <core:icon identifier="actions-ban" size="small"/>
+                                    </f:case>
+                                </f:switch>
+
+                                {member.lastPayment.stateLabel}
+                            </td>
                             <td>
                                 <f:if condition="{member.lastPayment}">
                                     <f:then>
                                         <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_payment', uid: member.lastPayment.uid)}">
-                                            <f:format.date format="dd.mm.YYYY">{member.lastPayment.paidAt}</f:format.date>
+                                            <f:format.date format="d.m.Y">{member.lastPayment.paidAt}</f:format.date>
                                         </a>
                                     </f:then>
                                     <f:else>-</f:else>

@@ -35,6 +35,7 @@ final class BackendMemberController extends ActionController
 
     protected const MEMBER_ACTION_SET_ACTIVE = 'setActive';
     protected const MEMBER_ACTION_SET_INACTIVE = 'setInactive';
+    protected const MEMBER_ACTION_MARK_AS_PAID = 'markAsPaid';
 
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
@@ -243,6 +244,9 @@ final class BackendMemberController extends ActionController
                 break;
             case self::MEMBER_ACTION_SET_INACTIVE:
                 $this->membershipService->setMembersInactive($memberUids);
+                break;
+            case self::MEMBER_ACTION_MARK_AS_PAID:
+                $this->paymentService->markMembersAsPaid($memberUids);
                 break;
 
         }
