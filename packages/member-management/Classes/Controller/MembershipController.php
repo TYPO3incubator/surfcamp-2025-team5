@@ -72,8 +72,8 @@ final class MembershipController extends ActionController
     {
         // Get memberships by pid
         $siteSettings = $this->request->getAttribute('site')->getSettings();
-        $membershipPid = $siteSettings->get('memberManagement.storage.membershipsFolderPid', null);
-        $memberships = ($membershipPid !== null) ? $this->membershipRepository->findAllByStorageId((int)$membershipPid) : [];
+        $membershipPid = $siteSettings->get('memberManagement.storage.membershipsFolderPid');
+        $memberships = ($membershipPid !== null) ? $this->membershipRepository->findAllByStorageId((int)$membershipPid)->toArray() : [];
 
         $this->view->assignMultiple([
             'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),

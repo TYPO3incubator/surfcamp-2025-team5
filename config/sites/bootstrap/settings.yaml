@@ -14,9 +14,9 @@ memberManagement:
       bic: AUTOATW1XXX
       paymentDueMonth: '9'
   storage:
-    membershipsFolderPid: 104
+    membershipsFolderPid: 109
     membersFolderPid: 16
-    paymentsFolderPid: 105
+    paymentsFolderPid: 110
 felogin:
   view:
-    templateRootPath: EXT:member_management/Resources/Private/Templates
+    templateRootPath: 'EXT:member_management/Resources/Private/Templates'

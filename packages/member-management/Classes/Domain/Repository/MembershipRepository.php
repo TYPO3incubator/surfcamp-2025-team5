@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Membership;
 
@@ -33,10 +34,10 @@ use TYPO3Incubator\MemberManagement\Domain\Model\Membership;
  */
 final class MembershipRepository extends Repository
 {
-    public function findAllByStorageId(int $id): ?array
+    public function findAllByStorageId(int $id): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setStoragePageIds([$id]);
-        return $query->execute()->toArray();
+        return $query->execute();
     }
 }
