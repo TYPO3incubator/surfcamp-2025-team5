@@ -29,6 +29,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
@@ -49,14 +50,18 @@ use TYPO3Incubator\MemberManagement\Exception\MemberIsNotProperlyPersisted;
  */
 final class MembershipService
 {
+    private LanguageService $languageService;
     private ?ServerRequestInterface $request = null;
 
     public function __construct(
         private readonly HashService $hashService,
+        private readonly LanguageServiceFactory $languageServiceFactory,
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer,
         private readonly PersistenceManagerInterface $persistenceManager,
-    ) {}
+    ) {
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
+    }
 
     /**
      * @throws MemberIsAlreadyConfirmed
@@ -68,7 +73,6 @@ final class MembershipService
     {
         $uid = $member->getUid();
         $email = $member->getEmail();
-        $languageService = $this->getLanguageService();
 
         // Throw on invalid member(ship) state
         if ($uid === null || $email === '') {
@@ -95,7 +99,7 @@ final class MembershipService
         // Send mail to new member
         $email = $this->createEmail(
             'CreateMembership',
-            $languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
+            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
             $member,
         );
         $email->assignMultiple([
@@ -124,7 +128,6 @@ final class MembershipService
     public function confirm(Member $member): bool
     {
         $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
-        $languageService = $this->getLanguageService();
 
         if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
             throw new MemberIsAlreadyConfirmed($member);
@@ -153,7 +156,7 @@ final class MembershipService
 
         $email = $this->createEmail(
             'NewMembership',
-            $languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject'),
+            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject'),
             $member,
             new Address($managerEmailAddress),
         );
@@ -204,6 +207,9 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
+        $this->languageService = $this->languageServiceFactory->createFromSiteLanguage(
+            $request->getAttribute('language'),
+        );
     }
 
     private function getSiteSettings(): ?SiteSettings
@@ -215,10 +221,5 @@ final class MembershipService
         }
 
         return $site->getSettings();
-    }
-
-    private function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
     }
 }
