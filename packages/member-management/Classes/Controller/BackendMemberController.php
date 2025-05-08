@@ -33,7 +33,7 @@ final class BackendMemberController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $members = $this->memberRepository->findAll();
+        $members = $this->memberRepository->findConfirmed();
         $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')

@@ -142,7 +142,6 @@ final class MembershipService
 
         // Confirm membership
         $member->setCreateHash('');
-        $member->setDisabled(false);
         $member->setMembershipStatus(MembershipStatus::Pending);
 
         // Update member in database
@@ -239,6 +238,7 @@ final class MembershipService
                 continue;
             }
             $member->setMembershipStatus(MembershipStatus::Active);
+            $member->setDisabled(false);
             $this->memberRepository->update($member);
 
             $email = $this->createEmail(
@@ -266,6 +266,7 @@ final class MembershipService
                 continue;
             }
             $member->setMembershipStatus(MembershipStatus::Inactive);
+            $member->setDisabled(true);
             $this->memberRepository->update($member);
         }
         $this->persistenceManager->persistAll();
