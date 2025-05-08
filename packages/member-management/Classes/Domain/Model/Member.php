@@ -67,16 +67,19 @@ class Member extends AbstractEntity
 
     #[Validate([
         'validator' => IbanValidator::class,
+        'options' => [
+            'propertyThatNeedsToBeSet' => 'sepaDebtorMandateSignDate',
+        ],
     ])]
     protected string $iban = '';
 
     protected string $bic = '';
-  
+
     protected string $sepaDebtorMandate = '';
-  
+
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $sepaDebtorMandateSignDate = null;
-  
+
     protected string $notes = '';
 
     #[Validate(['validator' => 'NotEmpty'])]
