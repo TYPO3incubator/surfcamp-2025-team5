@@ -87,6 +87,7 @@ $tmp_membermanagement_columns = [
             'type' => 'input',
             'size' => 11,
             'eval' => 'trim',
+            'max' => 35
         ],
     ],
     'sepa_debtor_mandate_sign_date' => [
