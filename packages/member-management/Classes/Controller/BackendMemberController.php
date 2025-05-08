@@ -7,7 +7,6 @@ namespace TYPO3Incubator\MemberManagement\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -26,7 +25,7 @@ final class BackendMemberController extends ActionController
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $members = $this->memberRepository->findAll();
-        $itemsPerPage = 1;
+        $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')
             : 1;
