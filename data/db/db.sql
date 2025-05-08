@@ -254,7 +254,7 @@ CREATE TABLE `cache_rootline` (
   `content` longblob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(180),`expires`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +271,7 @@ CREATE TABLE `cache_rootline_tags` (
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(191)),
   KEY `cache_tag` (`tag`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,12 +365,13 @@ CREATE TABLE `fe_users` (
   `privacy_accepted_at` bigint(20) NOT NULL DEFAULT 0,
   `member_since` bigint(20) NOT NULL DEFAULT 0,
   `member_until` bigint(20) NOT NULL DEFAULT 0,
-  `membership` int(10) unsigned NOT NULL DEFAULT 0,
+  `membership` longtext DEFAULT NULL,
   `membership_status` int(11) NOT NULL DEFAULT 0,
   `payments` int(10) unsigned NOT NULL DEFAULT 0,
   `notes` longtext DEFAULT NULL,
   `create_hash` varchar(255) NOT NULL DEFAULT '',
-  `sepa_accepted_at` bigint(20) NOT NULL DEFAULT 0,
+  `sepa_debtor_mandate` varchar(35) NOT NULL DEFAULT '',
+  `sepa_debtor_mandate_sign_date` bigint(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `parent` (`pid`,`username`(100)),
   KEY `username` (`username`(100)),
@@ -1037,7 +1038,7 @@ CREATE TABLE `sys_history` (
   PRIMARY KEY (`uid`),
   KEY `recordident_1` (`tablename`(100),`recuid`),
   KEY `recordident_2` (`tablename`(100),`tstamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=1173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1174 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1086,7 +1087,7 @@ CREATE TABLE `sys_lockedrecords` (
   `feuserid` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `event` (`userid`,`tstamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1128,7 +1129,7 @@ CREATE TABLE `sys_log` (
   KEY `errorcount` (`tstamp`,`error`),
   KEY `index_channel` (`channel`),
   KEY `index_level` (`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1862,7 +1863,7 @@ CREATE TABLE `tx_scheduler_task` (
   `task_group` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `index_nextexecution` (`nextexecution`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1896,7 +1897,7 @@ CREATE TABLE `tx_scheduler_task_group` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 17:49:47
+-- Dump completed on 2025-05-08 22:41:58
 /*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (aarch64)
 --
@@ -1954,7 +1955,7 @@ UNLOCK TABLES;
 LOCK TABLES `be_users` WRITE;
 /*!40000 ALTER TABLE `be_users` DISABLE KEYS */;
 INSERT INTO `be_users` VALUES
-(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:1:{s:32:\"696addfecc296b326ff6e9f04c7ff3e1\";a:5:{i:0;s:10:\"FC Bigfoot\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:28:\"&edit%5Bpages%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:1;s:3:\"pid\";i:0;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:76:\"/typo3/module/web/layout?token=397d32af3d335122ce46522e8d0b497687d70128&id=1\";}}i:1;s:32:\"696addfecc296b326ff6e9f04c7ff3e1\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}s:32:\"fd5a17de0820dd130a5d03889588182c\";a:5:{i:0;s:13:\"Frontend User\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:112;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:30:\"&edit%5Bpages%5D%5B112%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:112;s:3:\"pid\";i:111;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=112&table=&pointer=1\";}s:32:\"b899b29babb7b1fb58740c42dcd9d8d6\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:3;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=113&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}s:12:\"pagetsconfig\";a:1:{s:6:\"action\";s:19:\"pagetsconfig_active\";}s:6:\"web_ts\";a:1:{s:6:\"action\";s:25:\"web_typoscript_infomodify\";}s:25:\"web_typoscript_infomodify\";a:1:{s:23:\"selectedTemplatePerPage\";a:1:{i:1;i:-1;}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:16:\"opendocs::recent\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";s:12:\"pagetsconfig\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:6:\"web_ts\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:25:\"web_typoscript_infomodify\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:5:\"false\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746722714,NULL),
+(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:1:{s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:16:\"jochen@typo3.org\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=35b7f9e8c84dcc443ff2d5c15c40312040e7cb45&id=16&table=&pointer=1\";}}i:1;s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}s:32:\"fd5a17de0820dd130a5d03889588182c\";a:5:{i:0;s:13:\"Frontend User\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:112;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:30:\"&edit%5Bpages%5D%5B112%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:112;s:3:\"pid\";i:111;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=112&table=&pointer=1\";}s:32:\"b899b29babb7b1fb58740c42dcd9d8d6\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:3;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=113&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}s:12:\"pagetsconfig\";a:1:{s:6:\"action\";s:19:\"pagetsconfig_active\";}s:6:\"web_ts\";a:1:{s:6:\"action\";s:25:\"web_typoscript_infomodify\";}s:25:\"web_typoscript_infomodify\";a:1:{s:23:\"selectedTemplatePerPage\";a:1:{i:1;i:-1;}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"2988c6a33ef10a997d051ca23b8d4e7ecec7f34b\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"2988c6a33ef10a997d051ca23b8d4e7ecec7f34b\";s:16:\"opendocs::recent\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";s:12:\"pagetsconfig\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:6:\"web_ts\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:25:\"web_typoscript_infomodify\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:5:\"false\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746740465,NULL),
 (2,0,1744014582,1744014582,0,0,0,0,NULL,'default','a:4:{s:10:\"moduleData\";a:0:{}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";}',0,NULL,'','_cli_','$argon2id$v=19$m=65536,t=16,p=1$Qk41RG10QTUxUGQzclc3dA$9bxBcygWFXt9U5WuxRJLFP3866mFPYZjpkdwMrS98sg','',0,NULL,'','','',1,3,NULL,1,NULL,'',NULL,0,NULL);
 /*!40000 ALTER TABLE `be_users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1977,7 +1978,7 @@ UNLOCK TABLES;
 LOCK TABLES `fe_users` WRITE;
 /*!40000 ALTER TABLE `fe_users` DISABLE KEYS */;
 INSERT INTO `fe_users` VALUES
-(2,16,1746609070,1746553161,0,0,0,0,NULL,'tx_member_management_member',NULL,0,NULL,'jochen@typo3.org','$argon2id$v=19$m=65536,t=16,p=1$S09ZeFhFdjJiaUlkc0dtUw$XBqVobvw/mTzFyeQvgtjkBJMpDRj87GhZU0blyD1HjI','1','','Jochen','','Roth','Musterstraße','0123456789','','jochen@typo3.org','','89294','Oberroth','DE','','',0,0,'',NULL,946751962,1,'DE91100000000123456789','',1746553162,0,0,0,0,0,'','',0);
+(2,16,1746740496,1746553161,0,0,0,0,NULL,'tx_member_management_member',NULL,0,NULL,'jochen@typo3.org','$argon2id$v=19$m=65536,t=16,p=1$S09ZeFhFdjJiaUlkc0dtUw$XBqVobvw/mTzFyeQvgtjkBJMpDRj87GhZU0blyD1HjI','1','','Jochen','','Roth','Musterstraße','0123456789','','jochen@typo3.org','','89294','Oberroth','DE','','',0,0,'',NULL,946751962,1,'DE91100000000123456789','',1746553162,0,0,'5',0,0,'','','',0);
 /*!40000 ALTER TABLE `fe_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5372,7 +5373,8 @@ INSERT INTO `sys_history` VALUES
 (1169,1746714423,4,'BE',1,0,4,'tx_membermanagement_domain_model_membership',NULL,0,'0400$c033d831d5906613e4b0372f65efbfae:2163636ccad47d20f14434194687321b'),
 (1170,1746714431,1,'BE',1,0,9,'tx_membermanagement_domain_model_membership','{\"price\":\"10.00\",\"pid\":113,\"title\":\"Student\",\"description\":\"\",\"crdate\":1746714431,\"tstamp\":1746714431,\"uid\":9}',0,'0400$85973e2dd6569aebfa07c2c03cf79cce:5c60fc46bee9a06677de5523fb91bb6a'),
 (1171,1746714436,1,'BE',1,0,10,'tx_membermanagement_domain_model_membership','{\"price\":\"15.00\",\"pid\":113,\"title\":\"Senior citizen\",\"description\":\"\",\"crdate\":1746714436,\"tstamp\":1746714436,\"uid\":10}',0,'0400$5008a8ff6c8f1552a04d5b8528fdc03d:0f4001e43e513c81e34e07e6f24f2d06'),
-(1172,1746722934,2,'BE',1,0,1,'pages','{\"oldRecord\":{\"TSconfig\":null,\"l10n_diffsource\":\"{\\\"title\\\":\\\"\\\"}\"},\"newRecord\":{\"TSconfig\":\"TCEFORM {\\r\\n    tt_content {\\r\\n        CType.keepItems := addToList(membermanagement_createmembership, membermanagement_confirmmembership)\\r\\n    }\\r\\n}\",\"l10n_diffsource\":\"{\\\"doktype\\\":\\\"\\\",\\\"title\\\":\\\"\\\",\\\"slug\\\":\\\"\\\",\\\"nav_title\\\":\\\"\\\",\\\"subtitle\\\":\\\"\\\",\\\"nav_icon_set\\\":\\\"\\\",\\\"nav_icon\\\":\\\"\\\",\\\"seo_title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"no_index\\\":\\\"\\\",\\\"no_follow\\\":\\\"\\\",\\\"canonical_link\\\":\\\"\\\",\\\"sitemap_changefreq\\\":\\\"\\\",\\\"sitemap_priority\\\":\\\"\\\",\\\"og_title\\\":\\\"\\\",\\\"og_description\\\":\\\"\\\",\\\"og_image\\\":\\\"\\\",\\\"twitter_title\\\":\\\"\\\",\\\"twitter_description\\\":\\\"\\\",\\\"twitter_image\\\":\\\"\\\",\\\"twitter_card\\\":\\\"\\\",\\\"abstract\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"author_email\\\":\\\"\\\",\\\"lastUpdated\\\":\\\"\\\",\\\"layout\\\":\\\"\\\",\\\"newUntil\\\":\\\"\\\",\\\"backend_layout\\\":\\\"\\\",\\\"backend_layout_next_level\\\":\\\"\\\",\\\"thumbnail\\\":\\\"\\\",\\\"content_from_pid\\\":\\\"\\\",\\\"target\\\":\\\"\\\",\\\"cache_timeout\\\":\\\"\\\",\\\"cache_tags\\\":\\\"\\\",\\\"is_siteroot\\\":\\\"\\\",\\\"no_search\\\":\\\"\\\",\\\"php_tree_stop\\\":\\\"\\\",\\\"module\\\":\\\"\\\",\\\"media\\\":\\\"\\\",\\\"tsconfig_includes\\\":\\\"\\\",\\\"TSconfig\\\":\\\"\\\",\\\"l18n_cfg\\\":\\\"\\\",\\\"hidden\\\":\\\"\\\",\\\"nav_hide\\\":\\\"\\\",\\\"starttime\\\":\\\"\\\",\\\"endtime\\\":\\\"\\\",\\\"extendToSubpages\\\":\\\"\\\",\\\"fe_group\\\":\\\"\\\",\\\"editlock\\\":\\\"\\\",\\\"categories\\\":\\\"\\\",\\\"rowDescription\\\":\\\"\\\"}\"}}',0,'0400$56a7dc49e8f0ac8e2eff9f7066b03105:e175f7045d7ccbfb26ffcf279422c2e5');
+(1172,1746722934,2,'BE',1,0,1,'pages','{\"oldRecord\":{\"TSconfig\":null,\"l10n_diffsource\":\"{\\\"title\\\":\\\"\\\"}\"},\"newRecord\":{\"TSconfig\":\"TCEFORM {\\r\\n    tt_content {\\r\\n        CType.keepItems := addToList(membermanagement_createmembership, membermanagement_confirmmembership)\\r\\n    }\\r\\n}\",\"l10n_diffsource\":\"{\\\"doktype\\\":\\\"\\\",\\\"title\\\":\\\"\\\",\\\"slug\\\":\\\"\\\",\\\"nav_title\\\":\\\"\\\",\\\"subtitle\\\":\\\"\\\",\\\"nav_icon_set\\\":\\\"\\\",\\\"nav_icon\\\":\\\"\\\",\\\"seo_title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"no_index\\\":\\\"\\\",\\\"no_follow\\\":\\\"\\\",\\\"canonical_link\\\":\\\"\\\",\\\"sitemap_changefreq\\\":\\\"\\\",\\\"sitemap_priority\\\":\\\"\\\",\\\"og_title\\\":\\\"\\\",\\\"og_description\\\":\\\"\\\",\\\"og_image\\\":\\\"\\\",\\\"twitter_title\\\":\\\"\\\",\\\"twitter_description\\\":\\\"\\\",\\\"twitter_image\\\":\\\"\\\",\\\"twitter_card\\\":\\\"\\\",\\\"abstract\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"author_email\\\":\\\"\\\",\\\"lastUpdated\\\":\\\"\\\",\\\"layout\\\":\\\"\\\",\\\"newUntil\\\":\\\"\\\",\\\"backend_layout\\\":\\\"\\\",\\\"backend_layout_next_level\\\":\\\"\\\",\\\"thumbnail\\\":\\\"\\\",\\\"content_from_pid\\\":\\\"\\\",\\\"target\\\":\\\"\\\",\\\"cache_timeout\\\":\\\"\\\",\\\"cache_tags\\\":\\\"\\\",\\\"is_siteroot\\\":\\\"\\\",\\\"no_search\\\":\\\"\\\",\\\"php_tree_stop\\\":\\\"\\\",\\\"module\\\":\\\"\\\",\\\"media\\\":\\\"\\\",\\\"tsconfig_includes\\\":\\\"\\\",\\\"TSconfig\\\":\\\"\\\",\\\"l18n_cfg\\\":\\\"\\\",\\\"hidden\\\":\\\"\\\",\\\"nav_hide\\\":\\\"\\\",\\\"starttime\\\":\\\"\\\",\\\"endtime\\\":\\\"\\\",\\\"extendToSubpages\\\":\\\"\\\",\\\"fe_group\\\":\\\"\\\",\\\"editlock\\\":\\\"\\\",\\\"categories\\\":\\\"\\\",\\\"rowDescription\\\":\\\"\\\"}\"}}',0,'0400$56a7dc49e8f0ac8e2eff9f7066b03105:e175f7045d7ccbfb26ffcf279422c2e5'),
+(1173,1746740496,2,'BE',1,0,2,'fe_users','{\"oldRecord\":{\"membership\":\"0\"},\"newRecord\":{\"membership\":\"5\"}}',0,'0400$b6593b3090ef2ce9cd2c9ba8d07cbe62:3f083a6a2d15ee54bb50505f181f8201');
 /*!40000 ALTER TABLE `sys_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5426,7 +5428,7 @@ UNLOCK TABLES;
 LOCK TABLES `sys_lockedrecords` WRITE;
 /*!40000 ALTER TABLE `sys_lockedrecords` DISABLE KEYS */;
 INSERT INTO `sys_lockedrecords` VALUES
-(71,1,1746722935,'pages',1,0,'admin',0);
+(73,1,1746740496,'fe_users',2,0,'admin',0);
 /*!40000 ALTER TABLE `sys_lockedrecords` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5597,7 +5599,14 @@ INSERT INTO `sys_log` VALUES
 (158,1746714436,1,1,10,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was inserted on page {pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":10,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
 (159,1746722714,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.19.0.6','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
 (160,1746722934,1,2,1,'pages',0,0,'Record {table}:{uid} was updated',1,'content',0,'172.19.0.6','{\"table\":\"pages\",\"uid\":1,\"history\":\"1172\"}',0,0,'',0,'','info',NULL,NULL),
-(161,1746722959,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.19.0.6','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL);
+(161,1746722959,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.19.0.6','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(162,1746739244,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
+(163,1746739315,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(164,1746739353,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(165,1746739375,1,1,0,'',0,0,'Scheduler task \"%s\" (UID: %s, Class: \"%s\") was added',4,'default',0,'172.18.0.5','[\"Table garbage collection\",1,\"TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\TableGarbageCollectionTask\"]',-1,0,'',0,'','info',NULL,NULL),
+(166,1746739987,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
+(167,1746740465,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
+(168,1746740496,1,2,2,'fe_users',0,0,'Record {table}:{uid} was updated',1,'content',0,'172.18.0.5','{\"table\":\"fe_users\",\"uid\":2,\"history\":\"1173\"}',16,0,'',0,'','info',NULL,NULL);
 /*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5661,6 +5670,7 @@ INSERT INTO `sys_refindex` VALUES
 ('084953e0fc85430a0916eb842c3434f3','sys_file',35,'storage',0,0,2147483647,0,'','','',0,0,'sys_file_storage',1,'',0,0,2147483647,0,0,''),
 ('08802e165beff5f5482dcdf31b648a56','tt_content',13,'fcbigfoot_persons',0,0,2147483647,0,'','','',3,0,'tx_fcbigfoot_domain_model_person',5,'',0,0,2147483647,0,0,''),
 ('0881ff2f43c950be56130b100ad9769d','sys_file_reference',175,'uid_local',0,0,2147483647,0,'','','',0,0,'sys_file',30,'',0,0,2147483647,0,0,''),
+('08c3e3674341bef785f41a816bac4962','fe_users',2,'membership',0,0,2147483647,0,'','','',0,0,'tx_membermanagement_domain_model_membership',5,'',0,0,2147483647,0,0,''),
 ('0923d5f82ca034fbac5a5b0fb0d3b085','pages',54,'nav_icon',0,0,2147483647,0,'','','',0,0,'sys_file_reference',136,'',0,0,2147483647,0,0,''),
 ('0a7c924cc7e4952f9667c5ad2b5b0737','sys_file_reference',43,'uid_local',0,0,2147483647,0,'','','',0,0,'sys_file',86,'',0,0,2147483647,0,0,''),
 ('0acbe8fef7b4b2b640b280bff6e1c903','sys_file_reference',150,'uid_local',0,0,2147483647,0,'','','',0,0,'sys_file',36,'',0,0,2147483647,0,0,''),
@@ -6496,7 +6506,7 @@ INSERT INTO `sys_registry` VALUES
 (10,'installUpdate','TYPO3\\CMS\\Install\\Updates\\SysTemplateNoWorkspaceMigration','i:1;'),
 (11,'installUpdate','TYPO3\\CMS\\Extensionmanager\\Updates\\FeLoginModeExtractionUpdate','i:1;'),
 (12,'installUpdateRows','rowUpdatersDone','a:1:{i:0;s:69:\"TYPO3\\CMS\\Install\\Updates\\RowUpdater\\SysRedirectRootPageMoveMigration\";}'),
-(13,'core','formProtectionSessionToken:1','s:64:\"580fdb69308b748ee1d8d368e4f1990f7d2d7a32557e60873da0b65f99e291db\";'),
+(13,'core','formProtectionSessionToken:1','s:64:\"de27dcc4e1d189e28d8ac9433ce945d32337bfbf56ef7df743c0998cc360ac3c\";'),
 (14,'extensionDataImport','typo3/cms-core/ext_tables_static+adt.sql','s:0:\"\";'),
 (15,'extensionDataImport','typo3/cms-scheduler/ext_tables_static+adt.sql','s:0:\"\";'),
 (16,'extensionDataImport','typo3/cms-extbase/ext_tables_static+adt.sql','s:0:\"\";'),
@@ -7024,11 +7034,8 @@ LOCK TABLES `tx_membermanagement_domain_model_membership` WRITE;
 /*!40000 ALTER TABLE `tx_membermanagement_domain_model_membership` DISABLE KEYS */;
 INSERT INTO `tx_membermanagement_domain_model_membership` VALUES
 (5,109,1746714155,1746714155,'Standard','',20.00),
-(6,113,1746714172,1746714172,'Standard','',20.00),
 (7,109,1746714380,1746714380,'Student','',10.00),
-(8,109,1746714409,1746714409,'Senior citizen','',15.00),
-(9,113,1746714431,1746714431,'Student','',10.00),
-(10,113,1746714436,1746714436,'Senior citizen','',15.00);
+(8,109,1746714409,1746714409,'Senior citizen','',15.00);
 /*!40000 ALTER TABLE `tx_membermanagement_domain_model_membership` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7047,6 +7054,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `tx_scheduler_task` WRITE;
 /*!40000 ALTER TABLE `tx_scheduler_task` DISABLE KEYS */;
+INSERT INTO `tx_scheduler_task` VALUES
+(1,1746739375,1,0,'',1746756000,0,NULL,'','O:51:\"TYPO3\\CMS\\Scheduler\\Task\\TableGarbageCollectionTask\":11:{s:12:\"\0*\0scheduler\";N;s:10:\"\0*\0taskUid\";i:1;s:11:\"\0*\0disabled\";b:1;s:19:\"\0*\0runOnNextCronJob\";b:0;s:12:\"\0*\0execution\";O:29:\"TYPO3\\CMS\\Scheduler\\Execution\":6:{s:8:\"\0*\0start\";i:1746739356;s:6:\"\0*\0end\";i:0;s:11:\"\0*\0interval\";i:0;s:11:\"\0*\0multiple\";b:0;s:10:\"\0*\0cronCmd\";s:9:\"0 3 * * *\";s:23:\"\0*\0isNewSingleExecution\";b:0;}s:16:\"\0*\0executionTime\";i:1746756000;s:14:\"\0*\0description\";s:0:\"\";s:12:\"\0*\0taskGroup\";i:0;s:9:\"allTables\";b:0;s:12:\"numberOfDays\";i:90;s:5:\"table\";s:8:\"fe_users\";}',NULL,0);
 /*!40000 ALTER TABLE `tx_scheduler_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7067,4 +7076,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 17:49:47
+-- Dump completed on 2025-05-08 22:41:58
