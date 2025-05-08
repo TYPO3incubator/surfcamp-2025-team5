@@ -13,7 +13,7 @@ memberManagement:
     name: 'FC Bigfoot'
     personInCharge: 'Muster Person'
     emailOfPersonInCharge: muster.person@typo3.org
-    defaultCountry: 'ES'
+    defaultCountry: ES
     defaultUsergroup: 1
     address:
       streetAndHouseNumber: 'Street X 12'
@@ -25,9 +25,9 @@ memberManagement:
       bic: AUTOATW1XXX
       paymentDueMonth: '2'
   storage:
-    membershipsFolderPid: 1
-    paymentsFolderPid: 1
+    membershipsFolderPid: 113
+    paymentsFolderPid: 114
 felogin:
   pid: 1
-  view: 
-    templateRootPath: EXT:member_management/Resources/Private/Templates
+  view:
+    templateRootPath: 'EXT:member_management/Resources/Private/Templates'
