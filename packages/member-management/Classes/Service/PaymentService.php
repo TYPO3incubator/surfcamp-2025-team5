@@ -30,7 +30,7 @@ use TYPO3Incubator\MemberManagement\Domain\Repository\PaymentRepository;
 use TYPO3Incubator\MemberManagement\Payment\PaymentManagementAction;
 use TYPO3Incubator\MemberManagement\Payment\PaymentManagementResult;
 
-class PaymentService
+final class PaymentService
 {
     private ?ServerRequestInterface $request = null;
 
@@ -72,7 +72,7 @@ class PaymentService
             $reminderInterval = new \DateInterval($reminderPeriod);
 
             // Send "reminder" mail if not done yet
-            if ($lastPayment->getDueBy()?->sub($reminderInterval)->getTimestamp() < time()) {
+            if ($member->getIban() === '' && $lastPayment->getDueBy()?->sub($reminderInterval)->getTimestamp() < time()) {
                 $email = $this->emailService->createEmail(
                     'PaymentReminder',
                     'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.paymentReminder.subject',
