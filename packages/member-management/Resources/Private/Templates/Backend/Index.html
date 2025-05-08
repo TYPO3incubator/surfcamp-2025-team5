@@ -152,7 +152,7 @@
                             </td>
                             <td>{member.membershipStatusLabel}</td>
                             <td>{member.email}</td>
-                            <td>status</td>
+                            <td>{member.lastPayment.stateLabel}</td>
                             <td>
                                 <f:if condition="{member.lastPayment}">
                                     <f:then>

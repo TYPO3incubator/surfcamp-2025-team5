@@ -104,4 +104,9 @@ class Payment extends AbstractEntity
     {
         $this->rememberMailSentAt = $rememberMailSentAt;
     }
+
+    public function getStateLabel(): string
+    {
+        return $this->state->label();
+    }
 }
