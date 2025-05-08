@@ -270,7 +270,6 @@ final class MembershipService
                 continue;
             }
             $member->setMembershipStatus(MembershipStatus::Inactive);
-            $member->setDisabled(true);
             $this->memberRepository->update($member);
         }
         $this->persistenceManager->persistAll();
