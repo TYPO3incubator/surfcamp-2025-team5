@@ -14,7 +14,7 @@ const members = [
         "iban": "DE89370400440532013000",
         "bic": "COBADEFFXXX",
         "sepa": true,
-        "membership": 4,
+        "membership": 5,
         "password": "Test1234!"
     },
     {
@@ -32,7 +32,7 @@ const members = [
         "iban": "",
         "bic": "",
         "sepa": false,
-        "membership": 2,
+        "membership": 7,
         "password": "Passwort!2024"
     },
     {
@@ -68,7 +68,7 @@ const members = [
         "iban": "FR7630006000011234567890189",
         "bic": "AGRIFRPPXXX",
         "sepa": false,
-        "membership": 6,
+        "membership": 5,
         "password": "Motdepasse@123"
     },
     {
@@ -86,7 +86,7 @@ const members = [
         "iban": "NL91ABNA0417164300",
         "bic": "",
         "sepa": true,
-        "membership": 3,
+        "membership": 8,
         "password": "Welkom2025!"
     },
     {
@@ -122,7 +122,7 @@ const members = [
         "iban": "ES9121000418450200051332",
         "bic": "CAIXESBBXXX",
         "sepa": false,
-        "membership": 1,
+        "membership": 7,
         "password": "España2025!"
     },
     {
@@ -158,7 +158,7 @@ const members = [
         "iban": "",
         "bic": "WBKPPLPP",
         "sepa": false,
-        "membership": 0,
+        "membership": 8,
         "password": "Polska2025!"
     },
     {
@@ -176,7 +176,7 @@ const members = [
         "iban": "NO9386011117947",
         "bic": "",
         "sepa": true,
-        "membership": 2,
+        "membership": 5,
         "password": "Norge2025!"
     },
     {
@@ -194,7 +194,7 @@ const members = [
         "iban": "DK5000400440116243",
         "bic": "DABADKKK",
         "sepa": true,
-        "membership": 6,
+        "membership": 7,
         "password": "Danmark2025!"
     },
     {
@@ -212,7 +212,7 @@ const members = [
         "iban": "",
         "bic": "",
         "sepa": false,
-        "membership": 3,
+        "membership": 7,
         "password": "Suomi2025!"
     }
 ]
