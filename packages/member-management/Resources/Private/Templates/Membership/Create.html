@@ -60,7 +60,7 @@
         <f:render partial="Input"
             arguments="{ type: 'text', id: 'bic', name: 'bic', required: false}" />
         <div class="mb-3 form-check">
-            <f:form.checkbox property="sepaAcceptedAt" value="{currentDateFormatted}" class="form-check-input sepa-accepted-js" id="sepa" data-toggle="iban"/>
+            <f:form.checkbox property="sepaDebtorMandateSignDate" value="{currentDateFormatted}" class="form-check-input sepa-accepted-js" id="sepa" data-toggle="iban"/>
             <label class="form-check-label" for="sepa">{f:translate(key: 'sepa-accepted')}</label>
         </div>
     </fieldset>

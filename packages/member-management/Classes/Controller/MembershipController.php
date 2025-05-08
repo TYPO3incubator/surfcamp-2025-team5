@@ -103,8 +103,10 @@ final class MembershipController extends ActionController
     {
         $member->setPrivacyAcceptedAt(new \DateTime());
 
-        if ($member->getSepaAcceptedAt()) {
-            $member->getSepaAcceptedAt(new \DateTime());
+        if ($member->getSepaDebtorMandateSignDate()) {
+            $member->setSepaDebtorMandateSignDate(new \DateTime());
+        } else {
+            $member->setSepaDebtorMandateSignDate(null);
         }
 
         // Hash given password
