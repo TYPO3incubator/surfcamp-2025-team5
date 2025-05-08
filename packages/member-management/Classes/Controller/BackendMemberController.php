@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
@@ -34,16 +35,18 @@ final class BackendMemberController extends ActionController
 
     protected const MEMBER_ACTION_SET_ACTIVE = 'setActive';
     protected const MEMBER_ACTION_SET_INACTIVE = 'setInactive';
+
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
-        private readonly MemberRepository $memberRepository,
-        private readonly MembershipService $membershipService,
-        private readonly PageRenderer $pageRenderer,
-        protected readonly IconFactory $iconFactory,
-        private readonly PaymentService $paymentService,
-        private readonly LanguageServiceFactory $languageServiceFactory,
-        private readonly MembershipRepository $membershipRepository,
-    ) {
+        private readonly MemberRepository        $memberRepository,
+        private readonly MembershipService       $membershipService,
+        private readonly PageRenderer            $pageRenderer,
+        protected readonly IconFactory           $iconFactory,
+        private readonly PaymentService          $paymentService,
+        private readonly LanguageServiceFactory  $languageServiceFactory,
+        private readonly MembershipRepository    $membershipRepository,
+    )
+    {
         $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
     }
 
@@ -58,10 +61,9 @@ final class BackendMemberController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
+        // filter fields
         $filters = [];
         $search = '';
-        $membershipUid = 0;
-        $membershipStatus = -2;
         if ($this->request->hasArgument('search')) {
             $search = $this->request->getArgument('search');
             $filters['search'] = $search;
@@ -70,15 +72,47 @@ final class BackendMemberController extends ActionController
                 $filters['search'] = 'Jochen';
             }
         }
-        if ($this->request->hasArgument('membershipUid')) {
-            $membershipUid = $this->request->getArgument('membershipUid');
-            $filters['membershipUid'] = $membershipUid;
+
+        $membershipUid = $this->request->hasArgument('membershipUid')
+            ? (int)$this->request->getArgument('membershipUid')
+            : 0;
+
+        $membershipStatus = $this->request->hasArgument('membershipStatus')
+            ? $this->request->getArgument('membershipStatus')
+            : -2;
+
+        // sorting fields
+        $fieldMap = [
+            'lastName' => 'lastName',
+            'membershipTitle' => 'membership.title',
+            'membershipStatus' => 'membershipStatus',
+            'email' => 'email',
+        ];
+
+        $sortField = $this->request->hasArgument('sortField')
+            ? $this->request->getArgument('sortField')
+            : 'lastName';
+
+        if (!isset($fieldMap[$sortField])) {
+            $sortField = 'lastName';
         }
-        if ($this->request->hasArgument('membershipStatus')) {
-            $membershipStatus = $this->request->getArgument('membershipStatus');
-            $filters['membershipStatus'] = $membershipStatus;
+
+        $realField = $fieldMap[$sortField];
+
+        $sortDirection = QueryInterface::ORDER_ASCENDING;
+
+        if ($this->request->hasArgument('sortDirection')) {
+            $sortDirection = $this->request->getArgument('sortDirection');
+            $sortDirection = in_array($sortDirection, [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING])
+                ? $sortDirection
+                : QueryInterface::ORDER_ASCENDING;
         }
-        $members = $this->memberRepository->findByFilters($filters);
+
+        $orderings = [
+            $realField => $sortDirection,
+        ];
+
+        $members = $this->memberRepository->findByFilters($filters, $orderings);
         $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')
@@ -109,15 +143,27 @@ final class BackendMemberController extends ActionController
                 'label' => MembershipStatus::Inactive->label(),
             ],
         ];
+
+        // get nextSortDirections
+        $nextSortDirections = [];
+        foreach (array_keys($fieldMap) as $alias) {
+            $nextSortDirections[$alias] = ($sortField === $alias && $sortDirection === QueryInterface::ORDER_ASCENDING)
+                ? QueryInterface::ORDER_DESCENDING
+                : QueryInterface::ORDER_ASCENDING;
+        }
+
         $this->moduleTemplate->assignMultiple(
             [
                 'pagination' => $pagination,
                 'paginator' => $paginator,
-                'search'            => $search,
-                'membershipUid'     => $membershipUid,
-                'membershipStatus'  => $membershipStatus,
-                'memberships'       => $memberships,
-                'statusOptions'     => $statusOptions,
+                'search' => $search,
+                'membershipUid' => $membershipUid,
+                'membershipStatus' => $membershipStatus,
+                'memberships' => $memberships,
+                'statusOptions' => $statusOptions,
+                'sortField' => $sortField,
+                'sortDirection' => $sortDirection,
+                'nextSortDirections' => $nextSortDirections,
             ]
         );
 
@@ -128,7 +174,8 @@ final class BackendMemberController extends ActionController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function generateSepaXmlAction(): ResponseInterface {
+    public function generateSepaXmlAction(): ResponseInterface
+    {
         $this->paymentService->setRequest($this->request);
         $sepaXML = $this->paymentService->generateSepaXml();
 

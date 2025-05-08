@@ -129,6 +129,7 @@ $tmp_membermanagement_columns = [
             'renderType' => 'selectSingle',
             'minitems' => 0,
             'maxitems' => 1,
+            'foreign_table' => 'tx_membermanagement_domain_model_membership',
             'itemsProcFunc' => TypeMembershipItemsProcFunc::class . '->itemsProcFunc',
         ],
     ],

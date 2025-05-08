@@ -85,7 +85,7 @@ final class MemberRepository extends Repository
     public function findConfirmed(): QueryResultInterface
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setIgnoreEnableFields( true);
 
         $query->matching(
             $query->logicalNot(
@@ -96,9 +96,11 @@ final class MemberRepository extends Repository
         return $query->execute();
     }
 
-    public function findByFilters(array $filters)
+    public function findByFilters(array $filters = [], array $orderings = [])
     {
         $query = $this->createQuery();
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
         $constraints = [
             $query->greaterThan('membershipStatus', MembershipStatus::Unconfirmed),
         ];
@@ -121,6 +123,9 @@ final class MemberRepository extends Repository
         }
 
         $query->matching($query->logicalAnd(...$constraints));
+        if ($orderings !== []) {
+            $query->setOrderings($orderings);
+        }
         return $query->execute();
     }
 }

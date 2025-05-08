@@ -77,16 +77,51 @@
                     <tr>
                         <th></th>
                         <th>
-                            <f:translate key="backend.membermanagement.name"/>
+                            <f:link.action action="index"
+                                           arguments="{sortField: 'lastName', sortDirection: nextSortDirections.lastName}"
+                                           class="d-flex align-items-center text-decoration-none">
+                                <f:translate key="backend.membermanagement.name"/>
+                                <f:if condition="{sortField} == 'lastName'">
+                                    <f:render section="sortingIcons"
+                                              arguments="{sortDirection: sortDirection}"></f:render>
+                                </f:if>
+                            </f:link.action>
+
                         </th>
                         <th>
-                            <f:translate key="backend.membermanagement.membership"/>
+                            <f:link.action action="index"
+                                           arguments="{sortField: 'membershipTitle', sortDirection: nextSortDirections.membershipTitle}"
+                                           class="d-flex align-items-center text-decoration-none">
+                                <f:translate key="backend.membermanagement.membership"/>
+                                <f:if condition="{sortField} == 'membershipTitle'">
+                                    <f:render section="sortingIcons"
+                                              arguments="{sortDirection: sortDirection}"></f:render>
+                                </f:if>
+                            </f:link.action>
                         </th>
                         <th>
-                            <f:translate key="backend.membermanagement.membershipStatus"/>
+                            <f:link.action action="index"
+                                           arguments="{sortField: 'membershipStatus', sortDirection: nextSortDirections.membershipStatus}"
+                                           addQueryString="true"
+                                           class="d-flex align-items-center text-decoration-none">
+                                <f:translate key="backend.membermanagement.membershipStatus"/>
+                                <f:if condition="{sortField} == membershipStatus">
+                                    <f:render section="sortingIcons"
+                                              arguments="{sortDirection: sortDirection}"></f:render>
+                                </f:if>
+                            </f:link.action>
                         </th>
                         <th>
-                            <f:translate key="backend.membermanagement.email"/>
+                            <f:link.action action="index"
+                                           arguments="{sortField: 'email', sortDirection: nextSortDirections.email}"
+                                           addQueryString="true"
+                                           class="d-flex align-items-center text-decoration-none">
+                                <f:translate key="backend.membermanagement.email"/>
+                                <f:if condition="{sortField} == email">
+                                    <f:render section="sortingIcons"
+                                              arguments="{sortDirection: sortDirection}"></f:render>
+                                </f:if>
+                            </f:link.action>
                         </th>
                         <th>
                             <f:translate key="backend.membermanagement.paymentStatus"/>
@@ -107,7 +142,8 @@
                                     additionalAttributes="{class: 'rowCheckbox'}"/>
                             </td>
                             <td>
-                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">{member.firstName} {member.lastName}</a>
+                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">{member.firstName}
+                                    {member.lastName}</a>
                             </td>
                             <td>
                                 <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_membership', uid: member.membership.uid)}">
@@ -128,7 +164,9 @@
                                 </f:if>
                             </td>
                             <td>
-                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}" class="btn btn-default btn-sm" title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')}">
+                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}"
+                                   class="btn btn-default btn-sm"
+                                   title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')}">
                                     <core:icon identifier="actions-open" size="small"/>
                                 </a>
                             </td>
@@ -157,6 +195,19 @@
             </nav>
         </f:if>
     </div>
+</f:section>
+
+<f:section name="sortingIcons">
+    <span class="ms-1">
+        <f:if condition="{sortDirection} == 'ASC'">
+            <f:then>
+                <core:icon identifier="actions-sort-amount-up" size="small"/>
+            </f:then>
+            <f:else>
+                <core:icon identifier="actions-sort-amount-down" size="small"/>
+            </f:else>
+        </f:if>
+  </span>
 </f:section>
 
 </html>
