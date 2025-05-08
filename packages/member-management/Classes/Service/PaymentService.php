@@ -95,6 +95,10 @@ class PaymentService
         ));
 
         foreach ($membersWithOpenPayments as $member) {
+            if (!$member->getSepaDebtorMandateSignDate()) {
+                continue;
+            }
+
             $membershipFeeInCents = $member->getMembership()?->getPrice() * 100;
 
             // Add a Single Transaction to the named payment
@@ -137,13 +141,10 @@ class PaymentService
             return [];
         }
 
-//        $membersIds = array_map(static fn(Member $member) => $member->getUid(), $members);
-
         $dueDateYearTimestamp = $dueDate->getTimestamp();
 
         // A member has an open payment when the member has not already paid this year (before the due date)
         $membersWithOpenPayments = $this->paymentRepository->findMembersWithOpenPayments($paymentsFolderPid, $members, $dueDateYearTimestamp);
-//        $memberUidsWithOpenPayments = $this->paymentRepository->findMembersWithOpenPayments($paymentsFolderPid, $membersIds, $dueDateYearTimestamp);
 
         return $membersWithOpenPayments;
     }

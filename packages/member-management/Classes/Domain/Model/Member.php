@@ -28,6 +28,7 @@ use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3Incubator\MemberManagement\Domain\Validator\IbanValidator;
+use TYPO3Incubator\MemberManagement\Domain\Validator\PasswordRepeatValidator;
 
 /**
  * Member
@@ -104,6 +105,13 @@ class Member extends AbstractEntity
 
     protected string $username = '';
     protected string $password = '';
+
+    #[Validate([
+        'validator' => PasswordRepeatValidator::class,
+        'options' => [
+            'propertyToCompare' => 'password',
+        ],
+    ])]
     protected string $passwordRepeat = '';
     protected string $createHash = '';
     protected int $usergroup = 0;

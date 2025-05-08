@@ -13,7 +13,7 @@
       <p>
             <f:translate key="email.membershipActivated.main.body"/>
       </p>
-      <f:if condition="{member.sepaAcceptedAt}">
+      <f:if condition="{member.sepaDebtorMandateSignDate}">
             <f:then>
                   <f:translate key="email.membershipActivated.main.transfer"/><br/>
                   <f:translate key="payment-reason"/>: {sitesets.memberManagement.organization.paymentInformation.paymentReason}<br/>

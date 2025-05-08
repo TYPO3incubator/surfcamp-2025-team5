@@ -8,3 +8,10 @@ services:
     resource: '../Classes/*'
     exclude:
       - '../Classes/Domain/Model/*'
+
+  TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator:
+    alias: 'TYPO3Incubator\MemberManagement\Domain\Validator\MemberObjectValidator'
+    public: true
+
+  TYPO3Incubator\MemberManagement\TCA\TypeMembershipItemsProcFunc:
+    public: true
