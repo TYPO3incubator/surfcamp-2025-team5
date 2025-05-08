@@ -11,18 +11,23 @@ use Doctrine\DBAL\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\PaymentInformation;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+use TYPO3Incubator\MemberManagement\Domain\Model\Payment;
+use TYPO3Incubator\MemberManagement\Domain\Model\PaymentState;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Domain\Repository\PaymentRepository;
+use TYPO3Incubator\MemberManagement\Payment\PaymentManagementAction;
+use TYPO3Incubator\MemberManagement\Payment\PaymentManagementResult;
 
 class PaymentService
 {
@@ -31,7 +36,94 @@ class PaymentService
     public function __construct(
         private readonly MemberRepository $memberRepository,
         private readonly PaymentRepository $paymentRepository,
+        private readonly PersistenceManagerInterface $persistenceManager,
+        private readonly SiteFinder $siteFinder,
     ) {
+    }
+
+    public function processMemberPayments(Member $member): PaymentManagementResult
+    {
+        // Don't create payments for non-active members
+        if ($member->getMembershipStatus() !== MembershipStatus::Active) {
+            return new PaymentManagementResult(PaymentManagementAction::Nothing, $member);
+        }
+
+        /** @var Payment|null $lastPayment */
+        $lastPayment = $this->paymentRepository->findByMember($member)->getFirst();
+
+        // Create first payment for new active member
+        if ($lastPayment === null) {
+            $payment = $this->createPayment($member, true);
+
+            return new PaymentManagementResult(PaymentManagementAction::NewPaymentCreated, $member, $payment);
+        }
+
+        if ($lastPayment->getState() === PaymentState::Pending) {
+            // Only one "remember" mail is sent, subsequent actions must be taken manually
+            if ($lastPayment->getRememberMailSentAt() !== null) {
+                return new PaymentManagementResult(PaymentManagementAction::ManualActionRequired, $member, $lastPayment);
+            }
+
+            // Send "remember" mail if not done yet
+            if ($lastPayment->getDueBy()?->getTimestamp() < time()) {
+                // @todo send remember mail
+
+                $lastPayment->setRememberMailSentAt(new \DateTime());
+
+                $this->persistenceManager->update($lastPayment);
+                $this->persistenceManager->persistAll();
+
+                return new PaymentManagementResult(PaymentManagementAction::RememberMailSent, $member, $lastPayment);
+            }
+
+            return new PaymentManagementResult(PaymentManagementAction::Nothing, $member, $lastPayment);
+        }
+
+        // Create next payment if applicable
+        if ($lastPayment->getState() === PaymentState::Paid) {
+            $payment = $this->createPayment($member);
+
+            if ($payment !== null) {
+                return new PaymentManagementResult(PaymentManagementAction::NewPaymentCreated, $member, $payment);
+            }
+        }
+
+        return new PaymentManagementResult(PaymentManagementAction::Nothing, $member, $lastPayment);
+    }
+
+    public function createPayment(Member $member, bool $ignoreGracePeriod = false): ?Payment
+    {
+        $site = $this->siteFinder->getSiteByPageId((int) $member->getPid());
+        $dueDate = $this->getDueDate($site);
+
+        if (!$ignoreGracePeriod) {
+            // @todo convert to site setting
+            $gracePeriod = 'P3M'; // 3 weeks
+            $interval = new \DateInterval($gracePeriod);
+
+            // No payment needed if outside of grace period
+            if ($dueDate->sub($interval)->getTimestamp() < time()) {
+                return null;
+            }
+        }
+
+        $membership = $member->getMembership();
+
+        // Early return if member has no membership associated
+        if ($membership === null) {
+            return null;
+        }
+
+        $payment = GeneralUtility::makeInstance(Payment::class);
+        $payment->setMember($member);
+        $payment->setDueBy($dueDate);
+        $payment->setAmount($membership->getPrice());
+        $payment->setState(PaymentState::Pending);
+
+        $this->persistenceManager->add($payment);
+        $this->persistenceManager->persistAll();
+
+        return $payment;
     }
 
     /**
@@ -47,11 +139,10 @@ class PaymentService
 
         $organizationName = $siteSettings->get('memberManagement.organization.name');
         $organizationPersonInCharge = $siteSettings->get('memberManagement.organization.personInCharge');
-        $paymentDueMonth = (int)$siteSettings->get('memberManagement.organization.paymentInformation.paymentDueMonth');
         $organizationIban = $siteSettings->get('memberManagement.organization.paymentInformation.iban');
         $organizationBic = $siteSettings->get('memberManagement.organization.paymentInformation.bic');
         $organizationSepaCreditorId = (int)$siteSettings->get('memberManagement.organization.paymentInformation.sepaCreditorId');
-        $dueDate = $this->getDueDate($paymentDueMonth);
+        $dueDate = $this->getDueDate($site);
         $uniqueMessageIdentification = 'member/' . time();
 
         $membersFolderPid = (int)$siteSettings->get('felogin.pid');
@@ -117,15 +208,16 @@ class PaymentService
         return $directDebit->asXML();
     }
 
-    private function getDueDate(int $dueMonth): DateTime
+    private function getDueDate(Site $site): DateTime
     {
+        $dueMonth = (int)$site->getSettings()->get('memberManagement.organization.paymentInformation.paymentDueMonth', 1);
         $now = new DateTimeImmutable();
         $currentMonth = (int)$now->format('n');
         $currentYear = (int)$now->format('Y');
 
         $year = ($currentMonth >= $dueMonth) ? $currentYear + 1 : $currentYear;
 
-        $immutableDate = (new DateTimeImmutable())->setDate($year, $dueMonth, 1);
+        $immutableDate = (new DateTimeImmutable())->setDate($year, $dueMonth, 1)->setTime(0, 0);
 
         return DateTime::createFromImmutable($immutableDate);
     }
