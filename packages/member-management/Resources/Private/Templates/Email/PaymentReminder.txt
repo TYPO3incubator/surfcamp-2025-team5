@@ -1,0 +1,5 @@
+<f:layout name="SystemEmail" />
+<f:section name="Title"><f:translate key="LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.paymentReminder.title" /></f:section>
+<f:section name="Main">,
+<f:comment><!-- @todo Add mail text --></f:comment>
+</f:section>

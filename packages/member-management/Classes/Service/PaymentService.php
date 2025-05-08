@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Service;
 
-use DateTime;
 use DateTimeImmutable;
 use Digitick\Sepa\Exception\InvalidArgumentException;
 use Doctrine\DBAL\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Site\Entity\Site;
@@ -34,6 +35,8 @@ class PaymentService
     private ?ServerRequestInterface $request = null;
 
     public function __construct(
+        private readonly EmailService $emailService,
+        private readonly LoggerInterface $logger,
         private readonly MemberRepository $memberRepository,
         private readonly PaymentRepository $paymentRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
@@ -64,11 +67,31 @@ class PaymentService
                 return new PaymentManagementResult(PaymentManagementAction::ManualActionRequired, $member, $lastPayment);
             }
 
-            // Send "remember" mail if not done yet
-            if ($lastPayment->getDueBy()?->getTimestamp() < time()) {
-                // @todo send remember mail
+            // @todo convert to site setting
+            $reminderPeriod = 'P14D'; // 14 days
+            $reminderInterval = new \DateInterval($reminderPeriod);
 
-                $lastPayment->setRememberMailSentAt(new \DateTime());
+            // Send "remember" mail if not done yet
+            if ($lastPayment->getDueBy()?->sub($reminderInterval)->getTimestamp() < time()) {
+                $email = $this->emailService->createEmail(
+                    'PaymentReminder',
+                    'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.paymentReminder.subject',
+                    $member,
+                );
+                $email->assign('payment', $lastPayment);
+
+                try {
+                    $this->emailService->sendEmail($email);
+                } catch (TransportExceptionInterface $exception) {
+                    $this->logger->error(
+                        'Error while sending payment reminder mail: {message}',
+                        ['message' => $exception->getMessage()],
+                    );
+
+                    return new PaymentManagementResult(PaymentManagementAction::RememberMailCouldNotBeSent, $member, $lastPayment);
+                }
+
+                $lastPayment->setRememberMailSentAt(new \DateTimeImmutable());
 
                 $this->persistenceManager->update($lastPayment);
                 $this->persistenceManager->persistAll();
@@ -208,7 +231,7 @@ class PaymentService
         return $directDebit->asXML();
     }
 
-    private function getDueDate(Site $site): DateTime
+    private function getDueDate(Site $site): DateTimeImmutable
     {
         $dueMonth = (int)$site->getSettings()->get('memberManagement.organization.paymentInformation.paymentDueMonth', 1);
         $now = new DateTimeImmutable();
@@ -217,16 +240,17 @@ class PaymentService
 
         $year = ($currentMonth >= $dueMonth) ? $currentYear + 1 : $currentYear;
 
-        $immutableDate = (new DateTimeImmutable())->setDate($year, $dueMonth, 1)->setTime(0, 0);
-
-        return DateTime::createFromImmutable($immutableDate);
+        return (new DateTimeImmutable())
+            ->setDate($year, $dueMonth, 1)
+            ->setTime(0, 0)
+        ;
     }
 
     /**
      * @return array<Member>
      * @throws Exception
      */
-    private function getMembersWithOpenPayments(int $membersFolderPid, int $paymentsFolderPid, DateTime $dueDate): array
+    private function getMembersWithOpenPayments(int $membersFolderPid, int $paymentsFolderPid, DateTimeImmutable $dueDate): array
     {
         $members = $this->memberRepository->findActiveInFolder($membersFolderPid);
         if (count($members) === 0) {
@@ -261,5 +285,6 @@ class PaymentService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
+        $this->emailService->setRequest($request);
     }
 }

@@ -78,7 +78,7 @@ final class MembershipController extends ActionController
         $memberships = ($membershipPid !== null) ? $this->membershipRepository->findAllByStorageId((int)$membershipPid)->toArray() : [];
 
         $this->view->assignMultiple([
-            'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTime::W3C),
+            'currentDateFormatted' => (new \DateTimeImmutable())->format(\DateTimeInterface::W3C),
             'member' => $member ?? new Member(),
             'memberships' => $memberships,
             'sitesets' => $this->request->getAttribute('site')->getSettings()->getAll(),
@@ -103,14 +103,14 @@ final class MembershipController extends ActionController
 
     protected function saveAction(Member $member): ResponseInterface
     {
-        $member->setPrivacyAcceptedAt(new \DateTime());
+        $member->setPrivacyAcceptedAt(new \DateTimeImmutable());
 
         if ($member->getSepaDebtorMandateSignDate()) {
             // Max allowed characters for mandate reference number is 35
             // UUID v4 is 128 numbers, hex is 32 hex numbers
             $newRandomMandateReferenceNumber = strtoupper(UUID::v4()->toHex());
             $member->setSepaDebtorMandate($newRandomMandateReferenceNumber);
-            $member->setSepaDebtorMandateSignDate(new \DateTime());
+            $member->setSepaDebtorMandateSignDate(new \DateTimeImmutable());
         } else {
             $member->setSepaDebtorMandateSignDate(null);
         }
