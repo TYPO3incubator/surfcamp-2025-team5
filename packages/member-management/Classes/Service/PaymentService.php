@@ -22,6 +22,7 @@ use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\PaymentInformation;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Domain\Repository\PaymentRepository;
 
 class PaymentService
 {
@@ -29,6 +30,7 @@ class PaymentService
 
     public function __construct(
         private readonly MemberRepository $memberRepository,
+        private readonly PaymentRepository $paymentRepository,
     ) {
     }
 
@@ -52,10 +54,10 @@ class PaymentService
         $dueDate = $this->getDueDate($paymentDueMonth);
         $uniqueMessageIdentification = 'member/' . time();
 
-        $membersFolderPid = (int)$siteSettings->get('memberManagement.storage.membersFolderPid');
+        $membersFolderPid = (int)$siteSettings->get('felogin.pid');
         $paymentsFolderPid = (int)$siteSettings->get('memberManagement.storage.paymentsFolderPid');
 
-        $membersWithOpenPayments = $this->getOpenPayments($membersFolderPid, $paymentsFolderPid, $dueDate);
+        $membersWithOpenPayments = $this->getMembersWithOpenPayments($membersFolderPid, $paymentsFolderPid, $dueDate);
 
         if (count($membersWithOpenPayments) === 0) {
             $this->displayBackendFlashMessage(
@@ -69,9 +71,10 @@ class PaymentService
 
         // Set the initial sepa information
         $directDebit = TransferFileFacadeFactory::createDirectDebit(
-            $uniqueMessageIdentification,
-            "$organizationName, $organizationPersonInCharge",
-            'pain.008.003.02'
+            uniqueMessageIdentification: $uniqueMessageIdentification,
+            initiatingPartyName: $organizationName . ', ' . $organizationPersonInCharge,
+            // painFormat/ SEPA PAIN format = Payments Initiation: standard for communication between customer and bank (ISO 20022)
+            painFormat: 'pain.008.003.02'
         );
 
         $paymentName = 'unix-' . time() . '-';
@@ -127,40 +130,22 @@ class PaymentService
      * @return array<Member>
      * @throws Exception
      */
-    private function getOpenPayments(int $membersFolderPid, int $paymentsFolderPid, DateTime $dueDate): array
+    private function getMembersWithOpenPayments(int $membersFolderPid, int $paymentsFolderPid, DateTime $dueDate): array
     {
         $members = $this->memberRepository->findActiveInFolder($membersFolderPid);
-        $membersIds = array_map(static fn(Member $member) => $member->getUid(), $members);
+        if (count($members) === 0) {
+            return [];
+        }
+
+//        $membersIds = array_map(static fn(Member $member) => $member->getUid(), $members);
 
         $dueDateYearTimestamp = $dueDate->getTimestamp();
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)?->getQueryBuilderForTable(
-            'tx_membermanagement_domain_model_payment'
-        );
-
         // A member has an open payment when the member has not already paid this year (before the due date)
-        $memberUidsWithOpenPayments = $queryBuilder->select('member')
-            ->from('tx_membermanagement_domain_model_payment')
-            ->andWhere(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($paymentsFolderPid, Connection::PARAM_INT)
-                ),
-                $queryBuilder->expr()->in(
-                    'member',
-                    $queryBuilder->createNamedParameter($membersIds, Connection::PARAM_INT_ARRAY),
-                ),
-                $queryBuilder->expr()->lte('paid_at', $dueDateYearTimestamp),
-            )
-            ->executeQuery()
-            ->fetchAllAssociative();
-        $memberUidsWithOpenPayments = array_map(static fn($payment) => $payment['member'], $memberUidsWithOpenPayments);
+        $membersWithOpenPayments = $this->paymentRepository->findMembersWithOpenPayments($paymentsFolderPid, $members, $dueDateYearTimestamp);
+//        $memberUidsWithOpenPayments = $this->paymentRepository->findMembersWithOpenPayments($paymentsFolderPid, $membersIds, $dueDateYearTimestamp);
 
-        $filteredMembers = array_filter($members, static function (Member $member) use ($memberUidsWithOpenPayments) {
-            return in_array($member->getUid(), $memberUidsWithOpenPayments, true);
-        });
-
-        return $filteredMembers;
+        return $membersWithOpenPayments;
     }
 
     private function displayBackendFlashMessage(

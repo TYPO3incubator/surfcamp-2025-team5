@@ -12,6 +12,8 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
@@ -24,13 +26,16 @@ use TYPO3Incubator\MemberManagement\Service\PaymentService;
 final class BackendMemberController extends ActionController
 {
     private ModuleTemplate $moduleTemplate;
+    private LanguageService $languageService;
 
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly MemberRepository $memberRepository,
         protected readonly IconFactory $iconFactory,
         private readonly PaymentService $paymentService,
+        private readonly LanguageServiceFactory $languageServiceFactory,
     ) {
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
     }
 
     protected function initializeAction(): void
@@ -70,7 +75,7 @@ final class BackendMemberController extends ActionController
         $this->paymentService->setRequest($this->request);
         $sepaXML = $this->paymentService->generateSepaXml();
 
-        if (null !== $sepaXML) {
+        if ($sepaXML) {
             $response = $this->responseFactory->createResponse();
 
             $response->getBody()->write($sepaXML);
@@ -109,7 +114,7 @@ final class BackendMemberController extends ActionController
 
         return $buttonBar->makeLinkButton()
             ->setHref($href)
-            ->setTitle('Download SEPA XML')
+            ->setTitle($this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang_mod_member.xlf:downloadSepaXmlButton'))
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', IconSize::SMALL));
     }
