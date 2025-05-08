@@ -9,117 +9,147 @@
 <f:layout name="Module"/>
 
 <f:section name="Content">
-    <ul class="pagination">
-        <f:for each="{pagination.allPageNumbers}" as="page">
-            <li class="page-item">
-                <f:link.action
-                    action="index"
-                    arguments="{currentPageNumber: page}"
-                    addQueryString="true"
-                    class="page-link"
-                >
-                    {page}
-                </f:link.action>
-            </li>
-        </f:for>
-    </ul>
+    <div class="module-body t3js-module-body">
+        <h1>Members</h1>
+        <f:form action="index" class="filter-form mb-4 row g-3 align-items-end">
+            <div class="col-sm-4">
+                <label for="filterSearch" class="form-label">Search</label>
+                <f:form.textfield
+                    id="filterSearch"
+                    name="search"
+                    value="{search}"
+                    class="form-control"/>
+            </div>
+            <div class="col-sm-3">
+                <label for="filterMembership" class="form-label">Membership</label>
+                <f:form.select
+                    id="filterMembership"
+                    name="membershipUid"
+                    options="{memberships}"
+                    optionLabelField="title"
+                    optionValueField="uid"
+                    prependOptionValue="0"
+                    prependOptionLabel="All"
+                    value="{membershipUid}"
+                    class="form-select"
+                />
+            </div>
+            <div class="col-sm-3">
+                <label for="filterStatus" class="form-label">Status</label>
+                <f:form.select
+                    id="filterStatus"
+                    name="membershipStatus"
+                    options="{statusOptions}"
+                    optionValueField="value"
+                    optionLabelField="label"
+                    value="{membershipStatus}"
+                    class="form-select"
+                />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <f:link.action action="index" class="btn btn-default ms-2">Reset</f:link.action>
+            </div>
+        </f:form>
+        <f:form action="memberBulkAction" controller="BackendMember" method="post" class="bulk-form">
+            <div class="form-row justify-content-end">
+                <f:form.button
+                    type="submit"
+                    name="memberAction"
+                    value="setActive"
+                    class="btn btn-sm btn-default">
+                    <core:icon identifier="actions-toggle-on" size="small"/>
+                    <span class="ms-1">Set members active</span>
+                </f:form.button>
 
-    <f:form action="index" class="filter-form mb-4 row g-3 align-items-end">
-        <div class="col-sm-4">
-            <label for="filterSearch" class="form-label">Search</label>
-            <f:form.textfield
-                id="filterSearch"
-                name="search"
-                value="{search}"
-                class="form-control"/>
-        </div>
-        <div class="col-sm-3">
-            <label for="filterMembership" class="form-label">Membership</label>
-            <f:form.select
-                id="filterMembership"
-                name="membershipUid"
-                options="{memberships}"
-                optionLabelField="title"
-                optionValueField="uid"
-                prependOptionValue="0"
-                prependOptionLabel="All"
-                value="{membershipUid}"
-                class="form-select"
-            />
-        </div>
-        <div class="col-sm-3">
-            <label for="filterStatus" class="form-label">Status</label>
-            <f:form.select
-                id="filterStatus"
-                name="membershipStatus"
-                options="{statusOptions}"
-                optionValueField="value"
-                optionLabelField="label"
-                value="{membershipStatus}"
-                class="form-select"
-            />
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary">Filter</button>
-            <f:link.action action="index" class="btn btn-default ms-2">Reset</f:link.action>
-        </div>
-    </f:form>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>
-                    <f:translate key="backend.membermanagement.name"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.membership"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.membershipStatus"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.memberSince"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.email"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.paymentStatus"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.lastPayment"/>
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <f:for each="{paginator.paginatedItems}" as="member">
-                <tr>
-                    <td>{member.firstName} {member.lastName}</td>
-                    <td>{member.membership.title}</td>
-                    <td>{member.membershipStatusLabel}</td>
-                    <td>
-                        <f:format.date>{member.memberSince}</f:format.date>
-                    </td>
-                    <td>{member.email}</td>
-                    <td>status</td>
-                    <td>
-                        <f:if condition="{member.lastPayment}">
-                            <f:then>
-                                <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_pament', uid: member.lastPayment.uid)}">
-                                    <f:format.date>{member.lastPayment.paidAt}</f:format.date>
+                <f:form.button
+                    type="submit"
+                    name="memberAction"
+                    value="setInactive"
+                    class="btn btn-sm btn-default set-inactive-btn-js">
+                    <core:icon identifier="actions-toggle-off" size="small"/>
+                    <span class="ms-1">Set members inactive</span>
+                </f:form.button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <f:translate key="backend.membermanagement.name"/>
+                        </th>
+                        <th>
+                            <f:translate key="backend.membermanagement.membership"/>
+                        </th>
+                        <th>
+                            <f:translate key="backend.membermanagement.membershipStatus"/>
+                        </th>
+                        <th>
+                            <f:translate key="backend.membermanagement.email"/>
+                        </th>
+                        <th>
+                            <f:translate key="backend.membermanagement.paymentStatus"/>
+                        </th>
+                        <th>
+                            <f:translate key="backend.membermanagement.lastPayment"/>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{paginator.paginatedItems}" as="member">
+                        <tr>
+                            <td>
+                                <f:form.checkbox
+                                    name="memberUids[]"
+                                    value="{member.uid}"
+                                    additionalAttributes="{class: 'rowCheckbox'}"/>
+                            </td>
+                            <td>{member.firstName} {member.lastName}</td>
+                            <td>{member.membership.title}</td>
+                            <td>{member.membershipStatusLabel}</td>
+                            <td>{member.email}</td>
+                            <td>status</td>
+                            <td>
+                                <f:if condition="{member.lastPayment}">
+                                    <f:then>
+                                        <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_payment', uid: member.lastPayment.uid)}">
+                                            <f:format.date>{member.lastPayment.paidAt}</f:format.date>
+                                        </a>
+                                    </f:then>
+                                    <f:else>-</f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}" class="btn btn-default btn-sm" title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')}">
+                                    <core:icon identifier="actions-open" size="small"/>
                                 </a>
-                            </f:then>
-                            <f:else>-</f:else>
-                        </f:if>
-                    </td>
-                    <td><a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">
-                        <core:icon identifier="actions-open" size="small"/>
-                    </a></td>
-                </tr>
-            </f:for>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    </f:for>
+                    </tbody>
+                </table>
+            </div>
+        </f:form>
+
+        <f:if condition="{pagination.allPageNumbers -> f:count()} > 1">
+            <nav aria-labelledby="recordlist-pagination">
+                <ul class="pagination mb-0">
+                    <f:for each="{pagination.allPageNumbers}" as="page">
+                        <li class="page-item">
+                            <f:link.action
+                                arguments="{currentPageNumber:page}"
+                                addQueryString="true"
+                                class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+                            >
+                                {page}
+                            </f:link.action>
+                        </li>
+                    </f:for>
+                </ul>
+            </nav>
+        </f:if>
     </div>
 </f:section>
 

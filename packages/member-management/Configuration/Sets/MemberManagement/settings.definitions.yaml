@@ -86,6 +86,11 @@ settings:
       category: MemberManagement.organization.paymentInformation
       type: string
       default: ''
+  memberManagement.organization.paymentInformation.paymentReason:
+      label: 'Payment reason'
+      category: MemberManagement.organization.paymentInformation
+      type: string
+      default: ''
   memberManagement.organization.paymentInformation.paymentDueMonth:
       label: 'Payment due month'
       category: MemberManagement.organization.paymentInformation

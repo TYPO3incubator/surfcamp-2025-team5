@@ -19,4 +19,5 @@ settings:
         iban: ''
         bic: ''
         sepaCreditorId: ''
+        paymentReason: ''
         paymentDueMonth: ''

@@ -27,16 +27,19 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyConfirmed;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyCreated;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsNoLongerInAnActiveMembership;
@@ -59,8 +62,9 @@ final class MembershipService
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer,
         private readonly PersistenceManagerInterface $persistenceManager,
+        private readonly MemberRepository $memberRepository,
     ) {
-        $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences($this->getBackendUserAuthentication());
     }
 
     /**
@@ -138,7 +142,6 @@ final class MembershipService
 
         // Confirm membership
         $member->setCreateHash('');
-        $member->setDisabled(false);
         $member->setMembershipStatus(MembershipStatus::Pending);
 
         // Update member in database
@@ -209,9 +212,12 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
-        $this->languageService = $this->languageServiceFactory->createFromSiteLanguage(
-            $request->getAttribute('language'),
-        );
+
+        $siteLanguage = $request->getAttribute('language');
+
+        if ($siteLanguage instanceof SiteLanguage) {
+            $this->languageService = $this->languageServiceFactory->createFromSiteLanguage($siteLanguage);
+        }
     }
 
     private function getSiteSettings(): ?SiteSettings
@@ -223,5 +229,60 @@ final class MembershipService
         }
 
         return $site->getSettings();
+    }
+
+    public function setMembersActive(array $memberUids) {
+        foreach ($memberUids as $memberUid) {
+            $member = $this->memberRepository->findByUid($memberUid);
+            if ($member->getMembershipStatus() === MembershipStatus::Active) {
+                continue;
+            }
+            $member->setMembershipStatus(MembershipStatus::Active);
+            $member->setDisabled(false);
+            $this->memberRepository->update($member);
+
+            $email = $this->createEmail(
+                'MembershipActivated',
+                $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.membershipActivated.subject'),
+                $member,
+            );
+
+            $email->assign('sitesets', $this->getSiteSettings()->getAll());
+
+            $sitesets = $this->getSiteSettings()->getAll();
+
+            try {
+                $this->mailer->send($email);
+            } catch (TransportExceptionInterface $exception) {
+                $this->logger->error(
+                    'Error while sending new membership confirmatiomn mail: {message}',
+                    ['message' => $exception->getMessage()],
+                );
+            }
+        }
+        $this->persistenceManager->persistAll();
+    }
+
+    public function setMembersInactive(array $memberUids) {
+        foreach ($memberUids as $memberUid) {
+            $member = $this->memberRepository->findByUid($memberUid);
+            if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
+                continue;
+            }
+            $member->setMembershipStatus(MembershipStatus::Inactive);
+            $this->memberRepository->update($member);
+        }
+        $this->persistenceManager->persistAll();
+    }
+
+    private function getBackendUserAuthentication(): ?BackendUserAuthentication
+    {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+
+        if ($backendUser instanceof BackendUserAuthentication) {
+            return $backendUser;
+        }
+
+        return null;
     }
 }
