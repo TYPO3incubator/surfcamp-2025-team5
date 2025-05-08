@@ -30,6 +30,9 @@
 			<trans-unit id="city">
 				<source>City</source>
 			</trans-unit>
+            <trans-unit id="cancel.message">
+                <source>Your membership has been successfully cancelled. You will soon get a confirmation mail.</source>
+            </trans-unit>
 			<trans-unit id="confirm.message">
 				<source>Your registration has been successfully saved, our contact person will check your enquiry and approve you as a new member soon.</source>
 			</trans-unit>
@@ -86,6 +89,12 @@
             </trans-unit>
             <trans-unit id="email.paymentReminder.title">
                 <source>Reminder for your membership payment</source>
+            </trans-unit>
+            <trans-unit id="email.cancelMembershipConfirmation.subject">
+                <source>Membership cancellation confirmation</source>
+            </trans-unit>
+            <trans-unit id="email.canceledMembership.subject">
+                <source>Membership cancellation</source>
             </trans-unit>
 			<trans-unit id="payment-reason">
 				<source>Reason for payment</source>
@@ -170,6 +179,9 @@
             </trans-unit>
             <trans-unit id="per-year">
                 <source>per year</source>
+            </trans-unit>
+            <trans-unit id="member.settings.cancel">
+                <source>Cancel membership</source>
             </trans-unit>
 			<trans-unit id="email.main.salutation">
                 <source>Dear %s</source>

@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
@@ -164,6 +165,58 @@ final class MembershipService
                 ['message' => $exception->getMessage()],
             );
 
+            return false;
+        }
+
+        return $this->mailer->getSentMessage() !== null;
+    }
+
+    public function cancel(Member $member): bool
+    {
+        // Set member to cancel by setting it inactive and setting a member_until date
+        $this->setMembersInactive([$member->getUid()]);
+        // @todo no hardcoded date
+        $member->setMemberUntil(new \DateTime('1.9.2026'));
+        try {
+            $this->persistenceManager->update($member);
+        } catch (UnknownObjectException $exception) {
+            $this->logger->error(
+                'Error while updating the member field member_until: {message}',
+                ['message' => $exception->getMessage()],
+            );
+            return false;
+        }
+
+        // Confirmation mail
+        $emailUser = $this->createEmail(
+            'CancelMembershipConfirmation',
+            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.cancelMembershipConfirmation.subject'),
+            $member,
+        );
+
+        // Mail to person in charge
+        $emailManager = new FluidEmail();
+        $emailManager
+            ->to($this->getSiteSettings()->get('memberManagement.organization.emailOfPersonInCharge'))
+            ->subject($this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject'),)
+            ->format(FluidEmail::FORMAT_BOTH)
+            ->setTemplate('CanceledMembership')
+            ->assign('member', $member)
+        ;
+
+        if ($this->request !== null) {
+            $emailUser->setRequest($this->request);
+            $emailManager->setRequest($this->request);
+        }
+
+        try {
+            $this->mailer->send($emailUser);
+            $this->mailer->send($emailManager);
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error(
+                'Error while sending membership double-opt-in mail: {message}',
+                ['message' => $exception->getMessage()],
+            );
             return false;
         }
     }
