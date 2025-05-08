@@ -7,9 +7,7 @@
     <f:form.validationResults for="member">
         <f:for each="{validationResults.flattenedErrors}" as="errors">
             <f:for each="{errors}" as="error">
-                <div class="alert alert-danger" role="alert">
-                    {error}
-                </div>
+                <f:render partial="Alert" arguments="{severity: 'danger', content: error}" />
             </f:for>
         </f:for>
     </f:form.validationResults>

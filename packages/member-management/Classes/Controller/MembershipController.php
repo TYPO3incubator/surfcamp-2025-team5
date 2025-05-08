@@ -168,10 +168,10 @@ final class MembershipController extends ActionController
 
         try {
             if (!$this->membershipService->confirm($member)) {
-                $this->view->assign('errorReason', 'unknown');
+                return $this->errorResponse('unknown');
             }
         } catch (Exception $exception) {
-            $this->view->assign('errorReason', $exception->getCode());
+            return $this->errorResponse($exception->getCode());
         }
 
         return $this->htmlResponse();

@@ -1,13 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:comment>
-    <!-- @todo check for error in {errorReason}, can be one of: -->
-    <!-- 1746441586 => membership already confirmed -->
-    <!-- 1746450606 => membership no longer active -->
-    <!-- unknown => unknown error -->
-</f:comment>
-
-<div><p>{f:translate(key: 'confirm.message')}</p></div>
+<f:render partial="Alert" arguments="{severity: 'success'}" contentAs="content">
+    <f:translate key="confirm.message" />
+</f:render>
 
 </html>
