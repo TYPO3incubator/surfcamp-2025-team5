@@ -112,7 +112,12 @@ final class BackendMemberController extends ActionController
             $realField => $sortDirection,
         ];
 
-        $members = $this->memberRepository->findByFilters($filters, $orderings);
+        $site = $this->request->getAttribute('site');
+        $siteSettings = $site->getSettings();
+        $membersPid = (int)$siteSettings->get('felogin.pid');
+        $membershipPid = (int)$siteSettings->get('memberManagement.storage.membershipsFolderPid');
+
+        $members = $this->memberRepository->findByFilters($filters, $orderings, $membersPid);
         $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')
@@ -123,7 +128,7 @@ final class BackendMemberController extends ActionController
             $paginator,
             $maximumLinks,
         );
-        $memberships = $this->membershipRepository->findAll();
+        $memberships = $this->membershipRepository->findAllByStorageId($membershipPid);
 
         $statusOptions = [
             [

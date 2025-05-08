@@ -102,9 +102,17 @@ final class MemberRepository extends Repository
         return $query->execute();
     }
 
-    public function findByFilters(array $filters = [], array $orderings = [])
+    public function findByFilters(array $filters = [], array $orderings = [], $membersPid = 0): QueryResultInterface
     {
+
         $query = $this->createQuery();
+        if ($membersPid > 0) {
+            $this->setDefaultQuerySettings(
+                $query->getQuerySettings()
+                    ->setRespectStoragePage(false)
+                    ->setStoragePageIds([$membersPid])
+            );
+        }
 
         $constraints = [
             $query->greaterThan('membershipStatus', MembershipStatus::Unconfirmed),
