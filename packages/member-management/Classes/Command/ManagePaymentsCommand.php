@@ -130,8 +130,8 @@ final class ManagePaymentsCommand extends Command
                 PaymentManagementAction::ManualActionRequired => '<error>Manual action required</error>',
                 PaymentManagementAction::NewPaymentCreated => '<info>New payment created</info>',
                 PaymentManagementAction::Nothing => 'Nothing to do',
-                PaymentManagementAction::RememberMailCouldNotBeSent => '<error>Error while sending remember mail</error>',
-                PaymentManagementAction::RememberMailSent => '<comment>Remember mail sent</comment>',
+                PaymentManagementAction::ReminderMailCouldNotBeSent => '<error>Error while sending reminder mail</error>',
+                PaymentManagementAction::ReminderMailSent => '<comment>Reminder mail sent</comment>',
             },
             match ($result->payment) {
                 null => 'No associated payment',

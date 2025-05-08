@@ -13,7 +13,7 @@ return [
         'iconfile' => 'EXT:member_management/Resources/Public/Icons/payment.svg',
     ],
     'types' => [
-        1 => ['showitem' => 'member, paid_at, amount, state, remember_mail_sent_at'],
+        1 => ['showitem' => 'member, paid_at, amount, state, reminder_mail_sent_at'],
     ],
     'columns' => [
         'member' => [
@@ -82,9 +82,9 @@ return [
                 'default' => PaymentState::Pending->value,
             ],
         ],
-        'remember_mail_sent_at' => [
+        'reminder_mail_sent_at' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_payment.remember_mail_sent_at',
+            'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:tx_membermanagement_domain_model_payment.reminder_mail_sent_at',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,

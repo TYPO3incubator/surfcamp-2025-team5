@@ -62,8 +62,8 @@ class PaymentService
         }
 
         if ($lastPayment->getState() === PaymentState::Pending) {
-            // Only one "remember" mail is sent, subsequent actions must be taken manually
-            if ($lastPayment->getRememberMailSentAt() !== null) {
+            // Only one "reminder" mail is sent, subsequent actions must be taken manually
+            if ($lastPayment->getReminderMailSentAt() !== null) {
                 return new PaymentManagementResult(PaymentManagementAction::ManualActionRequired, $member, $lastPayment);
             }
 
@@ -71,7 +71,7 @@ class PaymentService
             $reminderPeriod = 'P14D'; // 14 days
             $reminderInterval = new \DateInterval($reminderPeriod);
 
-            // Send "remember" mail if not done yet
+            // Send "reminder" mail if not done yet
             if ($lastPayment->getDueBy()?->sub($reminderInterval)->getTimestamp() < time()) {
                 $email = $this->emailService->createEmail(
                     'PaymentReminder',
@@ -88,15 +88,15 @@ class PaymentService
                         ['message' => $exception->getMessage()],
                     );
 
-                    return new PaymentManagementResult(PaymentManagementAction::RememberMailCouldNotBeSent, $member, $lastPayment);
+                    return new PaymentManagementResult(PaymentManagementAction::ReminderMailCouldNotBeSent, $member, $lastPayment);
                 }
 
-                $lastPayment->setRememberMailSentAt(new \DateTimeImmutable());
+                $lastPayment->setReminderMailSentAt(new \DateTimeImmutable());
 
                 $this->persistenceManager->update($lastPayment);
                 $this->persistenceManager->persistAll();
 
-                return new PaymentManagementResult(PaymentManagementAction::RememberMailSent, $member, $lastPayment);
+                return new PaymentManagementResult(PaymentManagementAction::ReminderMailSent, $member, $lastPayment);
             }
 
             return new PaymentManagementResult(PaymentManagementAction::Nothing, $member, $lastPayment);

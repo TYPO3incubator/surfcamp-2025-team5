@@ -43,7 +43,7 @@ class Payment extends AbstractEntity
     protected PaymentState $state = PaymentState::Pending;
 
     #[Validate(['validator' => 'NotEmpty'])]
-    protected ?\DateTimeImmutable $rememberMailSentAt = null;
+    protected ?\DateTimeImmutable $reminderMailSentAt = null;
 
     public function getMember(): Member
     {
@@ -95,13 +95,13 @@ class Payment extends AbstractEntity
         $this->state = $state;
     }
 
-    public function getRememberMailSentAt(): ?\DateTimeImmutable
+    public function getReminderMailSentAt(): ?\DateTimeImmutable
     {
-        return $this->rememberMailSentAt;
+        return $this->reminderMailSentAt;
     }
 
-    public function setRememberMailSentAt(?\DateTimeImmutable $rememberMailSentAt): void
+    public function setReminderMailSentAt(?\DateTimeImmutable $reminderMailSentAt): void
     {
-        $this->rememberMailSentAt = $rememberMailSentAt;
+        $this->reminderMailSentAt = $reminderMailSentAt;
     }
 }
