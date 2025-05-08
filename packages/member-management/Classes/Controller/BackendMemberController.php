@@ -48,10 +48,6 @@ final class BackendMemberController extends ActionController
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getDocHeaderButtons($this->moduleTemplate);
-    }
-
-    protected function initializeAction(): void
-    {
         $this->membershipService->setRequest($this->request);
         $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
         $this->pageRenderer->addCssFile('EXT:member_management/Resources/Public/Css/backend.css');
