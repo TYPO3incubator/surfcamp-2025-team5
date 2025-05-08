@@ -157,9 +157,14 @@ final class MemberRepository extends Repository
     }
 
     #[\Override]
-    public function findByUid($uid): ?Member
+    public function findByUid($uid, int $storagePid = 0): ?Member
     {
         $query = $this->createQuery();
+        if ($storagePid > 0) {
+            $query->getQuerySettings()->setStoragePageIds([$storagePid]);
+        } else {
+            $query->getQuerySettings()->setRespectStoragePage(false);
+        }
         $query->matching($query->equals('uid', $uid));
         return $query->execute()->getFirst();
     }
