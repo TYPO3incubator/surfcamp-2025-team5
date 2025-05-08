@@ -19,7 +19,9 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
 use TYPO3Incubator\MemberManagement\Service\PaymentService;
 
 #[AsController]
@@ -34,6 +36,7 @@ final class BackendMemberController extends ActionController
         protected readonly IconFactory $iconFactory,
         private readonly PaymentService $paymentService,
         private readonly LanguageServiceFactory $languageServiceFactory,
+        private readonly MembershipRepository $membershipRepository,
     ) {
         $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
     }
@@ -46,7 +49,23 @@ final class BackendMemberController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $members = $this->memberRepository->findAll();
+        $filters = [];
+        $search = '';
+        $membershipUid = 0;
+        $membershipStatus = -2;
+        if ($this->request->hasArgument('search')) {
+            $search = $this->request->getArgument('search');
+            $filters['search'] = $search;
+        }
+        if ($this->request->hasArgument('membershipUid')) {
+            $membershipUid = $this->request->getArgument('membershipUid');
+            $filters['membershipUid'] = $membershipUid;
+        }
+        if ($this->request->hasArgument('membershipStatus')) {
+            $membershipStatus = $this->request->getArgument('membershipStatus');
+            $filters['membershipStatus'] = $membershipStatus;
+        }
+        $members = $this->memberRepository->findByFilters($filters);
         $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
             ? (int)$this->request->getArgument('currentPageNumber')
@@ -57,10 +76,35 @@ final class BackendMemberController extends ActionController
             $paginator,
             $maximumLinks,
         );
+        $memberships = $this->membershipRepository->findAll();
+
+        $statusOptions = [
+            [
+                'value' => -2,
+                'label' => 'All',
+            ],
+            [
+                'value' => MembershipStatus::Pending->value,
+                'label' => MembershipStatus::Pending->label(),
+            ],
+            [
+                'value' => MembershipStatus::Active->value,
+                'label' => MembershipStatus::Active->label(),
+            ],
+            [
+                'value' => MembershipStatus::Inactive->value,
+                'label' => MembershipStatus::Inactive->label(),
+            ],
+        ];
         $this->moduleTemplate->assignMultiple(
             [
                 'pagination' => $pagination,
                 'paginator' => $paginator,
+                'search'            => $search,
+                'membershipUid'     => $membershipUid,
+                'membershipStatus'  => $membershipStatus,
+                'memberships'       => $memberships,
+                'statusOptions'     => $statusOptions,
             ]
         );
 

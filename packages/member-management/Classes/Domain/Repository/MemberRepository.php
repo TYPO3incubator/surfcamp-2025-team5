@@ -80,4 +80,32 @@ final class MemberRepository extends Repository
 
         return $query->execute()->toArray();
     }
+
+    public function findByFilters(array $filters)
+    {
+        $query = $this->createQuery();
+        $constraints = [
+            $query->greaterThan('membershipStatus', MembershipStatus::Unconfirmed),
+        ];
+
+        if (!empty($filters['search'])) {
+            $term = '%' . $filters['search'] . '%';
+            $constraints[] = $query->logicalOr(
+                $query->like('first_name', $term),
+                $query->like('last_name', $term),
+                $query->like('email', $term)
+            );
+        }
+
+        if (!empty($filters['membershipUid']) && $filters['membershipUid'] > 0) {
+            $constraints[] = $query->equals('membership.uid', (int)$filters['membershipUid']);
+        }
+
+        if (isset($filters['membershipStatus']) && $filters['membershipStatus'] > -1) {
+            $constraints[] = $query->equals('membership_status', (int)$filters['membershipStatus']);
+        }
+
+        $query->matching($query->logicalAnd(...$constraints));
+        return $query->execute();
+    }
 }

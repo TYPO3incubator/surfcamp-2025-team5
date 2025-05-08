@@ -1,26 +1,68 @@
 <html
-        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-        xmlns:mm="http://typo3.org/ns/TYPO3Incubator/MemberManagement/ViewHelpers"
-        xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
-        data-namespace-typo3-fluid="true">
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:mm="http://typo3.org/ns/TYPO3Incubator/MemberManagement/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
 <f:layout name="Default"/>
 
-<f:layout name="Module" />
+<f:layout name="Module"/>
 
 <f:section name="Content">
     <ul class="pagination">
         <f:for each="{pagination.allPageNumbers}" as="page">
-            <li class="page-item">
+            <li class="page-item {page == paginator.currentPageNumber ? 'active'}">
                 <f:link.action
-                        arguments="{currentPageNumber:page}"
-                        class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+                    action="index"
+                    arguments="{currentPageNumber: page}"
+                    class="page-link"
                 >
                     {page}
                 </f:link.action>
             </li>
         </f:for>
     </ul>
+
+    <f:form action="index" class="filter-form mb-4 row g-3 align-items-end">
+        <div class="col-sm-4">
+            <label for="filterSearch" class="form-label">Search</label>
+            <f:form.textfield
+                id="filterSearch"
+                name="search"
+                value="{search}"
+                class="form-control"/>
+        </div>
+        <div class="col-sm-3">
+            <label for="filterMembership" class="form-label">Membership</label>
+            <f:form.select
+                id="filterMembership"
+                name="membershipUid"
+                options="{memberships}"
+                optionLabelField="title"
+                optionValueField="uid"
+                prependOptionValue="0"
+                prependOptionLabel="All"
+                value="{membershipUid}"
+                class="form-select"
+            />
+        </div>
+        <div class="col-sm-3">
+            <label for="filterStatus" class="form-label">Status</label>
+            <f:form.select
+                id="filterStatus"
+                name="membershipStatus"
+                options="{statusOptions}"
+                optionValueField="value"
+                optionLabelField="label"
+                value="{membershipStatus}"
+                class="form-select"
+            />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <f:link.action action="index" class="btn btn-default ms-2">Reset</f:link.action>
+        </div>
+    </f:form>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
