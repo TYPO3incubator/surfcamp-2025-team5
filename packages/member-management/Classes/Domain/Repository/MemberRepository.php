@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -45,6 +46,11 @@ final class MemberRepository extends Repository
         parent::__construct();
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
+        // if call comes from backend -> ignore enable fields
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+            $querySettings->setIgnoreEnableFields(true);
+        }
         $this->setDefaultQuerySettings($querySettings);
     }
 
@@ -99,8 +105,7 @@ final class MemberRepository extends Repository
     public function findByFilters(array $filters = [], array $orderings = [])
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
         $constraints = [
             $query->greaterThan('membershipStatus', MembershipStatus::Unconfirmed),
         ];
@@ -127,5 +132,13 @@ final class MemberRepository extends Repository
             $query->setOrderings($orderings);
         }
         return $query->execute();
+    }
+
+    #[\Override]
+    public function findByUid($uid): ?Member
+    {
+        $query = $this->createQuery();
+        $query->matching($query->equals('uid', $uid));
+        return $query->execute()->getFirst();
     }
 }
