@@ -75,6 +75,7 @@ class Member extends AbstractEntity
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $memberUntil = null;
 
+    #[Validate(['validator' => 'NotEmpty'])]
     protected ?Membership $membership = null;
     protected MembershipStatus $membershipStatus = MembershipStatus::Unconfirmed;
 
