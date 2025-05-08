@@ -67,18 +67,10 @@
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-membership')}</legend>
-        <f:comment><!-- @todo fetch available memberships --></f:comment>
-        <!--
         <div class="mb-3">
-            <label for="membership" class="form-label">{f:translate(key: 'membership')} - @todo</label>
-            <select class="form-select" id="membership" name="membership" required>
-                <option selected>{f:translate(key: 'select-choose')}</option>
-                <option value="0">xxx</option>
-                <option value="1">xxx</option>
-                <option value="2">xxx</option>
-            </select>
+            <label for="membership" class="form-label">{f:translate(key: 'membership')}</label>
+            <f:form.select options="{memberships}" optionLabelField="title" class="form-select" id="membership" name="membership" required="true" />
         </div>
-        -->
         <f:render partial="Input"
             arguments="{ type: 'password', id: 'password', name: 'password', required: true}" />
         <f:render partial="Input"

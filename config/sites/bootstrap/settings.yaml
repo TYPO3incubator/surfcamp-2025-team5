@@ -3,11 +3,11 @@ memberManagement:
     name: 'Bootstrap Test'
     personInCharge: 'Jane Doe'
     emailOfPersonInCharge: jane.doe@typo3.org
-    defaultCountry: 'GB'
+    defaultCountry: GB
     defaultUsergroup: 1
     address:
       streetAndHouseNumber: 'Emanuel-Leutze-Str. 11'
-      city: 'Düsseldorf'
+      city: Düsseldorf
       zip: '40547'
       country: Germany
     paymentInformation:
@@ -15,9 +15,9 @@ memberManagement:
       bic: AUTOATW1XXX
       paymentDueMonth: '9'
   storage:
-    membershipsFolderPid: 105
-    paymentsFolderPid: 106
+    membershipsFolderPid: 109
+    paymentsFolderPid: 110
 felogin:
   pid: 16
-  view: 
-    templateRootPath: EXT:member_management/Resources/Private/Templates
+  view:
+    templateRootPath: 'EXT:member_management/Resources/Private/Templates'
