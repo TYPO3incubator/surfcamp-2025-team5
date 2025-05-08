@@ -348,9 +348,14 @@ class Member extends AbstractEntity
 
     public function getLastPayment(): ?Payment
     {
-        $payments = $this->getPayments()->toArray();
-        return empty($payments)
-            ? null
-            : max($payments, fn(Payment $a, Payment $b) => $a->getPaidAt() <=> $b->getPaidAt());
+        return array_reduce(
+            $this->getPayments()->toArray(),
+            static function (?Payment $latest, Payment $current): ?Payment {
+                return $latest === null || $current->getPaidAt() > $latest->getPaidAt()
+                    ? $current
+                    : $latest;
+            },
+            null
+        );
     }
 }
