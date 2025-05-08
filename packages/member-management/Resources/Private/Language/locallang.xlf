@@ -132,6 +132,12 @@
 			<trans-unit id="zip">
 				<source>Zip</source>
 			</trans-unit>
+            <trans-unit id="currency">
+                <source>€</source>
+            </trans-unit>
+            <trans-unit id="per-year">
+                <source>per year</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>
