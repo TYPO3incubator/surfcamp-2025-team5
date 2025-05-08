@@ -106,8 +106,14 @@
                                     value="{member.uid}"
                                     additionalAttributes="{class: 'rowCheckbox'}"/>
                             </td>
-                            <td>{member.firstName} {member.lastName}</td>
-                            <td>{member.membership.title}</td>
+                            <td>
+                                <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">{member.firstName} {member.lastName}</a>
+                            </td>
+                            <td>
+                                <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_membership', uid: member.membership.uid)}">
+                                    {member.membership.title}
+                                </a>
+                            </td>
                             <td>{member.membershipStatusLabel}</td>
                             <td>{member.email}</td>
                             <td>status</td>
