@@ -72,14 +72,17 @@ final class BackendMemberController extends ActionController
                 $filters['search'] = 'Jochen';
             }
         }
+        $membershipUid = 0;
+        if ($this->request->hasArgument('membershipUid')) {
+            $membershipUid = (int)$this->request->getArgument('membershipUid');;
+            $filters['membershipUid'] = $membershipUid;
+        }
 
-        $membershipUid = $this->request->hasArgument('membershipUid')
-            ? (int)$this->request->getArgument('membershipUid')
-            : 0;
-
-        $membershipStatus = $this->request->hasArgument('membershipStatus')
-            ? $this->request->getArgument('membershipStatus')
-            : -2;
+        $membershipStatus = -2;
+        if ($this->request->hasArgument('membershipStatus')) {
+            $membershipStatus = (int)$this->request->getArgument('membershipStatus');
+            $filters['membershipStatus'] = $membershipStatus;
+        }
 
         // sorting fields
         $fieldMap = [
