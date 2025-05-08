@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
@@ -46,14 +47,16 @@ final class MemberRepository extends Repository
     public function __construct()
     {
         parent::__construct();
+
+        $request = $this->getServerRequest();
+
         // if call comes from backend -> ignore enable fields
-        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+        if ($request === null || ApplicationType::fromRequest($request)->isBackend()) {
             $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
             $querySettings->setEnableFieldsToBeIgnored(['disabled']);
             $querySettings->setIgnoreEnableFields(true);
             $this->setDefaultQuerySettings($querySettings);
         }
-
     }
 
     public function findOneByHash(string $hash, Site $site, bool $includeDisabled = false): ?Member
@@ -167,5 +170,16 @@ final class MemberRepository extends Repository
         }
         $query->matching($query->equals('uid', $uid));
         return $query->execute()->getFirst();
+    }
+
+    private function getServerRequest(): ?ServerRequestInterface
+    {
+        $serverRequest = $GLOBALS['TYPO3_REQUEST'] ?? null;
+
+        if (!($serverRequest instanceof ServerRequestInterface)) {
+            return $serverRequest;
+        }
+
+        return null;
     }
 }
