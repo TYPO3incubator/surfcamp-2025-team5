@@ -45,6 +45,9 @@
 			<trans-unit id="email.createMembership.subject">
 				<source>Please confirm your membership</source>
 			</trans-unit>
+			<trans-unit id="email.createMembership.title">
+				<source>Please confirm your membership</source>
+			</trans-unit>
 			<trans-unit id="email.createMembership.main.body">
 				<source>You are only one step away from your registration. Please click on the following button to confirm your registration.</source>
 			</trans-unit>
@@ -60,12 +63,30 @@
 			<trans-unit id="email.createMembership.main.salutation">
 				<source>Dear %s</source>
 			</trans-unit>
-			<trans-unit id="email.createMembership.title">
-				<source>Please confirm your membership</source>
-			</trans-unit>
             <trans-unit id="email.newMembership.subject">
                 <source>New member registration</source>
             </trans-unit>
+			<trans-unit id="email.membershipActivated.subject">
+                <source>You are now a member!</source>
+            </trans-unit>
+			<trans-unit id="email.membershipActivated.title">
+                <source>You are now a member!</source>
+            </trans-unit>
+			<trans-unit id="email.membershipActivated.main.body">
+				<source>We look forward to welcoming you as a new member. You can now log in to our website with your e-mail address and password and view more information about your membership.</source>
+			</trans-unit>
+			<trans-unit id="email.membershipActivated.main.sepa">
+				<source>When you registered, you indicated that we may debit the membership fee via SEPA direct debit. This will happen in the next few days.</source>
+			</trans-unit>
+			<trans-unit id="email.membershipActivated.main.transfer">
+				<source>When you registered, you indicated that you would like to make the payment manually. Please transfer the following amount within the next 14 days:</source>
+			</trans-unit>
+			<trans-unit id="payment-reason">
+				<source>Reason for payment</source>
+			</trans-unit>
+			<trans-unit id="payment-amount">
+				<source>Amount</source>
+			</trans-unit>
 			<trans-unit id="firstname">
 				<source>First name</source>
 			</trans-unit>

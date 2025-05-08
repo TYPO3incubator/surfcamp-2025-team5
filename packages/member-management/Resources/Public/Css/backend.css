@@ -1,0 +1,9 @@
+.table-responsive {
+    border: 1px solid var(--typo3-state-default-border-color);
+    border-radius: var(--typo3-input-border-radius);
+    overflow: hidden;
+}
+
+tbody tr:last-of-type td {
+    border-bottom: 0;
+}

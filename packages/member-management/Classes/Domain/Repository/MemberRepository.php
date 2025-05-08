@@ -25,6 +25,7 @@ namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
@@ -79,5 +80,19 @@ final class MemberRepository extends Repository
         );
 
         return $query->execute()->toArray();
+    }
+
+    public function findConfirmed(): QueryResultInterface
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->matching(
+            $query->logicalNot(
+                $query->equals('membershipStatus', MembershipStatus::Unconfirmed),
+            ),
+        );
+
+        return $query->execute();
     }
 }

@@ -24,6 +24,7 @@ return [
             BackendMemberController::class => [
                 'index',
                 'generateSepaXml',
+                'memberBulkAction'
             ],
         ],
     ],

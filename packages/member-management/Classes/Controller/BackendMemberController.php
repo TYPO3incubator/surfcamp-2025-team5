@@ -12,6 +12,7 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
@@ -20,6 +21,7 @@ use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Service\MembershipService;
 use TYPO3Incubator\MemberManagement\Service\PaymentService;
 
 #[AsController]
@@ -28,9 +30,13 @@ final class BackendMemberController extends ActionController
     private ModuleTemplate $moduleTemplate;
     private LanguageService $languageService;
 
+    protected const MEMBER_ACTION_SET_ACTIVE = 'setActive';
+    protected const MEMBER_ACTION_SET_INACTIVE = 'setInactive';
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly MemberRepository $memberRepository,
+        private readonly MembershipService $membershipService,
+        private readonly PageRenderer $pageRenderer,
         protected readonly IconFactory $iconFactory,
         private readonly PaymentService $paymentService,
         private readonly LanguageServiceFactory $languageServiceFactory,
@@ -42,6 +48,9 @@ final class BackendMemberController extends ActionController
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getDocHeaderButtons($this->moduleTemplate);
+        $this->membershipService->setRequest($this->request);
+        $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
+        $this->pageRenderer->addCssFile('EXT:member_management/Resources/Public/Css/backend.css');
     }
 
     public function indexAction(): ResponseInterface
@@ -118,4 +127,23 @@ final class BackendMemberController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', IconSize::SMALL));
     }
+
+    public function memberBulkActionAction(array $memberUids = [], string $memberAction = null): ResponseInterface
+    {
+        if (empty($memberUids) || $memberAction === null) {
+            $this->addFlashMessage('No items selected or no action specified.');
+            return $this->redirect('index');
+        }
+        switch ($memberAction) {
+            case self::MEMBER_ACTION_SET_ACTIVE:
+                $this->membershipService->setMembersActive($memberUids);
+                break;
+            case self::MEMBER_ACTION_SET_INACTIVE:
+                $this->membershipService->setMembersInactive($memberUids);
+                break;
+
+        }
+        return $this->redirect('index');
+    }
+
 }
