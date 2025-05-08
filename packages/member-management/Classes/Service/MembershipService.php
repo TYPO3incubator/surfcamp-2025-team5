@@ -174,7 +174,7 @@ final class MembershipService
             return false;
         }
 
-        return $this->mailer->getSentMessage() === null;
+        return $this->mailer->getSentMessage() !== null;
     }
 
     private function createEmail(
