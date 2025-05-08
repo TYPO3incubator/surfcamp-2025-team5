@@ -39,9 +39,9 @@ for (const index in members) {
 
         await page.locator('#privacy').check();
 
-        await page.evaluate(() => {
-            page.locator('.btn[type="submit"]').click();
-        });
+        await page.locator('.btn[type="submit"]').click();
+
+        await expect(page.getByText('Register Membership')).toBeVisible({timeout:5000});
     });
 }
 
