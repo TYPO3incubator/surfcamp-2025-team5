@@ -23,8 +23,8 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
@@ -40,26 +40,15 @@ use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
  */
 final class MemberRepository extends Repository
 {
-    public function __construct()
+    public function findOneByHash(string $hash, Site $site, bool $includeDisabled = false): ?Member
     {
-        parent::__construct();
-        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-        $querySettings->setRespectStoragePage(false);
-        $this->setDefaultQuerySettings($querySettings);
-    }
-
-    public function findOneByHash(string $hash, bool $includeDisabled = false): ?Member
-    {
-        $query = $this->createQuery();
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setRespectStoragePage(false);
+        $query = $this->createQueryForSite($site);
 
         if ($includeDisabled) {
+            $querySettings = $query->getQuerySettings();
             $querySettings->setIgnoreEnableFields(true);
             $querySettings->setEnableFieldsToBeIgnored(['disabled']);
         }
-
-        // @todo Limit to storage page of current site
 
         $query->matching(
             $query->equals('createHash', $hash),
@@ -71,12 +60,10 @@ final class MemberRepository extends Repository
     public function findActiveInFolder(int $folderId): array
     {
         $query = $this->createQuery();
+        $query->getQuerySettings()->setStoragePageIds([$folderId]);
 
         $query = $query->matching(
-            $query->logicalAnd(
-                $query->equals('pid', $folderId),
-                $query->equals('membership_status', MembershipStatus::Active),
-            ),
+            $query->equals('membership_status', MembershipStatus::Active),
         );
 
         return $query->execute()->toArray();
@@ -94,5 +81,22 @@ final class MemberRepository extends Repository
         );
 
         return $query->execute();
+    }
+
+    /**
+     * @return QueryResultInterface<Member>
+     */
+    public function findBySite(Site $site): QueryResultInterface
+    {
+        return $this->createQueryForSite($site)->execute();
+    }
+
+    private function createQueryForSite(Site $site): QueryInterface
+    {
+        $storagePid = $site->getSettings()->get('felogin.pid');
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setStoragePageIds([$storagePid]);
+
+        return $query;
     }
 }
