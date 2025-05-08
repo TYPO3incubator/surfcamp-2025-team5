@@ -60,6 +60,7 @@ final class BackendMemberController extends ActionController
                 $this->membershipService->setMembersActive($memberUids);
                 break;
             case self::MEMBER_ACTION_SET_INACTIVE:
+                $this->membershipService->setMembersInactive($memberUids);
                 break;
 
         }
