@@ -1,17 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:flashMessages/>
+<f:asset.css identifier="membership" href="EXT:member_management/Resources/Public/Css/membership.css" />
 
 <f:if condition="{messageKey}">
     <h3>
         <f:render partial="RenderLabelOrMessage" arguments="{key: '{messageKey}_header'}"/>
     </h3>
-    <p>
-        <f:render partial="RenderLabelOrMessage" arguments="{key: '{messageKey}_message'}"/>
-    </p>
 </f:if>
 
-<f:form target="_top" fieldNamePrefix="" action="login" requestToken="{requestToken}" spellcheck="false">
+<f:form target="_top" fieldNamePrefix="" action="login" requestToken="{requestToken}" spellcheck="false" class="form-felogin">
     <f:render section="content" arguments="{_all}"/>
 </f:form>
 
@@ -27,13 +25,13 @@
             <f:translate key="login"/>
         </legend>
         <div class="mb-3">
-            <label for="tx-felogin-input-username">
-                <f:translate key="username"/>
+            <label for="tx-felogin-input-username" class="w-100">
+                {f:translate(key:'email', extensionName: 'member_management')}
                 <f:form.textfield class="form-control" name="user" required="true" autocomplete="username" id="tx-felogin-input-username"/>
             </label>
         </div>
         <div class="mb-3">
-            <label for="tx-felogin-input-password">
+            <label for="tx-felogin-input-password" class="w-100">
                 <f:translate key="password"/>
                 <f:form.password class="form-control" name="pass" required="required" autocomplete="current-password" id="tx-felogin-input-password"/>
             </label>

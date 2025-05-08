@@ -25,6 +25,7 @@ memberManagement:
       bic: AUTOATW1XXX
       paymentReason: 'Membership fee: FC Bigfoot'
       paymentDueMonth: '2'
+      sepaCreditorId: DE21WVM1234567890
   storage:
     membershipsFolderPid: 113
     paymentsFolderPid: 114

@@ -38,44 +38,65 @@ use TYPO3Incubator\MemberManagement\Domain\Validator\IbanValidator;
 class Member extends AbstractEntity
 {
     protected string $title = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $firstName = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $lastName = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'EmailAddress'])]
     protected string $email = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $telephone = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $address = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $zip = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $city = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $country = '';
+
     #[Validate([
         'validator' => IbanValidator::class,
     ])]
     protected string $iban = '';
+
     protected string $bic = '';
+  
+    protected string $sepaDebtorMandate = '';
+  
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTime $sepaAcceptedAt = null;
+    protected ?DateTime $sepaDebtorMandateSignDate = null;
+  
     protected string $notes = '';
+
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $dateOfBirth = null;
+
     protected Gender $gender = Gender::Other;
+
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $privacyAcceptedAt = null;
+
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $memberSince = null;
+
     #[Validate(['validator' => 'DateTime'])]
     protected ?DateTime $memberUntil = null;
 
+    #[Validate(['validator' => 'NotEmpty'])]
     protected ?Membership $membership = null;
+
     protected MembershipStatus $membershipStatus = MembershipStatus::Unconfirmed;
 
     /** @var ObjectStorage<Payment> */
@@ -204,14 +225,24 @@ class Member extends AbstractEntity
         $this->bic = $bic;
     }
 
-    public function getSepaAcceptedAt(): ?DateTime
+    public function getSepaDebtorMandate(): string
     {
-        return $this->sepaAcceptedAt;
+        return $this->sepaDebtorMandate;
     }
 
-    public function setSepaAcceptedAt(?DateTime $sepaAcceptedAt): void
+    public function setSepaDebtorMandate(string $sepaDebtorMandate): void
     {
-        $this->sepaAcceptedAt = $sepaAcceptedAt;
+        $this->sepaDebtorMandate = $sepaDebtorMandate;
+    }
+
+    public function getSepaDebtorMandateSignDate(): ?DateTime
+    {
+        return $this->sepaDebtorMandateSignDate;
+    }
+
+    public function setSepaDebtorMandateSignDate(?DateTime $sepaDebtorMandateSignDate): void
+    {
+        $this->sepaDebtorMandateSignDate = $sepaDebtorMandateSignDate;
     }
 
     public function getNotes(): string
