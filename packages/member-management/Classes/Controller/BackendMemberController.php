@@ -7,6 +7,8 @@ namespace TYPO3Incubator\MemberManagement\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Page\JavaScriptModuleInstruction;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -22,12 +24,17 @@ final class BackendMemberController extends ActionController
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly MemberRepository $memberRepository,
         private readonly MembershipService $membershipService,
+        private readonly PageRenderer $pageRenderer,
     ) {
     }
 
     protected function initializeAction(): void
     {
         $this->membershipService->setRequest($this->request);
+        $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
+        $this->pageRenderer->getJavaScriptRenderer()->addJavaScriptModuleInstruction(
+            JavaScriptModuleInstruction::create('@vendor/typo3-incubator/member-management/backend.js'),
+        );
     }
 
     public function indexAction(): ResponseInterface
