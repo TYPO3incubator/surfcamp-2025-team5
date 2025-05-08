@@ -19,5 +19,5 @@ memberManagement:
     paymentsFolderPid: 106
 felogin:
   pid: 16
-  view: 
+  view:
     templateRootPath: EXT:member_management/Resources/Private/Templates

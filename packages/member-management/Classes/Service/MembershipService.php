@@ -161,6 +161,8 @@ final class MembershipService
             new Address($managerEmailAddress),
         );
 
+        $email->assign('beMemberPid', $this->getSiteSettings()?->get('felogin.pid'));
+
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $exception) {
