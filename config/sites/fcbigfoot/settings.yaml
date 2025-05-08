@@ -14,6 +14,7 @@ memberManagement:
     personInCharge: 'Muster Person'
     emailOfPersonInCharge: muster.person@typo3.org
     defaultCountry: 'ES'
+    defaultUsergroup: 1
     address:
       streetAndHouseNumber: 'Street X 12'
       city: 'La Oliva'
@@ -23,6 +24,10 @@ memberManagement:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
       paymentDueMonth: '2'
+  storage:
+    membershipsFolderPid: 1
+    paymentsFolderPid: 1
 felogin:
+  pid: 1
   view: 
     templateRootPath: EXT:member_management/Resources/Private/Templates
