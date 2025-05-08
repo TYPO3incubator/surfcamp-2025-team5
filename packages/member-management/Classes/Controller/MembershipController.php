@@ -114,8 +114,8 @@ final class MembershipController extends ActionController
 
         // set pid and usergroup based on site settings
         $siteSettings = $this->request->getAttribute('site')->getSettings();
-        $usergroup = $siteSettings->get('memberManagement.organization.defaultUsergroup');
-        $pid = $siteSettings->get('felogin.pid');
+        $usergroup = (int) $siteSettings->get('memberManagement.organization.defaultUsergroup');
+        $pid = (int) $siteSettings->get('felogin.pid');
         $member->setUsergroup($usergroup);
         $member->setPid($pid);
 
