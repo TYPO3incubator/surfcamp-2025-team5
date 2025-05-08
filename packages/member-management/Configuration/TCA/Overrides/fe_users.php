@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 
 defined('TYPO3') || die();
@@ -22,10 +25,10 @@ if (!isset($GLOBALS['TCA']['fe_users']['ctrl']['type'])) {
             'maxitems' => 1,
         ],
     ];
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns_tx_membermanagement_fe_users);
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     $GLOBALS['TCA']['fe_users']['ctrl']['type'],
     '',
@@ -76,9 +79,18 @@ $tmp_membermanagement_columns = [
             'eval' => 'trim',
         ],
     ],
-    'sepa_accepted_at' => [
+    'sepa_debtor_mandate' => [
         'exclude' => true,
-        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.sepa_accepted_at',
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.sepa_debtor_mandate',
+        'config' => [
+            'type' => 'input',
+            'size' => 11,
+            'eval' => 'trim',
+        ],
+    ],
+    'sepa_debtor_mandate_sign_date' => [
+        'exclude' => true,
+        'label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.sepa_debtor_mandate_sign_date',
         'config' => [
             'type' => 'datetime',
             'default' => 0,
@@ -187,11 +199,11 @@ $tmp_membermanagement_columns = [
     ],
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
+ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_membermanagement_columns);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
-    'date_of_birth, gender, iban, bic, sepa_accepted_at, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes, create_hash',
+    'date_of_birth, gender, iban, bic, sepa_debtor_mandate, sepa_debtor_mandate_sign_date, privacy_accepted_at, member_since, member_until, membership, membership_status, payments, notes, create_hash',
 );
 
 $GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type']]['config']['items'][] = ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.tx_extbase_type.tx_member_management_member', 'value' => 'tx_member_management_member'];

@@ -24,10 +24,12 @@ declare(strict_types=1);
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+use TYPO3Incubator\MemberManagement\Domain\Model\Payment;
 
 /**
  * MemberRepository
@@ -37,8 +39,9 @@ use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
  *
  * @extends Repository<Member>
  */
-final class MemberRepository extends Repository
+final class PaymentRepository extends Repository
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -47,37 +50,36 @@ final class MemberRepository extends Repository
         $this->setDefaultQuerySettings($querySettings);
     }
 
-    public function findOneByHash(string $hash, bool $includeDisabled = false): ?Member
-    {
-        $query = $this->createQuery();
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setRespectStoragePage(false);
-
-        if ($includeDisabled) {
-            $querySettings->setIgnoreEnableFields(true);
-            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
-        }
-
-        // @todo Limit to storage page of current site
-
-        $query->matching(
-            $query->equals('createHash', $hash),
-        );
-
-        return $query->execute()->getFirst();
-    }
-
-    public function findActiveInFolder(int $folderId): array
+    /**
+     * @param array<Member> $members
+     * @return array<Member>
+     * @throws InvalidQueryException
+     */
+    public function findMembersWithOpenPayments(int $folderId, array $members, int $dueDateYearTimestamp): array
     {
         $query = $this->createQuery();
 
         $query = $query->matching(
             $query->logicalAnd(
                 $query->equals('pid', $folderId),
-                $query->equals('membership_status', MembershipStatus::Active),
+                $query->in('member', $members),
+                $query->lessThan('paid_at', $dueDateYearTimestamp),
             ),
         );
 
-        return $query->execute()->toArray();
+        $paymentsFromMembersWithPaidMembershipPayments = $query->execute()->toArray();
+
+        $membersWithPaidMembershipPayments = array_map(static fn(Payment $payment) => $payment->getMember(), $paymentsFromMembersWithPaidMembershipPayments);
+
+        $membersWithOpenPayments = array_filter($members, static function (Member $member) use ($membersWithPaidMembershipPayments) {
+            $membershipPrice = $member->getMembership()?->getPrice();
+            if (!$membershipPrice || $membershipPrice === 0.0) {
+                return false;
+            }
+
+            return !in_array($member->getUid(), $membersWithPaidMembershipPayments, true);
+        });
+
+        return $membersWithOpenPayments;
     }
 }
