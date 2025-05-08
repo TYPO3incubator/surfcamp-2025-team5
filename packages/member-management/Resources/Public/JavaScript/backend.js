@@ -3,7 +3,6 @@ const btn = document.querySelector('.set-inactive-btn-js');
 if (btn) {
     btn.addEventListener('click', function(event) {
         // ask for confirmation; if cancelled, stop submission
-        console.log('btn')
         if (!window.confirm('Are you sure you want to set the selected members inactive?')) {
             event.preventDefault();
         }
