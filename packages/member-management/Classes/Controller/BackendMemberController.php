@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Controller;
 
-use Digitick\Sepa\Exception\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,6 +23,8 @@ use TYPO3Incubator\MemberManagement\Service\PaymentService;
 #[AsController]
 final class BackendMemberController extends ActionController
 {
+    private ModuleTemplate $moduleTemplate;
+
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly MemberRepository $memberRepository,
@@ -32,14 +33,14 @@ final class BackendMemberController extends ActionController
     ) {
     }
 
-    public function indexAction(): ResponseInterface
+    protected function initializeAction(): void
     {
-        return $this->renderBackendModule();
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->getDocHeaderButtons($this->moduleTemplate);
     }
 
-    private function renderBackendModule(): ResponseInterface
+    public function indexAction(): ResponseInterface
     {
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $members = $this->memberRepository->findAll();
         $itemsPerPage = 20;
         $currentPage = $this->request->hasArgument('currentPageNumber')
@@ -51,40 +52,19 @@ final class BackendMemberController extends ActionController
             $paginator,
             $maximumLinks,
         );
-        $moduleTemplate->assignMultiple(
+        $this->moduleTemplate->assignMultiple(
             [
                 'pagination' => $pagination,
                 'paginator' => $paginator,
             ]
         );
 
-        $this->getDocHeaderButtons($moduleTemplate);
-
-        return $moduleTemplate->renderResponse('Backend/Index');
-    }
-
-    protected function getDocHeaderButtons(ModuleTemplate $view): void
-    {
-        $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
-
-        $buttonBar->addButton($this->getDocHeaderButtonForGeneratingSepaXml($buttonBar), ButtonBar::BUTTON_POSITION_LEFT, 10);
-    }
-
-    private function getDocHeaderButtonForGeneratingSepaXml(ButtonBar $buttonBar): LinkButton
-    {
-        $href = $this->uriBuilder->reset()->uriFor('generateSepaXml');
-
-        return $buttonBar->makeLinkButton()
-            ->setHref($href)
-            ->setTitle('Download SEPA XML')
-            ->setShowLabelText(true)
-            ->setIcon($this->iconFactory->getIcon('actions-download', IconSize::SMALL));
+        return $this->moduleTemplate->renderResponse('Backend/Index');
     }
 
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
-     * @throws InvalidArgumentException
      */
     public function generateSepaXmlAction(): ResponseInterface {
         $this->paymentService->setRequest($this->request);
@@ -113,6 +93,24 @@ final class BackendMemberController extends ActionController
                 ->withHeader('Pragma', 'no-cache');
         }
 
-        return $this->renderBackendModule();
+        return $this->moduleTemplate->renderResponse('Backend/Index');
+    }
+
+    protected function getDocHeaderButtons(ModuleTemplate $view): void
+    {
+        $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
+
+        $buttonBar->addButton($this->getDocHeaderButtonForGeneratingSepaXml($buttonBar), ButtonBar::BUTTON_POSITION_LEFT, 10);
+    }
+
+    private function getDocHeaderButtonForGeneratingSepaXml(ButtonBar $buttonBar): LinkButton
+    {
+        $href = $this->uriBuilder->reset()->uriFor('generateSepaXml');
+
+        return $buttonBar->makeLinkButton()
+            ->setHref($href)
+            ->setTitle('Download SEPA XML')
+            ->setShowLabelText(true)
+            ->setIcon($this->iconFactory->getIcon('actions-download', IconSize::SMALL));
     }
 }
