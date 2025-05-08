@@ -243,9 +243,13 @@ final class MembershipService
 
             $email = $this->createEmail(
                 'MembershipActivated',
-                $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
+                $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.membershipActivated.subject'),
                 $member,
             );
+
+            $email->assign('sitesets', $this->getSiteSettings()->getAll());
+
+            $sitesets = $this->getSiteSettings()->getAll();
 
             try {
                 $this->mailer->send($email);

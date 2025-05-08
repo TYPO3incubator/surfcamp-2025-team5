@@ -13,6 +13,7 @@ memberManagement:
     paymentInformation:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
+      paymentReason: 'Membership fee Bootstrap'
       paymentDueMonth: '9'
   storage:
     membershipsFolderPid: 109

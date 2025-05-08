@@ -13,13 +13,13 @@
       <p>
             <f:translate key="email.membershipActivated.main.body"/>
       </p>
-      <f:if condition="{member.sepa_accepted_at}">
+      <f:if condition="{member.sepaAcceptedAt}">
             <f:then>
                   <f:translate key="email.membershipActivated.main.transfer"/><br/>
-                  <f:translate key="payment-reason"/>: xxx
-                  <f:translate key="payment-amount"/>: xxx
-                  <f:translate key="iban"/>: xxx
-                  <f:translate key="bic"/>: xxx
+                  <f:translate key="payment-reason"/>: {sitesets.memberManagement.organization.paymentInformation.paymentReason}<br/>
+                  <f:translate key="payment-amount"/>: {member.membership.price -> f:format.currency(currencySign: '€')}<br/>
+                  <f:translate key="iban"/>: {sitesets.memberManagement.organization.paymentInformation.iban}<br/>
+                  <f:translate key="bic"/>: {sitesets.memberManagement.organization.paymentInformation.bic}
             </f:then>
             <f:else>
                   <f:translate key="email.membershipActivated.main.sepa"/>
