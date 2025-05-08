@@ -42,6 +42,9 @@
 			<trans-unit id="email">
 				<source>Email address</source>
 			</trans-unit>
+			<trans-unit id="email.createMembership.subject">
+				<source>Please confirm your membership</source>
+			</trans-unit>
 			<trans-unit id="email.createMembership.main.body">
 				<source>You are only one step away from your registration. Please click on the following button to confirm your registration.</source>
 			</trans-unit>
@@ -60,6 +63,9 @@
 			<trans-unit id="email.createMembership.title">
 				<source>Please confirm your membership</source>
 			</trans-unit>
+            <trans-unit id="email.newMembership.subject">
+                <source>New member registration</source>
+            </trans-unit>
 			<trans-unit id="firstname">
 				<source>First name</source>
 			</trans-unit>
@@ -117,21 +123,70 @@
 			<trans-unit id="select-choose">
 				<source>Select option</source>
 			</trans-unit>
-			<trans-unit id="street">
-				<source>Street</source>
-			</trans-unit>
-			<trans-unit id="submit">
-				<source>Register</source>
-			</trans-unit>
-			<trans-unit id="telephone">
-				<source>Phone number</source>
-			</trans-unit>
-			<trans-unit id="title">
-				<source>Titel</source>
-			</trans-unit>
-			<trans-unit id="zip">
-				<source>Zip</source>
-			</trans-unit>
+            <trans-unit id="street">
+                <source>Street</source>
+            </trans-unit>
+            <trans-unit id="submit">
+                <source>Register</source>
+            </trans-unit>
+            <trans-unit id="telephone">
+                <source>Phone number</source>
+            </trans-unit>
+            <trans-unit id="title">
+                <source>Titel</source>
+            </trans-unit>
+            <trans-unit id="zip">
+                <source>Zip</source>
+            </trans-unit>
+			<trans-unit id="email.main.salutation">
+                <source>Dear %s</source>
+            </trans-unit>
+			<trans-unit id="email.main.button.information">
+                <source>If you are not able to click on the button, please copy the following link and open the page manually: </source>
+            </trans-unit>
+            <trans-unit id="email.createMembership.title">
+                <source>Please confirm your membership</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.body">
+                <source>You are only one step away from your registration. Please click on the following button to confirm your registration.</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.body.txt">
+                <source>You are only one step away from your registration. Please use the following link to confirm your registration.</source>
+            </trans-unit>
+			<trans-unit id="email.createMembership.main.button">
+                <source>Confirm registration</source>
+            </trans-unit>
+            <trans-unit id="email.newMembership.title">
+                <source>New membership registration</source>
+            </trans-unit>
+            <trans-unit id="email.newMembership.body">
+                <source>New membership registration</source>
+            </trans-unit>
+			<trans-unit id="email.newMembership.main.body">
+                <source>A new person has registered for your club and is waiting for approval.</source>
+            </trans-unit>
+			<trans-unit id="email.newMembership.main.body.txt">
+                <source>YA new person has registered for your club and is waiting for approval. Use the following link to view your members.</source>
+            </trans-unit>
+			<trans-unit id="email.newMembership.main.button">
+                <source>View memberships</source>
+            </trans-unit>
+
+            <trans-unit id="error.1746441586">
+                <source>Your registration has already been confirmed.</source>
+            </trans-unit>
+            <trans-unit id="error.1746450606">
+                <source>Your membership is in active state and cannot be confirmed again.</source>
+            </trans-unit>
+            <trans-unit id="error.memberNotFound">
+                <source>The requested member does not exist.</source>
+            </trans-unit>
+            <trans-unit id="error.invalidEmailAddress">
+                <source>The provided email address is invalid.</source>
+            </trans-unit>
+            <trans-unit id="error.unknown">
+                <source>An unknown error occurred. Please contact your person in charge.</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

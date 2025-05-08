@@ -162,7 +162,7 @@ final class MembershipController extends ActionController
 
     protected function confirmAction(string $hash, string $email): ResponseInterface
     {
-        $member = $this->memberRepository->findOneByHash($hash);
+        $member = $this->memberRepository->findOneByHash($hash, true);
 
         // Show error if no member with associated hash is found
         if ($member === null) {
@@ -174,16 +174,13 @@ final class MembershipController extends ActionController
             return $this->errorResponse('invalidEmailAddress');
         }
 
-        // Confirm membership
-        $member->setCreateHash('');
-        $member->setDisabled(false);
-        $member->setMembershipStatus(MembershipStatus::Pending);
-
-        // Update member in database
-        $this->persistenceManager->update($member);
-        $this->persistenceManager->persistAll();
-
-        // @todo send mail to manager
+        try {
+            if (!$this->membershipService->confirm($member)) {
+                return $this->errorResponse('unknown');
+            }
+        } catch (Exception $exception) {
+            return $this->errorResponse($exception->getCode());
+        }
 
         return $this->htmlResponse();
     }

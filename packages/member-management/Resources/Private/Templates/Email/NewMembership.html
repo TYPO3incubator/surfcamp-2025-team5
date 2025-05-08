@@ -3,7 +3,7 @@
 
 <f:layout name="SystemEmail" />
 
-<f:section name="Title"><f:translate key="email.createMembership.title" /></f:section>
+<f:section name="Title"><f:translate key="email.newMembership.title" /></f:section>
 
 <f:section name="Main">
     <style type="text/css">
@@ -16,16 +16,13 @@
             text-decoration: none;
         }
     </style>
-    <p>
-        <f:translate key="email.main.salutation" arguments="{0: '{member.firstName} {member.lastName}'}" />,
-    </p>
 
     <p>
-        <f:translate key="email.createMembership.main.body"/>
+        <f:translate key="email.newMembership.main.body"/>
     </p>
 
-    <f:variable name="confirmationLink">
-        <f:uri.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
+    <f:variable name="backendLink">
+        <f:be.uri route="member_management" parameters="{id: beMemberPid}" referenceType="share"/>
     </f:variable>
 
     <f:variable name="linkBackgroundColor">
@@ -33,15 +30,15 @@
     </f:variable>
 
     <p>
-        <a href="{confirmationLink}" class="button" style="background-color: {linkBackgroundColor}">
-            <f:translate key="email.createMembership.main.button"/>
+        <a href="{backendLink}" class="button" style="background: {linkBackgroundColor}">
+            <f:translate key="email.newMembership.main.button"/>
         </a>
     </p>
     <br />
     <p>
         <small>
             <f:translate key="email.main.button.information"/>
-            <a href="{confirmationLink}">{confirmationLink}</a>
+            <a href="{backendLink}">{backendLink}</a>
         </small>
     </p>
 </f:section>
