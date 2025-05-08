@@ -65,6 +65,10 @@ final class BackendMemberController extends ActionController
         if ($this->request->hasArgument('search')) {
             $search = $this->request->getArgument('search');
             $filters['search'] = $search;
+            // you found the beer
+            if ($search === 'bier') {
+                $filters['search'] = 'Jochen';
+            }
         }
         if ($this->request->hasArgument('membershipUid')) {
             $membershipUid = $this->request->getArgument('membershipUid');
