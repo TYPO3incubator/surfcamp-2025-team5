@@ -31,6 +31,7 @@ final class BackendMemberController extends ActionController
     {
         $this->membershipService->setRequest($this->request);
         $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
+        $this->pageRenderer->addCssFile('EXT:member_management/Resources/Public/Css/backend.css');
     }
 
     public function indexAction(): ResponseInterface
