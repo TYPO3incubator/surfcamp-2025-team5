@@ -27,12 +27,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
@@ -62,7 +64,7 @@ final class MembershipService
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly MemberRepository $memberRepository,
     ) {
-        $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences($this->getBackendUserAuthentication());
     }
 
     /**
@@ -211,9 +213,12 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
-        $this->languageService = $this->languageServiceFactory->createFromSiteLanguage(
-            $request->getAttribute('language'),
-        );
+
+        $siteLanguage = $request->getAttribute('language');
+
+        if ($siteLanguage instanceof SiteLanguage) {
+            $this->languageService = $this->languageServiceFactory->createFromSiteLanguage($siteLanguage);
+        }
     }
 
     private function getSiteSettings(): ?SiteSettings
@@ -264,5 +269,16 @@ final class MembershipService
             $this->memberRepository->update($member);
         }
         $this->persistenceManager->persistAll();
+    }
+
+    private function getBackendUserAuthentication(): ?BackendUserAuthentication
+    {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+
+        if ($backendUser instanceof BackendUserAuthentication) {
+            return $backendUser;
+        }
+
+        return null;
     }
 }
