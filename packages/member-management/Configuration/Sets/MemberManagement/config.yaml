@@ -4,12 +4,12 @@ settings:
   memberManagement:
     storage:
       membershipsFolderPid: 0
-      membersFolderPid: 0
       paymentsFolderPid: 0
     organization:
       name: ''
       personInCharge: ''
       emailOfPersonInCharge: ''
+      defaultUsergroup: 1
       address:
         streetAndHouseNumber: ''
         city: ''

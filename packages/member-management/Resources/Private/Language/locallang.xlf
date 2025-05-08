@@ -78,6 +78,9 @@
 			<trans-unit id="iban">
 				<source>IBAN</source>
 			</trans-unit>
+			<trans-unit id="sepa-accepted">
+				<source>I agree that the membership fee will be collected by SEPA direct debit.</source>
+			</trans-unit>
 			<trans-unit id="information-address">
 				<source>Address</source>
 			</trans-unit>

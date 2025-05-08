@@ -103,14 +103,27 @@ final class MembershipController extends ActionController
     {
         $member->setPrivacyAcceptedAt(new \DateTime());
 
+        if ($member->getSepaAcceptedAt()) {
+            $member->getSepaAcceptedAt(new \DateTime());
+        }
+
         // Hash given password
         $member->setPassword(
             $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
         );
 
+        // set pid and usergroup based on site settings
+        $siteSettings = $this->request->getAttribute('site')->getSettings();
+        $usergroup = $siteSettings->get('memberManagement.organization.defaultUsergroup');
+        $pid = $siteSettings->get('felogin.pid');
+        $member->setUsergroup($usergroup);
+        $member->setPid($pid);
+
         // Reset password repeat since we don't need it anymore
         $member->setPasswordRepeat('');
         $member->setUsername($member->getEmail());
+
+        // @todo create mandate reference (uuid? -> suggestion from Jochen, The Brain)
 
         // Disable member until consent was given
         $member->setDisabled(true);

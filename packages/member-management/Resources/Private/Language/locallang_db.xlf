@@ -24,6 +24,9 @@
             <trans-unit id="fe_users.iban">
                 <source>IBAN</source>
             </trans-unit>
+            <trans-unit id="fe_users.sepa_accepted_at">
+                <source>SEPA direct debit accepted on</source>
+            </trans-unit>
             <trans-unit id="fe_users.member_since">
                 <source>Member since</source>
             </trans-unit>

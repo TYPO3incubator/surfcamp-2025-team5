@@ -2,6 +2,8 @@
       data-namespace-typo3-fluid="true">
 
 <f:form action="save" controller="Membership" method="post" object="{member}" objectName="member">
+    <f:asset.script identifier="membership" src="EXT:member_management/Resources/Public/JavaScript/membership.js" />
+
     <f:form.validationResults for="member">
         <f:for each="{validationResults.flattenedErrors}" as="errors">
             <f:for each="{errors}" as="error">
@@ -55,9 +57,13 @@
     <fieldset>
         <legend>{f:translate(key: 'information-payment')}</legend>
         <f:render partial="Input"
-            arguments="{ type: 'text', id: 'iban', name: 'iban', required: true}" />
+            arguments="{ type: 'text', id: 'iban', name: 'iban', required: false}" />
         <f:render partial="Input"
             arguments="{ type: 'text', id: 'bic', name: 'bic', required: false}" />
+        <div class="mb-3 form-check">
+            <f:form.checkbox property="sepaAcceptedAt" value="{currentDateFormatted}" class="form-check-input sepa-accepted-js" id="sepa" data-toggle="iban"/>
+            <label class="form-check-label" for="sepa">{f:translate(key: 'sepa-accepted')}</label>
+        </div>
     </fieldset>
     <fieldset>
         <legend>{f:translate(key: 'information-membership')}</legend>
