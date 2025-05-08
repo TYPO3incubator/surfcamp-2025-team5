@@ -55,12 +55,13 @@ class Member extends AbstractEntity
     protected string $city = '';
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $country = '';
-    #[Validate(['validator' => 'NotEmpty'])]
     #[Validate([
         'validator' => IbanValidator::class,
     ])]
     protected string $iban = '';
     protected string $bic = '';
+    #[Validate(['validator' => 'DateTime'])]
+    protected ?DateTime $sepaAcceptedAt = null;
     protected string $notes = '';
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
@@ -84,6 +85,8 @@ class Member extends AbstractEntity
     protected string $password = '';
     protected string $passwordRepeat = '';
     protected string $createHash = '';
+    protected int $usergroup = 0;
+    protected ?int $pid = 0;
     protected bool $disabled = true;
 
     public function __construct()
@@ -199,6 +202,16 @@ class Member extends AbstractEntity
     public function setBic(string $bic): void
     {
         $this->bic = $bic;
+    }
+
+    public function getSepaAcceptedAt(): ?DateTime
+    {
+        return $this->sepaAcceptedAt;
+    }
+
+    public function setSepaAcceptedAt(?DateTime $sepaAcceptedAt): void
+    {
+        $this->sepaAcceptedAt = $sepaAcceptedAt;
     }
 
     public function getNotes(): string
@@ -329,6 +342,26 @@ class Member extends AbstractEntity
     public function setCreateHash(string $createHash): void
     {
         $this->createHash = $createHash;
+    }
+
+    public function getUsergroup(): int
+    {
+        return $this->usergroup;
+    }
+
+    public function setUsergroup(int $usergroup): void
+    {
+        $this->usergroup = $usergroup;
+    }
+
+    public function getPid(): ?int
+    {
+        return $this->pid;
+    }
+
+    public function setPid(?int $pid): void
+    {
+        $this->pid = $pid;
     }
 
     public function isDisabled(): bool

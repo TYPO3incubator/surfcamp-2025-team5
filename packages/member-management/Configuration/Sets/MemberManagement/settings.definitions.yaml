@@ -1,6 +1,9 @@
 categories:
   MemberManagement:
     label: 'Member Management'
+  MemberManagement.storage:
+    label: 'Storage Folders'
+    parent: MemberManagement
   MemberManagement.organization:
     label: 'Organization'
     parent: MemberManagement
@@ -11,6 +14,16 @@ categories:
     label: 'Payment information'
     parent: MemberManagement.organization
 settings:
+  memberManagement.storage.membershipsFolderPid:
+    label: 'Memberships folder PID'
+    category: MemberManagement.storage
+    type: int
+    default: 0
+  memberManagement.storage.paymentsFolderPid:
+    label: 'Payments folder PID'
+    category: MemberManagement.storage
+    type: int
+    default: 0
   memberManagement.organization.name:
     label: 'Organization name'
     category: MemberManagement.organization
@@ -32,6 +45,11 @@ settings:
     category: MemberManagement.organization
     type: string
     default: ''
+  memberManagement.organization.defaultUsergroup:
+    label: 'Usergroup ID'
+    category: MemberManagement.organization
+    type: int
+    default: 0
   memberManagement.organization.address.streetAndHouseNumber:
     label: 'Street and house number'
     category: MemberManagement.organization.address

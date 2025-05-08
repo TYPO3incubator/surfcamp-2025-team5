@@ -4,6 +4,7 @@ memberManagement:
     personInCharge: 'Team High 5'
     emailOfPersonInCharge: surfcamp@typo3.org
     defaultCountry: 'GB'
+    defaultUsergroup: 1
     address:
       streetAndHouseNumber: 'Calle Gran Canaria, 13 Urb. Butihondo'
       city: 'Las Palmas'
@@ -13,6 +14,10 @@ memberManagement:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
       paymentDueMonth: '9'
+  storage:
+    membershipsFolderPid: 1
+    paymentsFolderPid: 1
 felogin:
+  pid: 1
   view: 
     templateRootPath: EXT:member_management/Resources/Private/Templates
