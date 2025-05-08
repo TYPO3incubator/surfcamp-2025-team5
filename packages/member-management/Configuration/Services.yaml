@@ -8,3 +8,6 @@ services:
     resource: '../Classes/*'
     exclude:
       - '../Classes/Domain/Model/*'
+
+  TYPO3Incubator\MemberManagement\TCA\TypeMembershipItemsProcFunc:
+    public: true
