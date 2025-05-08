@@ -365,12 +365,13 @@ CREATE TABLE `fe_users` (
   `privacy_accepted_at` bigint(20) NOT NULL DEFAULT 0,
   `member_since` bigint(20) NOT NULL DEFAULT 0,
   `member_until` bigint(20) NOT NULL DEFAULT 0,
-  `membership` int(10) unsigned NOT NULL DEFAULT 0,
+  `membership` longtext DEFAULT NULL,
   `membership_status` int(11) NOT NULL DEFAULT 0,
   `payments` int(10) unsigned NOT NULL DEFAULT 0,
   `notes` longtext DEFAULT NULL,
   `create_hash` varchar(255) NOT NULL DEFAULT '',
-  `sepa_accepted_at` bigint(20) NOT NULL DEFAULT 0,
+  `sepa_debtor_mandate` varchar(35) NOT NULL DEFAULT '',
+  `sepa_debtor_mandate_sign_date` bigint(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `parent` (`pid`,`username`(100)),
   KEY `username` (`username`(100)),
@@ -1896,7 +1897,7 @@ CREATE TABLE `tx_scheduler_task_group` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 22:23:22
+-- Dump completed on 2025-05-08 22:34:24
 /*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (aarch64)
 --
@@ -1977,7 +1978,7 @@ UNLOCK TABLES;
 LOCK TABLES `fe_users` WRITE;
 /*!40000 ALTER TABLE `fe_users` DISABLE KEYS */;
 INSERT INTO `fe_users` VALUES
-(2,16,1746609070,1746553161,0,0,0,0,NULL,'tx_member_management_member',NULL,0,NULL,'jochen@typo3.org','$argon2id$v=19$m=65536,t=16,p=1$S09ZeFhFdjJiaUlkc0dtUw$XBqVobvw/mTzFyeQvgtjkBJMpDRj87GhZU0blyD1HjI','1','','Jochen','','Roth','Musterstraße','0123456789','','jochen@typo3.org','','89294','Oberroth','DE','','',0,0,'',NULL,946751962,1,'DE91100000000123456789','',1746553162,0,0,0,0,0,'','',0);
+(2,16,1746609070,1746553161,0,0,0,0,NULL,'tx_member_management_member',NULL,0,NULL,'jochen@typo3.org','$argon2id$v=19$m=65536,t=16,p=1$S09ZeFhFdjJiaUlkc0dtUw$XBqVobvw/mTzFyeQvgtjkBJMpDRj87GhZU0blyD1HjI','1','','Jochen','','Roth','Musterstraße','0123456789','','jochen@typo3.org','','89294','Oberroth','DE','','',0,0,'',NULL,946751962,1,'DE91100000000123456789','',1746553162,0,0,'0',0,0,'','','',0);
 /*!40000 ALTER TABLE `fe_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5601,7 +5602,8 @@ INSERT INTO `sys_log` VALUES
 (162,1746739244,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
 (163,1746739315,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
 (164,1746739353,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
-(165,1746739375,1,1,0,'',0,0,'Scheduler task \"%s\" (UID: %s, Class: \"%s\") was added',4,'default',0,'172.18.0.5','[\"Table garbage collection\",1,\"TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\TableGarbageCollectionTask\"]',-1,0,'',0,'','info',NULL,NULL);
+(165,1746739375,1,1,0,'',0,0,'Scheduler task \"%s\" (UID: %s, Class: \"%s\") was added',4,'default',0,'172.18.0.5','[\"Table garbage collection\",1,\"TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\TableGarbageCollectionTask\"]',-1,0,'',0,'','info',NULL,NULL),
+(166,1746739987,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL);
 /*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7073,4 +7075,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 22:23:22
+-- Dump completed on 2025-05-08 22:34:24
