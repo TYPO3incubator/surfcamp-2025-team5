@@ -220,7 +220,7 @@ CREATE TABLE `cache_pages` (
   `content` longblob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(180),`expires`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,7 @@ CREATE TABLE `cache_pages_tags` (
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(191)),
   KEY `cache_tag` (`tag`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `cache_rootline` (
   `content` longblob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(180),`expires`)
-) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +271,7 @@ CREATE TABLE `cache_rootline_tags` (
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(191)),
   KEY `cache_tag` (`tag`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=913 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -916,7 +916,7 @@ CREATE TABLE `sys_file_processedfile` (
   PRIMARY KEY (`uid`),
   KEY `combined_1` (`original`,`task_type`(100),`configurationsha1`),
   KEY `identifier` (`storage`,`identifier`(180))
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1037,7 +1037,7 @@ CREATE TABLE `sys_history` (
   PRIMARY KEY (`uid`),
   KEY `recordident_1` (`tablename`(100),`recuid`),
   KEY `recordident_2` (`tablename`(100),`tstamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=1172 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1086,7 +1086,7 @@ CREATE TABLE `sys_lockedrecords` (
   `feuserid` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `event` (`userid`,`tstamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1128,7 +1128,7 @@ CREATE TABLE `sys_log` (
   KEY `errorcount` (`tstamp`,`error`),
   KEY `index_channel` (`channel`),
   KEY `index_level` (`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1896,7 +1896,7 @@ CREATE TABLE `tx_scheduler_task_group` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 15:27:51
+-- Dump completed on 2025-05-08 17:49:47
 /*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (aarch64)
 --
@@ -1954,7 +1954,7 @@ UNLOCK TABLES;
 LOCK TABLES `be_users` WRITE;
 /*!40000 ALTER TABLE `be_users` DISABLE KEYS */;
 INSERT INTO `be_users` VALUES
-(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:6:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:5:{s:32:\"8d53ef865619c38685ddea41256ec797\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:263;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:35:\"&edit%5Btt_content%5D%5B263%5D=edit\";i:3;N;i:4;s:0:\"\";}s:32:\"6bc824829e30ecae6274055859ad447b\";a:5:{i:0;s:8:\"Standard\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:5;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B5%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:5;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"0032daeab3ea972c37c2db0c47468639\";a:5:{i:0;s:8:\"Standard\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:6;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B6%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:6;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"b899b29babb7b1fb58740c42dcd9d8d6\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:3;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"1303e539c9547cd256be9039d96838ad\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:4;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B4%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:4;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}}i:1;s:32:\"587489f07f1738cd2c00f59cf0530a4a\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}s:32:\"fd5a17de0820dd130a5d03889588182c\";a:5:{i:0;s:13:\"Frontend User\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:112;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:30:\"&edit%5Bpages%5D%5B112%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:112;s:3:\"pid\";i:111;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=112&table=&pointer=1\";}s:32:\"b899b29babb7b1fb58740c42dcd9d8d6\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:3;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=113&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:6:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:16:\"opendocs::recent\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:4:\"true\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746714018,NULL),
+(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:1:{s:32:\"696addfecc296b326ff6e9f04c7ff3e1\";a:5:{i:0;s:10:\"FC Bigfoot\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:28:\"&edit%5Bpages%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:1;s:3:\"pid\";i:0;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:76:\"/typo3/module/web/layout?token=397d32af3d335122ce46522e8d0b497687d70128&id=1\";}}i:1;s:32:\"696addfecc296b326ff6e9f04c7ff3e1\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}s:32:\"fd5a17de0820dd130a5d03889588182c\";a:5:{i:0;s:13:\"Frontend User\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:112;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:30:\"&edit%5Bpages%5D%5B112%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:112;s:3:\"pid\";i:111;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=112&table=&pointer=1\";}s:32:\"b899b29babb7b1fb58740c42dcd9d8d6\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:3;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=113&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}s:12:\"pagetsconfig\";a:1:{s:6:\"action\";s:19:\"pagetsconfig_active\";}s:6:\"web_ts\";a:1:{s:6:\"action\";s:25:\"web_typoscript_infomodify\";}s:25:\"web_typoscript_infomodify\";a:1:{s:23:\"selectedTemplatePerPage\";a:1:{i:1;i:-1;}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:16:\"opendocs::recent\";s:40:\"54f6fa34eae47036cd824afde9a8469b8354c53f\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";s:12:\"pagetsconfig\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:6:\"web_ts\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:25:\"web_typoscript_infomodify\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:5:\"false\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746722714,NULL),
 (2,0,1744014582,1744014582,0,0,0,0,NULL,'default','a:4:{s:10:\"moduleData\";a:0:{}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";}',0,NULL,'','_cli_','$argon2id$v=19$m=65536,t=16,p=1$Qk41RG10QTUxUGQzclc3dA$9bxBcygWFXt9U5WuxRJLFP3866mFPYZjpkdwMrS98sg','',0,NULL,'','','',1,3,NULL,1,NULL,'',NULL,0,NULL);
 /*!40000 ALTER TABLE `be_users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1998,7 +1998,6 @@ LOCK TABLES `index_fulltext` WRITE;
 /*!40000 ALTER TABLE `index_fulltext` DISABLE KEYS */;
 INSERT INTO `index_fulltext` VALUES
 ('230f8464c03ab1dc4fbd4bc332b6b776','Page A Page A\n             \n            \n         \n    \n         \n             \n                Page B  '),
-('3d798c3f120fdabe32985de46a5fc2fd','FC Bigfoot Events\n                                 \n                            \n                     \n                \n                     \n                        \n                                 \n                                 \n                                    \n                                    News\n                                 \n                            \n                     \n                \n                     \n                        \n                                 \n                                 \n                                    \n                                    Club\n                                 \n                                 \n                                    \n                                        \n                                                 \n                                                    History\n                                                 \n                                            \n                                    \n                                        \n                                                 \n                                                    Membership\n                                                 \n                                            \n                                    \n                                        \n                                                 \n                                                    Contact\n                                                 \n                                            \n                                    \n                                 \n                            \n                     \n                \n                     \n                        \n                                 \n                                 \n                                    \n                                    Team\n                                 \n                            \n                     \n                \n                     \n                        \n                                 \n                                 \n                                    \n                                    Sponsors\n                                 \n                            \n                     \n                \n             \n\n            \n                 \n            \n            \n                 \n                     Contact Us \n                 \n            \n         \n     \n \n\n\n\n\n \n    \n    \n    \n\n \n     \n         \n              \n             \n                 FC Bigfoot Fuerteventura \n                 23 years of passion and dedication \n                 \n                    Join today\n                 \n             \n         \n     \n     \n \n\n\n\n\n\n    \n     \n         \n            \n\n\n \n    \n        \n\n\n\n    \n    \n            \n                \n                     \n                        \n\n  \n     \n      \r\n\r\n  \r\n       \r\n        Our latest Game Results\r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n                     \n                \n            \n        \n    \n \n\n\n\n\n\n        \n     \n         \n             \n                \n                     \n                         \n                             \n                             \n                                \n                                        3 : 0\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Super Feet Stadium\n                         \n                         \n                            29.02.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        0 : 0\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Super Feet Stadium\n                         \n                         \n                            05.03.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        2 : 1\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Luton Bowl\n                         \n                         \n                            09.03.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        13 : 1\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Super Feet Stadium\n                         \n                         \n                            18.03.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        2 : 1\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Super Feet Stadium\n                         \n                         \n                            21.03.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        2 : 2\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Woodland Arena\n                         \n                         \n                            02.04.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        TBA\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Burns\' Power Plant\n                         \n                         \n                            09.04.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        TBA\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Wolverine Palace\n                         \n                         \n                            16.04.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        TBA\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Super Feet Stadium\n                         \n                         \n                            29.04.2024\n                         \n                     \n                \n                     \n                         \n                             \n                             \n                                \n                                        TBA\n                                    \n                             \n                             \n                         \n                         \n                            SurfCamp League @ Never Ever Arena\n                         \n                         \n                            13.05.2024\n                         \n                     \n                \n             \n         \n     \n\n    \n\n\n\n\n\n\n\n         \n     \n\n    \n     \n        \n\n\n\n  \n     \n      \r\n\r\n  \r\n       \r\n        News\r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n \n     \n         \n             \n             24 Feb 2024 \n             15th charity tournament  \n             The big soccer spectacle will take place for the 15th time. We have once again invited soccer teams from the region and many have already confirmed their participation.  Our charity tournament is also always a meeting point for all soccer fans in the region to get together, chat or even have a beer together. \n             Learn more    \n         \n     \n     \n         \n             \n             10 Jun 2024 \n             Get ready for another exciting match! \n             On Thursday, 18.04.2023 at 16.30 the time has come, then the current 3rd of the regional league, our FC Bigfoot, meets the rival SurfCamp League. Here is some information about the game: Access to the stadium is possible from 14.30. Catering will be provided. \n             Learn more    \n         \n     \n     \n         \n             \n             13 April 2024 \n             Our new supporter: Luna Media \n             A Powerful Partnership: We\'re thrilled to welcome Luna Media as our newest sponsor! Their support promises to elevate our club to even greater heights, both on and off the field. \n             Learn more    \n         \n     \n \n\n\n\n\n\n \n    \n        \n\n     \n        \n        \n             \n                \n                    \n                         \n                            \n\n        \n \n    \n            \n\n \n\n\n        \n    \n \n\n\n    \n\n\n                         \n                    \n                \n             \n        \n        \n \n\n\n\n    \n    \n             \n                \n                    \n\n  \n     \n      \r\n\r\n  \r\n       \r\n        Your City. Your Club.\r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n                \n                 With 21 teams, we are once again one of the largest clubs in Fuerteventura this season! We have three senior teams in each age group and at least two youth teams in each age group. In total, we have almost 900 members. We would like to thank everyone who has supported us so actively this season. \n             \n        \n    \n \n\n\n\n\n\n\n  \n     \n      \r\n\r\n  \r\n       \r\n        Our events \r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n\n\n     \n         \n            \n                 \n                    \n                         \n                    \n                     \n                         \n                            Game Day\n                         \n                        \n                             \n                                Learn more\n                                  \n                             \n                        \n                     \n                 \n            \n                 \n                    \n                         \n                    \n                     \n                         \n                            Charity Event\n                         \n                        \n                             \n                                Learn more\n                                  \n                             \n                        \n                     \n                 \n            \n                 \n                    \n                         \n                    \n                     \n                         \n                            Junior Training\n                         \n                        \n                             \n                                Learn more\n                                  \n                             \n                        \n                     \n                 \n            \n                 \n                    \n                         \n                    \n                     \n                         \n                            Training\n                         \n                        \n                             \n                                Learn more\n                                  \n                             \n                        \n                     \n                 \n            \n         \n     \n\n\n\n\n\n\n \n    \n        \n\n\n\n    \n    \n             \n                \n                    \n\n  \n     \n      \r\n\r\n  \r\n       \r\n        Our Core Values\r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n                \n                 At FC Bigfoot, our values guide everything we do, both on and off the field. We are dedicated to fostering a community that embodies the spirit of football through trust, respect, openness, sharing, friendship, and fun. \n  Trust and Respect  We trust and respect every individual within our club—players, coaches, staff, and supporters. Everyone\'s contributions are valued, creating a strong, cohesive team. \n  Openness  Our inclusive and welcoming community embraces diversity. We ensure that everyone feels valued and included, fostering a sense of belonging through transparent and honest communication. \n  Sharing  Collaboration is key at FC Bigfoot. Sharing knowledge, skills, and experiences makes us stronger, inspiring the next generation of players and fans. \n  Friendship and Fun  Football is about building friendships and creating memories. We prioritize camaraderie and enjoyment, believing that a positive and fun atmosphere leads to better performance and a more fulfilling experience. \n FC Bigfoot is more than a club—we are a community built on shared values. Trust, respect, openness, sharing, friendship, and fun define us. Join us at FC Bigfoot, where values matter and every member is celebrated. \n             \n        \n    \n \n\n\n\n\n \n    \n\n  \n     \n      \r\n\r\n  \r\n       \r\n        Our biggest supporters\r\n       \r\n    \r\n\r\n\n      \r\n\r\n\r\n\n     \n  \n\n\n\n     \n         \n            \n                 \n                    \n                         \n                    \n                 \n            \n                 \n                    \n                         \n                    \n                 \n            \n                 \n                    \n                         \n                    \n                 \n            \n                 \n                    \n                         \n                    \n                 \n            \n                 \n                    \n                         \n                    \n                 \n            \n                 \n                    \n                         \n                    \n                 \n            \n         \n     \n \n\n\n\n     \n\n    \n    \n\n \n     \n         \n             Game on \n             Let\'s keep in touch \n         \n        \n            \n                 \n                    Suscribe\n                 \n            \n                 \n                    Contact us\n                 \n            \n        \n     \n \n\n\n\n\n \n\n\n     \n     \n         \n            \n                 \n            \n             \n                \n \n    \n         \n             \n                Events\n             \n         \n    \n         \n             \n                News\n             \n         \n    \n         \n             \n                Club\n             \n         \n    \n         \n             \n                Team\n             \n         \n    \n         \n             \n                Sponsors\n             \n         \n    \n \n\n\n                \n                     \n                         Privacy Policy \n                     \n                \n             \n         \n         \n            \n                © 2025 The TYPO3 Community\n            \n             \n                \n                    \n                \n                    \n                \n                    \n                         \n                              \n                             Instagram  '),
 ('4512611c26346c41692fc2d2c861ba25','Features A single TYPO3 CMS installation can easily power hundreds of websites in many dozens of languages. Need more functionality? No problem! More than 1,500 open source extensions are available via Packagist and TYPO3 Extension Repository (TER). \n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n\n\n    \n\n    \n\n\n    \n    \n    \n\n     \n        \n             \n                \n\n\n\n\n        \n \n    \n            \n                    \n \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n    \n    \n    \n    \n            \n        \n    \n    \n     \n \n\n\n                \n        \n    \n \n\n\n    \n\n\n             \n        \n     \n\n\n\n\n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n\n\n    \n\n    \n        \n        \n         \n            \n\n                 \n                     \n                        \n                         \n                             \n                                Multisite\n                             \n                            \n                            \n                                 A single TYPO3 CMS installation can power multiple sites, efficiently sharing configuration, templates, branding, and content where needed. Point multiple domains to different entry points of your TYPO3 multisite installation. \n                            \n                         \n                        \n                     \n                 \n            \n\n                 \n                     \n                        \n                         \n                             \n                                Multilingual\n                             \n                            \n                            \n                                 Deploy your content (or localised copies of your website in a multisite installation) in 56 languages. TYPO3 CMS websites and multisite installations support a variety of translation and localisation models and workflows. \n                            \n                         \n                        \n                     \n                 \n            \n\n                 \n                     \n                        \n                         \n                             \n                                Any data, any source\n                             \n                            \n                            \n                                 The TYPO3 CMS file system abstraction layer can use and combine any number of file storage systems and locations while remaining completely transparent to editors. Existing file service integrations include Akamai, Alfresco, SixOMC, Cumulus, QBank DAM, Dropbox, Magento, Bynder, and Amazon S3. \n                            \n                         \n                        \n                     \n                 \n            \n\n                 \n                     \n                        \n                         \n                             \n                                Mobile apps, responsive sites\n                             \n                            \n                            \n                                 Use TYPO3 CMS as the content management, business logic, and content provider for native mobile applications and front-end frameworks, as well as fully-responsive websites for website visitors and admins. \n                            \n                         \n                        \n                     \n                 \n            \n\n                 \n                     \n                        \n                         \n                             \n                                Content history and auditing\n                             \n                            \n                            \n                                 TYPO3 CMS keeps a full, unlimited, auditable history of content publication and revision. Browse all changes in a visual data comparison via “diff” and selectively undo, or even undelete! \n                            \n                         \n                        \n                     \n                 \n            \n\n                 \n                     \n                        \n                         \n                             \n                                On-page Search Engine Optimization (SEO)\n                             \n                            \n                            \n                                 A major part of getting on-page SEO right is consistency. With TYPO3 you can optimize for search engines on the go as you create individual pages with features like URL structure, page titles, and headers. It also allows you to quickly add your own meta description and meta tags. \n                            \n                         \n                        \n                     \n                 \n            \n         \n    \n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n    \n         \n            \n\n    \n             \n                 Full Responsive Backend \n             \n        \n\n\n\n            \n\n\n\n            \n\n\n\n         \n    \n\n\n\n    \n\n     The administration interface, called TYPO3 Backend, can be managed from any modern web browser, including tablets and smart phones the same way. Publishing a small change on-the-go or working with tablet devices to add content has never been easier. \n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n\n\n    \n\n    \n\n\n    \n    \n    \n\n     \n        \n             \n                \n\n\n\n\n        \n \n    \n            \n                     \n                         \n                            \n                                    Show larger version\n                                \n                         \n                        \n \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n        \n        \n        \n        \n            \n            \n            \n                \n                \n                    \n                    \n                    \n                    \n                            \n                        \n                    \n                \n            \n             \n        \n    \n    \n    \n    \n    \n            \n        \n    \n    \n     \n \n\n\n                     \n                \n        \n    \n \n\n\n    \n\n\n             \n        \n     \n\n\n\n\n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n    \n         \n            \n\n    \n             \n                 Runs everywhere \n             \n        \n\n\n\n            \n\n\n\n            \n\n\n\n         \n    \n\n\n\n    \n\n     You can install TYPO3 by downloading  with or without composer . Putting it on a web server or on a cloud service like Microsoft Azure or Amazon AWS is simple - due to proper separation of content, configuration and other assets like caches and temporary files. Use any database you like MySQL/MariaDB, postgreSQL, SQL Server or SQLite - due to the underlying database abstraction. \n  Read TYPO3 Install Guide  \n\n\n    \n\n\n\n    \n\n\n\n\n                         \n                     \n                 \n             \n         \n\n    \n\n\n\n     \n\n    \n\n\n\n\n\n\n\n\n         \n             \n                 \n                    \n\n\n\n                     \n                         \n                            \n    \n    \n\n\n\n    \n\n    \n         \n            \n\n    \n            \n                \n\n    \n             \n                 Reliable Upgrade Paths \n             \n        \n\n\n\n            \n        \n\n\n\n            \n\n\n\n            \n\n\n\n         \n    \n\n\n\n    \n\n     From its inception TYPO3 has emphasized the importance of stable APIs and full backwards-compatibility.  The TYPO3 core team follows a regular release schedule and take great care to ensure easy, non-breaking updates. \n  TYPO3 CMS Roadmap  '),
 ('4d4ccaa3fef37d18c9f2eb9a894108ff','Confirm Membership Your membership is confirmed  '),
 ('55a01547a20d7d965193fcd3e277624c','Page B Page A\n             \n            \n         \n    \n         \n             \n                Page B  '),
@@ -2022,7 +2021,6 @@ INSERT INTO `index_grlist` VALUES
 (2,'9bd8393860e6e9cf4c907a0919ca687d','9bd8393860e6e9cf4c907a0919ca687d','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
 (4,'cc75043b782e7d5b8b77c31c085dc87b','cc75043b782e7d5b8b77c31c085dc87b','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
 (6,'ab566ef524f8cda9b66737a0a146a674','ab566ef524f8cda9b66737a0a146a674','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
-(9,'3d798c3f120fdabe32985de46a5fc2fd','3d798c3f120fdabe32985de46a5fc2fd','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
 (12,'4512611c26346c41692fc2d2c861ba25','4512611c26346c41692fc2d2c861ba25','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
 (13,'230f8464c03ab1dc4fbd4bc332b6b776','230f8464c03ab1dc4fbd4bc332b6b776','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
 (14,'55a01547a20d7d965193fcd3e277624c','55a01547a20d7d965193fcd3e277624c','cdc0a8f9fe7f5e206d167723a90af880','0,-1'),
@@ -2042,7 +2040,6 @@ LOCK TABLES `index_phash` WRITE;
 /*!40000 ALTER TABLE `index_phash` DISABLE KEYS */;
 INSERT INTO `index_phash` VALUES
 ('230f8464c03ab1dc4fbd4bc332b6b776','ad5c9ca91e077da8aa1ce2dff42a55f1','[]','',99,0,'','0,-1','0','Page A','Page A Page B',1744022126,1744022132,1599,'ecc6dd1a44b97d6794d65dc91f851d7a',1744022132,8,0,1744022114,0,0,0,0),
-('3d798c3f120fdabe32985de46a5fc2fd','dc91fa3918f3fab9a43a16f82bb27086','[]','',1,0,'','0,-1','0','FC Bigfoot','Events News Club History Membership Contact Team Sponsors Contact Us FC Bigfoot Fuerteventura 23 years of passion and dedication Join today Our latest Game Results 3 : 0 SurfCamp League @ Super Feet S',1744014936,1744021289,30339,'cef657c85f8d56d9f23fab9b6aaf2f30',1744021289,45,0,1744014582,0,0,0,0),
 ('4512611c26346c41692fc2d2c861ba25','927f5bd190a4c729d55536dd6a64fc5a','[]','',95,0,'','0,-1','0','Features','A single TYPO3 CMS installation can easily power hundreds of websites in many dozens of languages. Need more functionality? No problem! More than 1,500 open source extensions are available via Packagi',1744015096,1744021608,103420,'5df7163565766c5b56f715dfddea577a',1744021608,109,0,1744015096,0,0,0,0),
 ('4d4ccaa3fef37d18c9f2eb9a894108ff','d47bf64a5379df78c307ecb9caffe5f3','[]','',105,0,'','0,-1','0','Confirm Membership','Your membership is confirmed',1746608114,1746608203,81701,'6eca70c47a6750a54e48a6a7b2280613',1746608203,18,0,1746554014,0,0,0,0),
 ('55a01547a20d7d965193fcd3e277624c','49bd411e140968a8cdc3180e2441bfe7','[]','',100,0,'','0,-1','0','Page B','Page A Page B',1744022124,1744022133,1599,'3e413a5660735903caa5cd997bfbcf2f',1744022133,8,0,1744022118,0,0,0,0),
@@ -2066,278 +2063,6 @@ INSERT INTO `index_rel` VALUES
 ('230f8464c03ab1dc4fbd4bc332b6b776','0cc175b9c0f1b6a831c399e269772661',2,0,32000,128),
 ('230f8464c03ab1dc4fbd4bc332b6b776','71860c77c6745379b0d44304d66b6a13',3,0,32000,128),
 ('230f8464c03ab1dc4fbd4bc332b6b776','92eb5ffee6ae2fec3ad71c777531578f',1,3,32000,0),
-('3d798c3f120fdabe32985de46a5fc2fd','01b6e20344b68835c5ed1ddedf20d531',8,149,4723,0),
-('3d798c3f120fdabe32985de46a5fc2fd','03d59e663c1af9ac33a9949d1193505a',1,197,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','05e94e8cbc28f5837d0c355917c05fea',1,469,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','06e3d36fa30cea095545139854ad1fb9',2,253,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','06f287d4d2555285b15d0e30a7738037',1,353,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','074b62fb6c21b84e6b5846e6bb001f67',1,16,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','075a959179a3ff15345c5865a10c5435',1,227,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','07811dc6c422334ce36a09ff5cd6fe71',3,101,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','07868a716d4712d7771f6414d2b8bf8a',1,361,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','07ab242311dbad887fb03e4a25092781',1,210,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','07cc694b9b3fc636710fa08b6922c42b',2,115,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','07ccfe360dce69b84595428e2ec1c1cc',1,137,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','08391c959fc8bd0b672c596c4d6bcdcd',1,236,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','09286af346951f520509c5702db7625e',1,235,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0b3b97fa66886c5688ee4ae80ec0c3c2',6,9,3542,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0cc175b9c0f1b6a831c399e269772661',10,139,5904,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0cfff68896ae6825dfa9caee7afcea9f',1,77,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0e5243d9965540f62aac19a985f3f33e',1,179,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0e66be14b86bd30bf4fc84357763b591',2,131,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0eee59a475855895f87e4900c084a4a9',1,70,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','0f9642bcff1dc3cd224f1f3e2f1ca629',1,120,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','10b73ec3370562dbd65f130ea54a8a35',11,27,6494,0),
-('3d798c3f120fdabe32985de46a5fc2fd','11a7a5d55a91adb201e113967eff93fe',1,425,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1253208465b1efa876f982d8a9e73eef',1,386,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','12de3a4dab98ef8a7d67aace8150b540',1,178,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','13b5bfe96f3e2fe411c9f66f4a582adf',6,146,3542,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1424ca49c88f72347af1f2fe7a569169',6,31,3542,0),
-('3d798c3f120fdabe32985de46a5fc2fd','162e31afc5ade88a04d3f428e97e8f46',12,21,7084,0),
-('3d798c3f120fdabe32985de46a5fc2fd','16908b0605f2645dfcb4c3a8d248cef3',3,0,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','18218139eec55d83cf82679934e5cd75',2,109,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','18ccf61d533b600bbf5a963359223fe4',1,522,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1b20e9021b3a16b059287caddc7862f6',1,453,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1b3231655cebb7a1f783eddf27d254ca',5,29,2952,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1ebf4e55c604b92cce9b0f1fd7debcc0',1,129,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1ed1645edd706dc379effe13f3edcacf',2,145,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1f5f6080965ed6d0a90e6b9ec599e441',1,213,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1fecb4dca32e01d3a83ebab5314ebbab',1,90,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','1ff1de774005f8da13f42943881c655f',1,99,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','21582c6c30be1217322cdb9aebaf4a59',3,358,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','21cec257feb15bcc84e0acd5b0773883',1,533,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','22af645d1859cb5ca6da0c484f1f37ea',1,220,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','23a58bf9274bedb19375e527a0744fa9',1,260,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','23b79ae0fc0f07a3669598dd23c694cc',1,380,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','29d0b8d9daec06cdd0cda7269997b216',1,436,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','2f8a6bf31f3bd67bd2d9720c58b19c9a',3,5,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','30c6ee2fd7ea2b9ab608ad1b56291bb2',1,389,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','312351bff07989769097660a56395065',1,535,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','312db69f5bf4447dfe3c58983083b54f',1,342,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3262d48df5d75e3452f0f16b313b7808',2,251,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3309a7a7941818e131b4dfb9a6349914',2,177,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','339d8d14024f2ae5c8dc2e07362eba1d',7,159,4132,0),
-('3d798c3f120fdabe32985de46a5fc2fd','35d6d33467aae9a2e3dccb4b6b027878',1,278,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','364107f60f8e60ce22332e1d3fb8aa6d',1,525,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3681df8d04470ecc65053b790e19a065',1,81,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','37693cfc748049e45d87b8c7d8b9aacd',1,13,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','37b4e2d82900d5e94b8da524fbeb33c0',2,363,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','37d153a06c79e99e4de5889dbe2e7c57',1,217,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','393070777bc8dc5f8900ff849e704f54',1,190,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3a098d086c802fe130b34cda92eaa1bb',1,174,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3c59dc048e8850243be8079a5c74d079',1,261,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3c6e0b8a9c15224a8228b9a98ca1531d',1,427,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3cd15f8f2940aff879df34df4e5c2cd1',1,3,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3d9fb56d74e048e4b871027949764052',1,404,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3e1867f5aee83045775fbe355e6a3ce1',1,157,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3f1b0333a44fd5f611d3429887eba4a8',2,275,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','3f347890f95ef75c2eacb4f01c622ac9',1,521,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','4015e9ce43edfb0668ddaa973ebc7e87',4,264,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','40be4e59b9a2a2b5dffb918c0e86b3d7',1,230,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','4119639092e62c55ea8be348e4d9260d',1,323,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','41b54177746ada75a77ec0768ebd51dc',1,172,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','42bd4c0819c498d1c1ab622de74d6f82',1,310,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','434990c8a25d2be94863561ae98bd682',1,238,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','43b5c9175984c071f30b873fdce0a000',1,181,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','43c4975d498bbc4228b3f3a20ff5ac6f',1,390,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','46b3931b9959c927df4fc65fdee94b07',2,199,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','46defce884d1be32019f20864172323d',1,74,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','49889d3f78e208b1538f15a0c7bc16d0',1,185,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','4cf2d30b6327df1b462663c7611de22f',2,7,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','4ed5d2eaed1a1fadcc41ad1d58ed603e',1,257,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','50584c36a7a475387f81fa1b1655fe79',1,239,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','508c75c8507a2ae5223dfd2faeb98122',3,1,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','517b08dafd8aa7559790bf0715de47c6',12,28,7084,0),
-('3d798c3f120fdabe32985de46a5fc2fd','52d6127375d82f3e300827eb479b2c65',4,368,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','536801a526cbca7d986e6b9bc55363b8',3,367,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','53a9c3686afdbb0db7c626e56a243a41',1,32,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','53d670af9bb16ea82e7ef41ee23ec6df',1,308,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','53e61336bb49ec978968786b07dea50b',1,24,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','560a6e42db25034a739955610bd3f8b4',1,108,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','5634275d694f8665957746c9619132f0',1,299,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','567904efe9e64d9faf3e41ef402cb568',1,508,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','589b397ed82131bf51acdf63521c2df5',1,490,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','5d17dca175f108350a96a8dfb36a4be6',2,392,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','5e96bf62b9b2c18fdb65564b4a18fd1f',1,420,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','5fbab8c991be6b35d52e2d4868b6854f',1,47,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','600d6af0f320a021dc494cfa2daca569',1,110,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','60df9e64b0693131b626e465236c6874',1,381,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','62628cfd1cdd77d02c32812f048bada3',1,400,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','628b7db04235f228d40adc671413a8c8',1,319,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','62933a2951ef01f4eafd9bdf4d3cd2f0',2,223,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','62cc0b4ebb0b57b40778179234246c38',2,256,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','62cd275989e78ee56a81f0265a87562e',1,75,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','639849f6b368019778991b32434354fc',2,119,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','667940ea3df6617168cef1233b76dc29',1,82,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6b48da551d6920b8da8eb01ebc400297',1,359,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6b5843ce9d2d0599c3e3ce6d59c1551f',1,162,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6c92285fa6d3e827b198d120ea3ac674',1,195,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6ed2640df741eafe327878bd65000ad3',2,355,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6f7f9432d35dea629c8384dab312259a',1,395,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6f857e1b82f3db1d72613365ea42d442',1,517,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','6fcc4b7d36184ba33346b4be2d5d8244',1,207,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','71ccb7a35a452ea8153b6d920f9f190e',1,22,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','71df210ad5e28264557f10c663572933',1,435,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','731b886d80d2ea138da54d30f43b2005',2,19,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','75aeb98e5241592ad6a6c2c4c78a16ef',1,14,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','77004ea213d5fc71acf74a8c9c6795fb',4,371,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7761127a460aaf290ed953098284dd1a',1,483,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','77a072fba34a72588b4a8170238f2cf0',1,83,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','78ee54aa8f813885fe2fe20d232518b9',1,141,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7b8dc4fb0fb55fc8eb69ff080c45ed7e',1,246,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7d0db380a5b95a8ba1da0bca241abda1',5,173,2952,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7d637d275668ed6d41a9b97e6ad3a556',2,283,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7dfc1f5dc725f462d6a85bd6a7224164',1,462,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','7f90df6477bdb81ce131fe37eeeb1f01',3,103,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','82082716189f80fd070b89ac716570ba',1,466,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','82df41632da476065ce2997900554442',4,357,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','83ab982dd08483187289a75163dc50fe',2,379,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','83c6ea9026abedd647a70333769f6504',1,418,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8451fc653eaa269664a6d9b46a238424',1,287,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8518008e8835d42ddb7c83810b5cede0',1,472,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','88c1942bc02943fd4338ebd18d3bf464',1,457,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','89ee4584f59a50776fd36a64d55c1277',1,439,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8abf18f876245f99e3e536216d5d3bf3',1,385,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8b461191e6b0705ec1ce1199a20f370e',1,225,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8bf8854bebe108183caeb845c7676ae4',6,15,3542,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8cd283d8b7bacc277f2bae5e26ce6d1e',1,127,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8df358eebbbb64bf19235a902db73505',2,104,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8e15b32e960ad327e4c48061410f8bd4',1,209,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8e83b1d4dd4533f7d84d1c6055598795',2,388,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8fc42c6ddf9966db3b09e84365034357',16,105,9446,0),
-('3d798c3f120fdabe32985de46a5fc2fd','8fd6f46ad5874b41fc087b26745c81b2',4,122,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','910955a907e739b81ec8855763108a29',1,212,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','931504633da3bba2ae68490a4d0aef24',2,12,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','93349189c5d0219ba8b20ca7cbf068a1',3,369,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','933dd8674c563081260867dfa95b5e74',2,282,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','95cc6b4ac5abdeadc74b73a8ba7200d9',6,2,3542,0),
-('3d798c3f120fdabe32985de46a5fc2fd','960db2ed82202a9706b97775a4269378',2,125,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','97081c1611358b350e8088cb3d2b8b5b',1,405,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','979b93285de87c4731fc824bd9e4ba75',1,423,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9827f490863603674bc635c4a4bea06c',1,271,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','99f78c54130e752954404fff0707dcbd',1,413,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9c44fc81ae1c3b4b362d5576bf6cda53',1,46,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9cb9ce5bd9e807867d42a740c9633fc7',1,442,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9df3b01c60df20d13843841ff0d4482c',1,202,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9e81e7b963c71363e2fb3eefcfecfc0e',1,492,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9e925e9341b490bfd3b4c4ca3b0c1ef2',2,274,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','9ea0a36b3a20901fafe834eb519a595c',1,76,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a0c391dc49c440fc9962168353cedde3',1,341,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a181a603769c1f98ad927e7367c7aa51',1,143,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a2a551a6458a8de22446cc76d639a9e9',7,136,4132,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a2bbabfe7b1dd886a0c32b57bd8a94f9',2,384,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a542e9b744bedcfd874129ab0f98c4ff',1,432,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a658279f9b983958149f31e4d8487673',1,433,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a74ad8dfacd4f985eb3977517615ce25',1,334,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a7c78469daa497a86142ff91ed286c9c',1,226,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a86fcebe37c3e9c82e43c25d54ad2146',1,40,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','a98e84980a3612cf1f06dae18c313459',1,228,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','aa08769cdcb26674c6706093503ff0a3',1,513,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','aa8af3ebe14831a7cd1b6d1383a03755',1,152,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ab3e355e2b6806c984851ebdee2a0da1',1,221,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ac05c7d8f4406c971085f947e43ef730',4,365,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','acf4b89d3d503d8252c9c4ba75ddbf6d',1,300,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','adb00236071c05878eaeec5b3b96103d',4,366,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','addec426932e71323700afa1911f8f1c',9,160,5313,0),
-('3d798c3f120fdabe32985de46a5fc2fd','af71e0a18f8a746aaeedb1bbe63b66aa',1,463,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b03e3fd2b3d22ff6df2796c412b09311',1,326,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b2fdab230a2c39f3595a947861863cb7',1,165,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b32d73e56ec99bc5ec8f83871cde708a',1,167,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b42dad5453b2128a32f6612b13ea5d9f',5,117,2952,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b46127d3c32de3d485a478e88b8f6593',1,4,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b5122e6bf436c50799accdaed57a846d',1,313,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b5eda0a74558a342cf659187f06f746f',2,150,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b7b655045b89200c7a4dedb1303ca2f1',1,182,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b807023f87e63b8ada92f79f546ff9cc',1,312,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b8488851cdb11c1ff0ba352fb3308451',4,71,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b8a9f715dbb64fd5c56e7783c6820a61',1,288,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b96ba508e3690f5168e4b0e68b15b178',1,524,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','b9b4136389b37e3520cac8ddc3596c43',1,396,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ba8a48b0e34226a2992d871c65600a7c',2,222,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','bb3ccd5881d651448ded1dac904054ac',1,198,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','be1ab1632e4285edc3733b142935c60b',1,304,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','be5d5d37542d75f93a87094459f76678',21,17,12398,0),
-('3d798c3f120fdabe32985de46a5fc2fd','bf7b83f5e1b17616ccf3e2af66e54e47',1,510,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c05f6c233521207f6fe311afef550c3c',1,473,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c185ddac8b5a8f5aa23c5b80bc12d214',2,327,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c1a1738648ecda410dc3a0dbbb3be683',1,279,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c395246f710b0e2c86b7ed82f7f56ce3',1,171,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c458d397f9d289f2e4aaa14db438c03d',1,45,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c4ca4238a0b923820dcc509a6f75849b',3,42,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c51ce410c124a10e0db5e4b97fc2af39',2,48,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c59174e113eee69e3e2145e6fb22bfad',1,402,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c5e7dfaf771d423ecf59b008369021e8',1,20,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c6c24400cd50cd724c6f9a9d2493abf4',1,410,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c7561db7a418dd39b2201dfe110ab4a4',1,94,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c81e728d9d4c2f636f067f89cc14862c',4,41,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c8d11180c956e5b5afc3d1970ce2193e',1,95,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c8d46d341bea4fd5bff866a65ff8aea9',4,23,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','c9ff055d5178c1e5686eb62017e3c4ff',1,241,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ca23ba209cc33678530392b7197fda4d',2,364,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cb50fd5e8c18cffaaad1ab74baf6eb3c',1,63,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cbf5d56e63331be4b1df14b5d99678b2',1,454,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cc935c5faf4c8f7a0468d7552a9b8138',2,154,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cd9e6a20f2dd30591bce77969f2b90c1',1,459,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cf19be9223758af6ecd460b5fc46b2f6',1,477,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','cfcd208495d565ef66e7dff9f98764da',3,26,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d00413cdded7a5c5bc2e06079d63e562',1,407,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d0cab90d8d20d57e2f2b9be52f7dd25d',1,441,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d2e3083420929d8bfae81f58fa4594cb',1,301,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d3d9446802a44259755d38e6d163e820',1,161,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d42f2dd9c54d4fbd36ce35b5ae060c0c',1,460,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d4579b2688d675235f402f6b4b43bcbf',1,344,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d48788168076b999d36c4f3ccb75ba2f',1,140,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d55669822f1a8cf72ec1911e462a54eb',3,112,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d6e047923b2b0f63a7a03c66074a0151',1,478,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d745415de7dbe78a88c1cd077b8a798c',1,470,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d7b85f12bdf36266db695411a654f73f',1,100,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d861877da56b8b4ceb35c8cbfdf65bb4',1,106,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d92d09fea730e2ba3908f2bff7c2b56b',1,97,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','d98a07f84921b24ee30f86fd8cd85c3c',2,123,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','da443a0ad979d5530df38ca1a74e4f80',3,107,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','db0f6f37ebeb6ea09489124345af2a45',2,284,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','db3f3946ba271882d8c74cdbf3d5179a',2,151,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','dc117c9322deb502c3b16769a8a64e08',1,537,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','de0c47fd329b3e2e28f59696b73b11cc',1,515,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e03f9063484fb1967d1675c86a6094d7',5,30,2952,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e05fe30750d3ea262a610d17ebc07019',7,0,4132,128),
-('3d798c3f120fdabe32985de46a5fc2fd','e1342b084a6585295c7ade62c211f850',1,289,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e2eff6c2dafd909df8508f891b385d88',2,118,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e3cc92c14a5e6dd1a7d94b6ff634d7fc',1,169,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e5439f340ec51b34d51348e0885bcdf1',1,247,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e680afd37e4511a8cb3ce9f63168862a',1,303,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e72ff831dbceb5bf11b0a31b81327631',2,102,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e81c4e4f2b7b93b481e13a8553c2ae1b',1,153,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','e82fa6ac6af62c4e5bcd387709acd5dc',1,168,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ebed715e82a0a0f3e950ef6565cdc4a8',1,111,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ecc3c7b4754f8509cfe9de944671b36f',7,0,4132,128),
-('3d798c3f120fdabe32985de46a5fc2fd','eccbc87e4b5ce2fe28308fd9f2a7baf3',1,25,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ed29da59b3ca8a6b01b216d2973487d2',1,192,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ed2b5c0139cec8ad2873829dc1117d50',5,170,2952,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ed881bac6397ede33c0a285c9f50bb83',2,307,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','eda721c5f8c61daee37ca15ce3c4d881',1,130,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ee20fd29e100990f661f3f1479c19647',2,393,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','eeaf118e5d97270acfc4cd8da9555891',1,422,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f068fc985d0a439e5a126d78a28cc4c9',1,438,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f09cc7ee3a9a93273f4b80601cafb00c',4,335,2361,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f1edc500eb1136f10c17eeffb9eecbc5',1,501,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f212d489ec65fe36e32d99f6ac0861c9',1,55,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f2f645b7cf0962908fdb5bb485bd0cad',2,69,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f39ed5b6d0275dcbc4a2f5de624d95ae',1,270,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f4af8b5789576c000ce9105b25609bd6',1,534,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f5743daa1b0c190dc25ac146a657932e',1,416,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f59cd8184f216f9ebecc3697b68de4c3',1,18,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f5ab96926a6a561aab7ecb4ba7c915d4',1,306,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f6216ab8b669f451dd4270a9cb96ec69',1,68,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f6cb3e816496528d4187db53bc66567f',2,248,1180,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f894427cc1c571f79da49605ef8b112f',3,6,1771,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f970e2767d0cfe75876ea857f92e319b',1,233,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f97c5d29941bfb1b2fdab0874906ab82',1,267,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f9cb12f89c3f82ffaba2483cd3551d82',1,132,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','f9f90eeaf400d228facde6bc48da5cfb',1,138,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','fbb44b4487415b134bce9c790a27fe5e',1,296,590,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ff1ccf57e98c817df1efcd9fe44a8aeb',11,116,6494,0),
-('3d798c3f120fdabe32985de46a5fc2fd','ffe8560492ef96f860b965341d0c9698',1,539,590,0),
 ('4512611c26346c41692fc2d2c861ba25','00bcb59c2dfc8710e05aeb0659531a26',1,190,765,0),
 ('4512611c26346c41692fc2d2c861ba25','01b6e20344b68835c5ed1ddedf20d531',7,59,5358,0),
 ('4512611c26346c41692fc2d2c861ba25','05b1aee1a08b2265d582914c2e1293d1',1,308,765,0),
@@ -3085,7 +2810,6 @@ INSERT INTO `index_section` VALUES
 (2,'9bd8393860e6e9cf4c907a0919ca687d','9bd8393860e6e9cf4c907a0919ca687d',1,12,0,12),
 (4,'cc75043b782e7d5b8b77c31c085dc87b','cc75043b782e7d5b8b77c31c085dc87b',15,94,0,94),
 (6,'ab566ef524f8cda9b66737a0a146a674','ab566ef524f8cda9b66737a0a146a674',15,80,91,91),
-(9,'3d798c3f120fdabe32985de46a5fc2fd','3d798c3f120fdabe32985de46a5fc2fd',1,0,0,1),
 (12,'4512611c26346c41692fc2d2c861ba25','4512611c26346c41692fc2d2c861ba25',15,95,0,95),
 (13,'230f8464c03ab1dc4fbd4bc332b6b776','230f8464c03ab1dc4fbd4bc332b6b776',98,99,0,99),
 (14,'55a01547a20d7d965193fcd3e277624c','55a01547a20d7d965193fcd3e277624c',98,100,0,100),
@@ -3838,7 +3562,7 @@ UNLOCK TABLES;
 LOCK TABLES `pages` WRITE;
 /*!40000 ALTER TABLE `pages` DISABLE KEYS */;
 INSERT INTO `pages` VALUES
-(1,0,1744014936,1744014582,0,0,0,0,'',256,NULL,0,0,0,0,NULL,'{\"title\":\"\"}',0,0,0,0,2,1,31,27,0,1744014936,0,0,0,0.5,'','',0,0,1,'FC Bigfoot','/',NULL,0,0,0,0,'',0,'','','',0,0,0,'',0,0,NULL,NULL,NULL,'','',0,1,0,'',0,'pagets__home','pagets__default','','',0,0,'','','',NULL,0,'',NULL,0,'',1),
+(1,0,1746722934,1744014582,0,0,0,0,'',256,NULL,0,0,0,0,NULL,'{\"doktype\":\"\",\"title\":\"\",\"slug\":\"\",\"nav_title\":\"\",\"subtitle\":\"\",\"nav_icon_set\":\"\",\"nav_icon\":\"\",\"seo_title\":\"\",\"description\":\"\",\"no_index\":\"\",\"no_follow\":\"\",\"canonical_link\":\"\",\"sitemap_changefreq\":\"\",\"sitemap_priority\":\"\",\"og_title\":\"\",\"og_description\":\"\",\"og_image\":\"\",\"twitter_title\":\"\",\"twitter_description\":\"\",\"twitter_image\":\"\",\"twitter_card\":\"\",\"abstract\":\"\",\"keywords\":\"\",\"author\":\"\",\"author_email\":\"\",\"lastUpdated\":\"\",\"layout\":\"\",\"newUntil\":\"\",\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"thumbnail\":\"\",\"content_from_pid\":\"\",\"target\":\"\",\"cache_timeout\":\"\",\"cache_tags\":\"\",\"is_siteroot\":\"\",\"no_search\":\"\",\"php_tree_stop\":\"\",\"module\":\"\",\"media\":\"\",\"tsconfig_includes\":\"\",\"TSconfig\":\"\",\"l18n_cfg\":\"\",\"hidden\":\"\",\"nav_hide\":\"\",\"starttime\":\"\",\"endtime\":\"\",\"extendToSubpages\":\"\",\"fe_group\":\"\",\"editlock\":\"\",\"categories\":\"\",\"rowDescription\":\"\"}',0,0,0,0,2,1,31,27,0,1744014936,0,0,0,0.5,'','',0,0,1,'FC Bigfoot','/','TCEFORM {\r\n    tt_content {\r\n        CType.keepItems := addToList(membermanagement_createmembership, membermanagement_confirmmembership)\r\n    }\r\n}',0,0,0,0,'',0,'','','',0,0,0,'',0,0,NULL,NULL,NULL,'','',0,1,0,'',0,'pagets__home','pagets__default','','',0,0,'','','',NULL,0,'',NULL,0,'',1),
 (2,1,1744014582,1744014582,0,0,0,0,'',256,NULL,0,0,0,0,NULL,'{\"doktype\":\"\",\"title\":\"\",\"slug\":\"\",\"nav_title\":\"\",\"subtitle\":\"\",\"abstract\":\"\",\"keywords\":\"\",\"description\":\"\",\"author\":\"\",\"author_email\":\"\",\"lastUpdated\":\"\",\"layout\":\"\",\"newUntil\":\"\",\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"content_from_pid\":\"\",\"target\":\"\",\"cache_timeout\":\"\",\"cache_tags\":\"\",\"is_siteroot\":\"\",\"no_search\":\"\",\"php_tree_stop\":\"\",\"module\":\"\",\"media\":\"\",\"tsconfig_includes\":\"\",\"TSconfig\":\"\",\"l18n_cfg\":\"\",\"hidden\":\"\",\"nav_hide\":\"\",\"starttime\":\"\",\"endtime\":\"\",\"extendToSubpages\":\"\",\"fe_group\":\"\",\"editlock\":\"\",\"categories\":\"\",\"rowDescription\":\"\"}',0,0,0,0,2,1,31,27,0,0,0,0,0,0.5,'','',0,0,1,'Privacy Policy','/privacy-policy',NULL,0,0,0,0,'',1,'','','',0,0,0,'',0,0,NULL,NULL,NULL,'','',0,0,0,'',0,'','','','',0,0,'','','',NULL,0,'',NULL,0,'',9),
 (3,1,1744014582,1744014582,0,0,0,0,'',128,NULL,0,0,0,0,NULL,'{\"doktype\":\"\",\"title\":\"\",\"slug\":\"\",\"nav_title\":\"\",\"subtitle\":\"\",\"abstract\":\"\",\"keywords\":\"\",\"description\":\"\",\"author\":\"\",\"author_email\":\"\",\"lastUpdated\":\"\",\"layout\":\"\",\"newUntil\":\"\",\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"content_from_pid\":\"\",\"target\":\"\",\"cache_timeout\":\"\",\"cache_tags\":\"\",\"is_siteroot\":\"\",\"no_search\":\"\",\"php_tree_stop\":\"\",\"module\":\"\",\"media\":\"\",\"tsconfig_includes\":\"\",\"TSconfig\":\"\",\"l18n_cfg\":\"\",\"hidden\":\"\",\"nav_hide\":\"\",\"starttime\":\"\",\"endtime\":\"\",\"extendToSubpages\":\"\",\"fe_group\":\"\",\"editlock\":\"\",\"categories\":\"\",\"rowDescription\":\"\"}',0,0,0,0,2,1,31,27,0,0,0,0,0,0.5,'','',0,0,1,'Search','/search',NULL,0,0,0,0,'',1,'','','',0,0,0,'',0,0,NULL,NULL,NULL,'','',0,0,0,'',0,'','','','',0,0,'','','',NULL,0,'',NULL,0,'',8),
 (4,1,1744014582,1744014582,0,0,0,0,'',64,NULL,0,0,0,0,NULL,'{\"doktype\":\"\",\"title\":\"\",\"slug\":\"\",\"nav_title\":\"\",\"subtitle\":\"\",\"abstract\":\"\",\"keywords\":\"\",\"description\":\"\",\"author\":\"\",\"author_email\":\"\",\"lastUpdated\":\"\",\"layout\":\"\",\"newUntil\":\"\",\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"content_from_pid\":\"\",\"target\":\"\",\"cache_timeout\":\"\",\"cache_tags\":\"\",\"is_siteroot\":\"\",\"no_search\":\"\",\"php_tree_stop\":\"\",\"module\":\"\",\"media\":\"\",\"tsconfig_includes\":\"\",\"TSconfig\":\"\",\"l18n_cfg\":\"\",\"hidden\":\"\",\"nav_hide\":\"\",\"starttime\":\"\",\"endtime\":\"\",\"extendToSubpages\":\"\",\"fe_group\":\"\",\"editlock\":\"\",\"categories\":\"\",\"rowDescription\":\"\"}',0,0,0,0,2,1,31,27,0,0,0,0,0,0.5,'','',0,0,1,'Contact Us','/contact-us',NULL,0,0,0,0,'',1,'','','',0,0,0,'',0,0,NULL,NULL,NULL,'','',0,0,0,'',0,'','','','',0,0,'','','',NULL,0,'',NULL,0,'',7),
@@ -5647,7 +5371,8 @@ INSERT INTO `sys_history` VALUES
 (1168,1746714421,4,'BE',1,0,3,'tx_membermanagement_domain_model_membership',NULL,0,'0400$aae5de9c9080f700b41d7b4357935bad:82d0fb50ca88989b2ad0478930a6f537'),
 (1169,1746714423,4,'BE',1,0,4,'tx_membermanagement_domain_model_membership',NULL,0,'0400$c033d831d5906613e4b0372f65efbfae:2163636ccad47d20f14434194687321b'),
 (1170,1746714431,1,'BE',1,0,9,'tx_membermanagement_domain_model_membership','{\"price\":\"10.00\",\"pid\":113,\"title\":\"Student\",\"description\":\"\",\"crdate\":1746714431,\"tstamp\":1746714431,\"uid\":9}',0,'0400$85973e2dd6569aebfa07c2c03cf79cce:5c60fc46bee9a06677de5523fb91bb6a'),
-(1171,1746714436,1,'BE',1,0,10,'tx_membermanagement_domain_model_membership','{\"price\":\"15.00\",\"pid\":113,\"title\":\"Senior citizen\",\"description\":\"\",\"crdate\":1746714436,\"tstamp\":1746714436,\"uid\":10}',0,'0400$5008a8ff6c8f1552a04d5b8528fdc03d:0f4001e43e513c81e34e07e6f24f2d06');
+(1171,1746714436,1,'BE',1,0,10,'tx_membermanagement_domain_model_membership','{\"price\":\"15.00\",\"pid\":113,\"title\":\"Senior citizen\",\"description\":\"\",\"crdate\":1746714436,\"tstamp\":1746714436,\"uid\":10}',0,'0400$5008a8ff6c8f1552a04d5b8528fdc03d:0f4001e43e513c81e34e07e6f24f2d06'),
+(1172,1746722934,2,'BE',1,0,1,'pages','{\"oldRecord\":{\"TSconfig\":null,\"l10n_diffsource\":\"{\\\"title\\\":\\\"\\\"}\"},\"newRecord\":{\"TSconfig\":\"TCEFORM {\\r\\n    tt_content {\\r\\n        CType.keepItems := addToList(membermanagement_createmembership, membermanagement_confirmmembership)\\r\\n    }\\r\\n}\",\"l10n_diffsource\":\"{\\\"doktype\\\":\\\"\\\",\\\"title\\\":\\\"\\\",\\\"slug\\\":\\\"\\\",\\\"nav_title\\\":\\\"\\\",\\\"subtitle\\\":\\\"\\\",\\\"nav_icon_set\\\":\\\"\\\",\\\"nav_icon\\\":\\\"\\\",\\\"seo_title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"no_index\\\":\\\"\\\",\\\"no_follow\\\":\\\"\\\",\\\"canonical_link\\\":\\\"\\\",\\\"sitemap_changefreq\\\":\\\"\\\",\\\"sitemap_priority\\\":\\\"\\\",\\\"og_title\\\":\\\"\\\",\\\"og_description\\\":\\\"\\\",\\\"og_image\\\":\\\"\\\",\\\"twitter_title\\\":\\\"\\\",\\\"twitter_description\\\":\\\"\\\",\\\"twitter_image\\\":\\\"\\\",\\\"twitter_card\\\":\\\"\\\",\\\"abstract\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"author_email\\\":\\\"\\\",\\\"lastUpdated\\\":\\\"\\\",\\\"layout\\\":\\\"\\\",\\\"newUntil\\\":\\\"\\\",\\\"backend_layout\\\":\\\"\\\",\\\"backend_layout_next_level\\\":\\\"\\\",\\\"thumbnail\\\":\\\"\\\",\\\"content_from_pid\\\":\\\"\\\",\\\"target\\\":\\\"\\\",\\\"cache_timeout\\\":\\\"\\\",\\\"cache_tags\\\":\\\"\\\",\\\"is_siteroot\\\":\\\"\\\",\\\"no_search\\\":\\\"\\\",\\\"php_tree_stop\\\":\\\"\\\",\\\"module\\\":\\\"\\\",\\\"media\\\":\\\"\\\",\\\"tsconfig_includes\\\":\\\"\\\",\\\"TSconfig\\\":\\\"\\\",\\\"l18n_cfg\\\":\\\"\\\",\\\"hidden\\\":\\\"\\\",\\\"nav_hide\\\":\\\"\\\",\\\"starttime\\\":\\\"\\\",\\\"endtime\\\":\\\"\\\",\\\"extendToSubpages\\\":\\\"\\\",\\\"fe_group\\\":\\\"\\\",\\\"editlock\\\":\\\"\\\",\\\"categories\\\":\\\"\\\",\\\"rowDescription\\\":\\\"\\\"}\"}}',0,'0400$56a7dc49e8f0ac8e2eff9f7066b03105:e175f7045d7ccbfb26ffcf279422c2e5');
 /*!40000 ALTER TABLE `sys_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5700,6 +5425,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `sys_lockedrecords` WRITE;
 /*!40000 ALTER TABLE `sys_lockedrecords` DISABLE KEYS */;
+INSERT INTO `sys_lockedrecords` VALUES
+(71,1,1746722935,'pages',1,0,'admin',0);
 /*!40000 ALTER TABLE `sys_lockedrecords` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5867,7 +5594,10 @@ INSERT INTO `sys_log` VALUES
 (155,1746714421,1,3,3,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was deleted unrecoverable from pages:{pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":3,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
 (156,1746714423,1,3,4,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was deleted unrecoverable from pages:{pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":4,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
 (157,1746714431,1,1,9,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was inserted on page {pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":9,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
-(158,1746714436,1,1,10,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was inserted on page {pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":10,\"pid\":113}',113,0,'',0,'','info',NULL,NULL);
+(158,1746714436,1,1,10,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was inserted on page {pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":10,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
+(159,1746722714,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.19.0.6','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
+(160,1746722934,1,2,1,'pages',0,0,'Record {table}:{uid} was updated',1,'content',0,'172.19.0.6','{\"table\":\"pages\",\"uid\":1,\"history\":\"1172\"}',0,0,'',0,'','info',NULL,NULL),
+(161,1746722959,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.19.0.6','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL);
 /*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -6766,7 +6496,7 @@ INSERT INTO `sys_registry` VALUES
 (10,'installUpdate','TYPO3\\CMS\\Install\\Updates\\SysTemplateNoWorkspaceMigration','i:1;'),
 (11,'installUpdate','TYPO3\\CMS\\Extensionmanager\\Updates\\FeLoginModeExtractionUpdate','i:1;'),
 (12,'installUpdateRows','rowUpdatersDone','a:1:{i:0;s:69:\"TYPO3\\CMS\\Install\\Updates\\RowUpdater\\SysRedirectRootPageMoveMigration\";}'),
-(13,'core','formProtectionSessionToken:1','s:64:\"f3dd898fc8cd0af12aad11fb74b1b5dfe32f32d22b8a333155d775e4eb654ae8\";'),
+(13,'core','formProtectionSessionToken:1','s:64:\"580fdb69308b748ee1d8d368e4f1990f7d2d7a32557e60873da0b65f99e291db\";'),
 (14,'extensionDataImport','typo3/cms-core/ext_tables_static+adt.sql','s:0:\"\";'),
 (15,'extensionDataImport','typo3/cms-scheduler/ext_tables_static+adt.sql','s:0:\"\";'),
 (16,'extensionDataImport','typo3/cms-extbase/ext_tables_static+adt.sql','s:0:\"\";'),
@@ -7337,4 +7067,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 15:27:51
+-- Dump completed on 2025-05-08 17:49:47
