@@ -21,16 +21,24 @@
         <f:translate key="email.newMembership.main.body"/>
     </p>
 
+    <f:variable name="backendLink">
+        <f:be.uri route="member_management" referenceType="share"/>
+    </f:variable>
+
+    <f:variable name="linkBackgroundColor">
+        {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')}
+    </f:variable>
+
     <p>
-        <f:be.link route="member_management" referenceType="share" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+        <a href="{backendLink}" class="button" style="background: {linkBackgroundColor}">
             <f:translate key="email.newMembership.main.button"/>
-        </f:be.link>
+        </a>
     </p>
     <br />
     <p>
         <small>
             <f:translate key="email.main.button.information"/>
-            <f:be.uri route="member_management" referenceType="share"/>
+            <a href="{backendLink}">{backendLink}</a>
         </small>
     </p>
 </f:section>

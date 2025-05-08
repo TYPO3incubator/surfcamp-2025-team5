@@ -24,16 +24,24 @@
         <f:translate key="email.createMembership.main.body"/>
     </p>
 
+    <f:variable name="confirmationLink">
+        <f:uri.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
+    </f:variable>
+
+    <f:variable name="linkBackgroundColor">
+        {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')}
+    </f:variable>
+
     <p>
-        <f:link.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" class="button" style="background: {f:if(condition: typo3.systemConfiguration.backend.loginHighlightColor, then: typo3.systemConfiguration.backend.loginHighlightColor, else: '#ff8700')};">
+        <a href="{confirmationLink}" class="button" style="background-color: {linkBackgroundColor}">
             <f:translate key="email.createMembership.main.button"/>
-        </f:link.action>
+        </a>
     </p>
     <br />
     <p>
         <small>
             <f:translate key="email.main.button.information"/>
-            <f:uri.action action="confirm" pluginName="ConfirmMembership" arguments="{hash: hash, email: member.email}" pageUid="{confirmationPid}" absolute="1" />
+            <a href="{confirmationLink}">{confirmationLink}</a>
         </small>
     </p>
 </f:section>
