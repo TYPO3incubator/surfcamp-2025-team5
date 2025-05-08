@@ -71,7 +71,7 @@
             <label for="membership" class="form-label">{f:translate(key: 'membership')}</label>
             <f:form.select class="form-select" id="membership" property="membership" prependOptionLabel="{f:translate(key: 'select-choose')}" required="true">
                 <f:for each="{memberships}" as="membership">
-                    <f:form.select.option value="{membership.id}">
+                    <f:form.select.option value="{membership.uid}">
                         {membership.title} ({membership.price}{pricePerYear})
                     </f:form.select.option>
                 </f:for>
