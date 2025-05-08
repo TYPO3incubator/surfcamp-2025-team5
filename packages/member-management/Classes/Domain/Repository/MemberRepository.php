@@ -23,6 +23,9 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -40,6 +43,19 @@ use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
  */
 final class MemberRepository extends Repository
 {
+    public function __construct()
+    {
+        parent::__construct();
+        // if call comes from backend -> ignore enable fields
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+            $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+            $querySettings->setIgnoreEnableFields(true);
+            $this->setDefaultQuerySettings($querySettings);
+        }
+
+    }
+
     public function findOneByHash(string $hash, Site $site, bool $includeDisabled = false): ?Member
     {
         $query = $this->createQueryForSite($site);
@@ -72,7 +88,7 @@ final class MemberRepository extends Repository
     public function findConfirmed(): QueryResultInterface
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setIgnoreEnableFields( true);
 
         $query->matching(
             $query->logicalNot(
@@ -98,5 +114,53 @@ final class MemberRepository extends Repository
         $query->getQuerySettings()->setStoragePageIds([$storagePid]);
 
         return $query;
+    }
+
+    public function findByFilters(array $filters = [], array $orderings = [], $membersPid = 0): QueryResultInterface
+    {
+
+        $query = $this->createQuery();
+        if ($membersPid > 0) {
+            $this->setDefaultQuerySettings(
+                $query->getQuerySettings()
+                    ->setRespectStoragePage(false)
+                    ->setStoragePageIds([$membersPid])
+            );
+        }
+
+        $constraints = [
+            $query->greaterThan('membershipStatus', MembershipStatus::Unconfirmed),
+        ];
+
+        if (!empty($filters['search'])) {
+            $term = '%' . $filters['search'] . '%';
+            $constraints[] = $query->logicalOr(
+                $query->like('first_name', $term),
+                $query->like('last_name', $term),
+                $query->like('email', $term)
+            );
+        }
+
+        if (!empty($filters['membershipUid']) && $filters['membershipUid'] > 0) {
+            $constraints[] = $query->equals('membership.uid', (int)$filters['membershipUid']);
+        }
+
+        if (isset($filters['membershipStatus']) && $filters['membershipStatus'] > -1) {
+            $constraints[] = $query->equals('membership_status', (int)$filters['membershipStatus']);
+        }
+
+        $query->matching($query->logicalAnd(...$constraints));
+        if ($orderings !== []) {
+            $query->setOrderings($orderings);
+        }
+        return $query->execute();
+    }
+
+    #[\Override]
+    public function findByUid($uid): ?Member
+    {
+        $query = $this->createQuery();
+        $query->matching($query->equals('uid', $uid));
+        return $query->execute()->getFirst();
     }
 }

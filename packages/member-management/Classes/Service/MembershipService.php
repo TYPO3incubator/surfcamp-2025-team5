@@ -249,8 +249,6 @@ final class MembershipService
 
             $email->assign('sitesets', $this->getSiteSettings()->getAll());
 
-            $sitesets = $this->getSiteSettings()->getAll();
-
             try {
                 $this->mailer->send($email);
             } catch (TransportExceptionInterface $exception) {
@@ -270,6 +268,7 @@ final class MembershipService
                 continue;
             }
             $member->setMembershipStatus(MembershipStatus::Inactive);
+            $member->setDisabled(true);
             $this->memberRepository->update($member);
         }
         $this->persistenceManager->persistAll();
