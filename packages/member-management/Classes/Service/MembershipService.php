@@ -238,7 +238,7 @@ final class MembershipService
 
             $email = $this->createEmail(
                 'MembershipActivated',
-                'You are now a member!',
+                $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
                 $member,
             );
 

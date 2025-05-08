@@ -25,6 +25,11 @@ final class BackendMemberController extends ActionController
     ) {
     }
 
+    protected function initializeAction(): void
+    {
+        $this->membershipService->setRequest($this->request);
+    }
+
     public function indexAction(): ResponseInterface
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
