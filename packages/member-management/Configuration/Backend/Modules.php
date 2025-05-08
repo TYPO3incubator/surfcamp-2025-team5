@@ -17,6 +17,7 @@ return [
         'access' => 'user',
         'workspaces' => 'live',
         'labels' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_mod_member.xlf',
+        'navigationComponent' => '@typo3/backend/tree/page-tree-element',
         'extensionName' => 'MemberManagement',
         'iconIdentifier' => 'tx-member-management-module',
         'controllerActions' => [
