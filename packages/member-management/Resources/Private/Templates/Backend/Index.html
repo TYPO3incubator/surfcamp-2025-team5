@@ -1,8 +1,8 @@
 <html
-        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-        xmlns:mm="http://typo3.org/ns/TYPO3Incubator/MemberManagement/ViewHelpers"
-        xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
-        data-namespace-typo3-fluid="true">
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:mm="http://typo3.org/ns/TYPO3Incubator/MemberManagement/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
 <f:layout name="Default"/>
 
@@ -11,71 +11,91 @@
         <f:for each="{pagination.allPageNumbers}" as="page">
             <li class="page-item">
                 <f:link.action
-                        arguments="{currentPageNumber:page}"
-                        class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+                    arguments="{currentPageNumber:page}"
+                    class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
                 >
                     {page}
                 </f:link.action>
             </li>
         </f:for>
     </ul>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>
-                    <f:translate key="backend.membermanagement.name"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.membership"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.membershipStatus"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.memberSince"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.email"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.paymentStatus"/>
-                </th>
-                <th>
-                    <f:translate key="backend.membermanagement.lastPayment"/>
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <f:for each="{paginator.paginatedItems}" as="member">
+    <f:form action="memberBulkAction" controller="BackendMember" method="post" class="bulk-form">
+        <div class="btn-toolbar mb-3">
+            <f:form.button
+                type="submit"
+                name="memberAction"
+                value="setActive"
+                class="btn btn-default me-2">
+                Set members active
+            </f:form.button>
+
+            <f:form.button
+                type="submit"
+                name="memberAction"
+                value="setActive"
+                class="btn btn-default me-2">
+                Set members inactive
+            </f:form.button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td>{member.firstName} {member.lastName}</td>
-                    <td>{member.membership.title}</td>
-                    <td>{member.membershipStatusLabel}</td>
-                    <td>
-                        <f:format.date>{member.memberSince}</f:format.date>
-                    </td>
-                    <td>{member.email}</td>
-                    <td>status</td>
-                    <td>
-                        <f:if condition="{member.lastPayment}">
-                            <f:then>
-                                <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_pament', uid: member.lastPayment.uid)}">
-                                    <f:format.date>{member.lastPayment.paidAt}</f:format.date>
-                                </a>
-                            </f:then>
-                            <f:else>-</f:else>
-                        </f:if>
-                    </td>
-                    <td><a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">
-                        <core:icon identifier="actions-open" size="small"/>
-                    </a></td>
+                    <th></th>
+                    <th>
+                        <f:translate key="backend.membermanagement.name"/>
+                    </th>
+                    <th>
+                        <f:translate key="backend.membermanagement.membership"/>
+                    </th>
+                    <th>
+                        <f:translate key="backend.membermanagement.membershipStatus"/>
+                    </th>
+                    <th>
+                        <f:translate key="backend.membermanagement.email"/>
+                    </th>
+                    <th>
+                        <f:translate key="backend.membermanagement.paymentStatus"/>
+                    </th>
+                    <th>
+                        <f:translate key="backend.membermanagement.lastPayment"/>
+                    </th>
+                    <th></th>
                 </tr>
-            </f:for>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                <f:for each="{paginator.paginatedItems}" as="member">
+                    <tr>
+                        <td>
+                            <f:form.checkbox
+                                name="memberUids[]"
+                                value="{member.uid}"
+                                additionalAttributes="{class: 'rowCheckbox'}"/>
+                        </td>
+                        <td>{member.firstName} {member.lastName}</td>
+                        <td>{member.membership.title}</td>
+                        <td>{member.membershipStatusLabel}</td>
+                        <td>{member.email}</td>
+                        <td>status</td>
+                        <td>
+                            <f:if condition="{member.lastPayment}">
+                                <f:then>
+                                    <a href="{mm:editLink(table: 'tx_membermanagement_domain_model_payment', uid: member.lastPayment.uid)}">
+                                        <f:format.date>{member.lastPayment.paidAt}</f:format.date>
+                                    </a>
+                                </f:then>
+                                <f:else>-</f:else>
+                            </f:if>
+                        </td>
+                        <td><a href="{mm:editLink(table: 'fe_users', uid: member.uid)}">
+                            <core:icon identifier="actions-open" size="small"/>
+                        </a></td>
+                    </tr>
+                </f:for>
+                </tbody>
+            </table>
+        </div>
+    </f:form>
 </f:section>
 
 </html>

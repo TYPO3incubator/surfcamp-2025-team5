@@ -22,6 +22,7 @@ return [
         'controllerActions' => [
             BackendMemberController::class => [
                 'index',
+                'memberBulkAction'
             ],
         ],
     ],

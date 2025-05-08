@@ -11,13 +11,17 @@ use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
+use TYPO3Incubator\MemberManagement\Service\MembershipService;
 
 #[AsController]
 final class BackendMemberController extends ActionController
 {
+    protected const MEMBER_ACTION_SET_ACTIVE = 'setActive';
+    protected const MEMBER_ACTION_SET_INACTIVE = 'setInactive';
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly MemberRepository $memberRepository,
+        private readonly MembershipService $membershipService,
     ) {
     }
 
@@ -44,4 +48,22 @@ final class BackendMemberController extends ActionController
 
         return $moduleTemplate->renderResponse('Backend/Index');
     }
+
+    public function memberBulkActionAction(array $memberUids = [], string $memberAction = null): ResponseInterface
+    {
+        if (empty($memberUids) || $memberAction === null) {
+            $this->addFlashMessage('No items selected or no action specified.');
+            return $this->redirect('index');
+        }
+        switch ($memberAction) {
+            case self::MEMBER_ACTION_SET_ACTIVE:
+                $this->membershipService->setMembersActive($memberUids);
+                break;
+            case self::MEMBER_ACTION_SET_INACTIVE:
+                break;
+
+        }
+        return $this->redirect('index');
+    }
+
 }

@@ -32,6 +32,8 @@ use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyConfirmed;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyCreated;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsNoLongerInAnActiveMembership;
@@ -52,6 +54,7 @@ final class MembershipService
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer,
         private readonly PersistenceManagerInterface $persistenceManager,
+        private readonly MemberRepository $memberRepository,
     ) {}
 
     /**
@@ -138,5 +141,32 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
+    }
+
+    public function setMembersActive(array $memberUids) {
+        foreach ($memberUids as $memberUid) {
+            $member = $this->memberRepository->findByUid($memberUid);
+            if ($member->getMembershipStatus() === MembershipStatus::Active) {
+                continue;
+            }
+            $member->setMembershipStatus(MembershipStatus::Active);
+            $this->memberRepository->update($member);
+
+            $email = $this->createEmail(
+                'MembershipActivated',
+                'You are now a member!',
+                $member,
+            );
+
+            try {
+                $this->mailer->send($email);
+            } catch (TransportExceptionInterface $exception) {
+                $this->logger->error(
+                    'Error while sending new membership confirmatiomn mail: {message}',
+                    ['message' => $exception->getMessage()],
+                );
+            }
+        }
+        $this->persistenceManager->persistAll();
     }
 }
