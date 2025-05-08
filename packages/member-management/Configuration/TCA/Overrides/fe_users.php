@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
+use TYPO3Incubator\MemberManagement\TCA\TypeMembershipItemsProcFunc;
 
 defined('TYPO3') || die();
 
@@ -126,12 +127,9 @@ $tmp_membermanagement_columns = [
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
-            'foreign_table' => 'tx_membermanagement_domain_model_membership',
             'minitems' => 0,
             'maxitems' => 1,
-            'items' => [
-                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.membership.no_membership', 'value' => 0],
-            ],
+            'itemsProcFunc' => TypeMembershipItemsProcFunc::class . '->itemsProcFunc',
         ],
     ],
     'membership_status' => [
