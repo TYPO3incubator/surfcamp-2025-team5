@@ -24,6 +24,7 @@ memberManagement:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
       paymentDueMonth: '2'
+      sepaCreditorId: DE21WVM1234567890
   storage:
     membershipsFolderPid: 113
     paymentsFolderPid: 114

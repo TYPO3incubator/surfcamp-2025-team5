@@ -6,6 +6,12 @@
             <trans-unit id="fe_users.bic">
                 <source>BIC</source>
             </trans-unit>
+            <trans-unit id="fe_users.sepa_debtor_mandate">
+                <source>SEPA mandate number</source>
+            </trans-unit>
+            <trans-unit id="fe_users.sepa_debtor_mandate_sign_date">
+                <source>SEPA mandate sign date</source>
+            </trans-unit>
             <trans-unit id="fe_users.date_of_birth">
                 <source>Date of birth</source>
             </trans-unit>

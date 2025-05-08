@@ -28,10 +28,15 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\Entity\SiteSettings;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
+use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyConfirmed;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsAlreadyCreated;
 use TYPO3Incubator\MemberManagement\Exception\MemberIsNoLongerInAnActiveMembership;
@@ -45,14 +50,18 @@ use TYPO3Incubator\MemberManagement\Exception\MemberIsNotProperlyPersisted;
  */
 final class MembershipService
 {
+    private LanguageService $languageService;
     private ?ServerRequestInterface $request = null;
 
     public function __construct(
         private readonly HashService $hashService,
+        private readonly LanguageServiceFactory $languageServiceFactory,
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer,
         private readonly PersistenceManagerInterface $persistenceManager,
-    ) {}
+    ) {
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences(null);
+    }
 
     /**
      * @throws MemberIsAlreadyConfirmed
@@ -72,7 +81,7 @@ final class MembershipService
         if ($member->getCreateHash() !== '') {
             throw new MemberIsAlreadyCreated($member);
         }
-        if ($member->getMemberSince() !== null) {
+        if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
             throw new MemberIsAlreadyConfirmed($member);
         }
         if ($member->getMemberUntil()?->getTimestamp() > time()) {
@@ -90,7 +99,7 @@ final class MembershipService
         // Send mail to new member
         $email = $this->createEmail(
             'CreateMembership',
-            'Please confirm your membership',
+            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
             $member,
         );
         $email->assignMultiple([
@@ -112,12 +121,74 @@ final class MembershipService
         return $this->mailer->getSentMessage() !== null;
     }
 
-    private function createEmail(string $template, string $subject, Member $member): FluidEmail
+    /**
+     * @throws MemberIsAlreadyConfirmed
+     * @throws MemberIsNoLongerInAnActiveMembership
+     */
+    public function confirm(Member $member): bool
     {
-        $recipient = new Address(
-            $member->getEmail(),
-            $member->getFirstName() . ' ' . $member->getLastName(),
+        $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
+
+        if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
+            throw new MemberIsAlreadyConfirmed($member);
+        }
+        if ($member->getMemberUntil()?->getTimestamp() > time()) {
+            throw new MemberIsNoLongerInAnActiveMembership($member);
+        }
+
+        // Confirm membership
+        $member->setCreateHash('');
+        $member->setDisabled(false);
+        $member->setMembershipStatus(MembershipStatus::Pending);
+
+        // Update member in database
+        $this->persistenceManager->update($member);
+        $this->persistenceManager->persistAll();
+
+        // Early return if no manager email address is configured
+        if (!is_string($managerEmailAddress) || trim($managerEmailAddress) === '') {
+            $this->logger->warning(
+                'No email address configured for person in charge of member management, manager email skipped.',
+            );
+
+            return true;
+        }
+
+        $email = $this->createEmail(
+            'NewMembership',
+            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject'),
+            $member,
+            new Address($managerEmailAddress),
         );
+
+        $email->assign('beMemberPid', $this->getSiteSettings()?->get('felogin.pid'));
+
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error(
+                'Error while sending membership confirmation mail to manager: {message}',
+                ['message' => $exception->getMessage()],
+            );
+
+            return false;
+        }
+
+        return $this->mailer->getSentMessage() !== null;
+    }
+
+    private function createEmail(
+        string $template,
+        string $subject,
+        Member $member,
+        ?Address $recipient = null,
+    ): FluidEmail {
+        if ($recipient === null) {
+            $recipient = new Address(
+                $member->getEmail(),
+                $member->getFirstName() . ' ' . $member->getLastName(),
+            );
+        }
 
         $email = new FluidEmail();
         $email
@@ -138,5 +209,19 @@ final class MembershipService
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
+        $this->languageService = $this->languageServiceFactory->createFromSiteLanguage(
+            $request->getAttribute('language'),
+        );
+    }
+
+    private function getSiteSettings(): ?SiteSettings
+    {
+        $site = $this->request?->getAttribute('site');
+
+        if (!($site instanceof Site)) {
+            return null;
+        }
+
+        return $site->getSettings();
     }
 }

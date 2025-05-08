@@ -13,6 +13,7 @@ categories:
   MemberManagement.organization.paymentInformation:
     label: 'Payment information'
     parent: MemberManagement.organization
+
 settings:
   memberManagement.storage.membershipsFolderPid:
     label: 'Memberships folder PID'
@@ -77,6 +78,11 @@ settings:
       default: ''
   memberManagement.organization.paymentInformation.bic:
       label: 'BIC'
+      category: MemberManagement.organization.paymentInformation
+      type: string
+      default: ''
+  memberManagement.organization.paymentInformation.sepaCreditorId:
+      label: 'SEPA creditor ID'
       category: MemberManagement.organization.paymentInformation
       type: string
       default: ''

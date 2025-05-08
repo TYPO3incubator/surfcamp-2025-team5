@@ -1,15 +1,14 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:form action="save" controller="Membership" method="post" object="{member}" objectName="member">
+<f:form  class="form-membership-create" action="save" controller="Membership" method="post" object="{member}" objectName="member">
     <f:asset.script identifier="membership" src="EXT:member_management/Resources/Public/JavaScript/membership.js" />
+    <f:asset.css identifier="membership" href="EXT:member_management/Resources/Public/Css/membership.css" />
 
     <f:form.validationResults for="member">
         <f:for each="{validationResults.flattenedErrors}" as="errors">
             <f:for each="{errors}" as="error">
-                <div class="alert alert-danger" role="alert">
-                    {error}
-                </div>
+                <f:render partial="Alert" arguments="{severity: 'danger', content: error}" />
             </f:for>
         </f:for>
     </f:form.validationResults>
