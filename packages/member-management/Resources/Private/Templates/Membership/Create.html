@@ -67,8 +67,15 @@
     <fieldset>
         <legend>{f:translate(key: 'information-membership')}</legend>
         <div class="mb-3">
+            <f:variable name="pricePerYear">{f:translate(key: 'currency')} {f:translate(key: 'per-year')}</f:variable>
             <label for="membership" class="form-label">{f:translate(key: 'membership')}</label>
-            <f:form.select options="{memberships}" optionLabelField="title" class="form-select" id="membership" name="membership" required="true" />
+            <f:form.select class="form-select" id="membership" property="membership" prependOptionLabel="{f:translate(key: 'select-choose')}" required="true">
+                <f:for each="{memberships}" as="membership">
+                    <f:form.select.option value="{membership.uid}">
+                        {membership.title} ({membership.price}{pricePerYear})
+                    </f:form.select.option>
+                </f:for>
+            </f:form.select>
         </div>
         <f:render partial="Input"
             arguments="{ type: 'password', id: 'password', name: 'password', required: true}" />

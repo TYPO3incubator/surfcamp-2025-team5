@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace TYPO3Incubator\MemberManagement\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Uid\Uuid;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -105,6 +106,10 @@ final class MembershipController extends ActionController
         $member->setPrivacyAcceptedAt(new \DateTime());
 
         if ($member->getSepaDebtorMandateSignDate()) {
+            // Max allowed characters for mandate reference number is 35
+            // UUID v4 is 128 numbers, hex is 32 hex numbers
+            $newRandomMandateReferenceNumber = strtoupper(UUID::v4()->toHex());
+            $member->setSepaDebtorMandate($newRandomMandateReferenceNumber);
             $member->setSepaDebtorMandateSignDate(new \DateTime());
         } else {
             $member->setSepaDebtorMandateSignDate(null);
