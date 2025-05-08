@@ -27,12 +27,23 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Payment extends AbstractEntity
 {
     protected Member $member;
+
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
     protected ?\DateTime $paidAt = null;
+
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'DateTime'])]
+    protected ?\DateTime $dueBy = null;
+
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'Float'])]
     protected float $amount = 0.0;
+
+    protected PaymentState $state = PaymentState::Pending;
+
+    #[Validate(['validator' => 'NotEmpty'])]
+    protected ?\DateTime $rememberMailSentAt = null;
 
     public function getMember(): Member
     {
@@ -54,6 +65,16 @@ class Payment extends AbstractEntity
         $this->paidAt = $paidAt;
     }
 
+    public function getDueBy(): ?\DateTime
+    {
+        return $this->dueBy;
+    }
+
+    public function setDueBy(?\DateTime $dueBy): void
+    {
+        $this->dueBy = $dueBy;
+    }
+
     public function getAmount(): float
     {
         return $this->amount;
@@ -62,5 +83,25 @@ class Payment extends AbstractEntity
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;
+    }
+
+    public function getState(): PaymentState
+    {
+        return $this->state;
+    }
+
+    public function setState(PaymentState $state): void
+    {
+        $this->state = $state;
+    }
+
+    public function getRememberMailSentAt(): ?\DateTime
+    {
+        return $this->rememberMailSentAt;
+    }
+
+    public function setRememberMailSentAt(?\DateTime $rememberMailSentAt): void
+    {
+        $this->rememberMailSentAt = $rememberMailSentAt;
     }
 }

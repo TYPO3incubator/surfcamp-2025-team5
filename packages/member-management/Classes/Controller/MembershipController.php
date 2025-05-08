@@ -26,6 +26,7 @@ namespace TYPO3Incubator\MemberManagement\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
@@ -169,7 +170,9 @@ final class MembershipController extends ActionController
 
     protected function confirmAction(string $hash, string $email): ResponseInterface
     {
-        $member = $this->memberRepository->findOneByHash($hash, true);
+        /** @var Site $site */
+        $site = $this->request->getAttribute('site');
+        $member = $this->memberRepository->findOneByHash($hash, $site, true);
 
         // Show error if no member with associated hash is found
         if ($member === null) {

@@ -23,32 +23,27 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Repository;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
-use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Model\Payment;
 
 /**
- * MemberRepository
+ * PaymentRepository
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  *
- * @extends Repository<Member>
+ * @extends Repository<Payment>
  */
 final class PaymentRepository extends Repository
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-        $querySettings->setRespectStoragePage(false);
-        $this->setDefaultQuerySettings($querySettings);
-    }
+    protected $defaultOrderings = [
+        'dueBy' => QueryInterface::ORDER_DESCENDING,
+    ];
 
     /**
      * @param array<Member> $members
@@ -58,10 +53,10 @@ final class PaymentRepository extends Repository
     public function findMembersWithOpenPayments(int $folderId, array $members, int $dueDateYearTimestamp): array
     {
         $query = $this->createQuery();
+        $query->getQuerySettings()->setStoragePageIds([$folderId]);
 
         $query = $query->matching(
             $query->logicalAnd(
-                $query->equals('pid', $folderId),
                 $query->in('member', $members),
                 $query->lessThan('paid_at', $dueDateYearTimestamp),
             ),
@@ -81,5 +76,35 @@ final class PaymentRepository extends Repository
         });
 
         return $membersWithOpenPayments;
+    }
+
+    /**
+     * @return QueryResultInterface<Payment>
+     */
+    public function findBySite(Site $site): QueryResultInterface
+    {
+        return $this->createQueryForSite($site)->execute();
+    }
+
+    /**
+     * @return QueryResultInterface<Payment>
+     */
+    public function findByMember(Member $member): QueryResultInterface
+    {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->equals('member', $member),
+        );
+
+        return $query->execute();
+    }
+
+    private function createQueryForSite(Site $site): QueryInterface
+    {
+        $storagePid = $site->getSettings()->get('memberManagement.storage.paymentsFolderPid');
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setStoragePageIds([$storagePid]);
+
+        return $query;
     }
 }
