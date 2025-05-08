@@ -12,8 +12,8 @@ use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
 final readonly class TypeMembershipItemsProcFunc
 {
     public function __construct(
-        private MembershipRepository $membershipRepository,
-        private SiteFinder $siteFinder
+        private readonly MembershipRepository $membershipRepository,
+        private readonly SiteFinder $siteFinder
     ){
     }
 
