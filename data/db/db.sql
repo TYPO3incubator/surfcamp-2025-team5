@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (aarch64)
 --
 -- Host: db    Database: db
@@ -1896,8 +1896,8 @@ CREATE TABLE `tx_scheduler_task_group` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 17:49:47
-/*M!999999\- enable the sandbox mode */ 
+-- Dump completed on 2025-05-08 22:23:22
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (aarch64)
 --
 -- Host: db    Database: db
@@ -5597,7 +5597,11 @@ INSERT INTO `sys_log` VALUES
 (158,1746714436,1,1,10,'tx_membermanagement_domain_model_membership',0,0,'Record {table}:{uid} was inserted on page {pid}',1,'content',0,'172.19.0.6','{\"table\":\"tx_membermanagement_domain_model_membership\",\"uid\":10,\"pid\":113}',113,0,'',0,'','info',NULL,NULL),
 (159,1746722714,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.19.0.6','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
 (160,1746722934,1,2,1,'pages',0,0,'Record {table}:{uid} was updated',1,'content',0,'172.19.0.6','{\"table\":\"pages\",\"uid\":1,\"history\":\"1172\"}',0,0,'',0,'','info',NULL,NULL),
-(161,1746722959,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.19.0.6','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL);
+(161,1746722959,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.19.0.6','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(162,1746739244,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL),
+(163,1746739315,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(164,1746739353,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
+(165,1746739375,1,1,0,'',0,0,'Scheduler task \"%s\" (UID: %s, Class: \"%s\") was added',4,'default',0,'172.18.0.5','[\"Table garbage collection\",1,\"TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\TableGarbageCollectionTask\"]',-1,0,'',0,'','info',NULL,NULL);
 /*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7047,6 +7051,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `tx_scheduler_task` WRITE;
 /*!40000 ALTER TABLE `tx_scheduler_task` DISABLE KEYS */;
+INSERT INTO `tx_scheduler_task` VALUES
+(1,1746739375,1,0,'',1746756000,0,NULL,'','O:51:\"TYPO3\\CMS\\Scheduler\\Task\\TableGarbageCollectionTask\":11:{s:12:\"\0*\0scheduler\";N;s:10:\"\0*\0taskUid\";i:1;s:11:\"\0*\0disabled\";b:1;s:19:\"\0*\0runOnNextCronJob\";b:0;s:12:\"\0*\0execution\";O:29:\"TYPO3\\CMS\\Scheduler\\Execution\":6:{s:8:\"\0*\0start\";i:1746739356;s:6:\"\0*\0end\";i:0;s:11:\"\0*\0interval\";i:0;s:11:\"\0*\0multiple\";b:0;s:10:\"\0*\0cronCmd\";s:9:\"0 3 * * *\";s:23:\"\0*\0isNewSingleExecution\";b:0;}s:16:\"\0*\0executionTime\";i:1746756000;s:14:\"\0*\0description\";s:0:\"\";s:12:\"\0*\0taskGroup\";i:0;s:9:\"allTables\";b:0;s:12:\"numberOfDays\";i:90;s:5:\"table\";s:8:\"fe_users\";}',NULL,0);
 /*!40000 ALTER TABLE `tx_scheduler_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7067,4 +7073,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 17:49:47
+-- Dump completed on 2025-05-08 22:23:22
