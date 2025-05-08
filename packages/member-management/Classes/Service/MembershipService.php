@@ -253,4 +253,16 @@ final class MembershipService
         }
         $this->persistenceManager->persistAll();
     }
+
+    public function setMembersInactive(array $memberUids) {
+        foreach ($memberUids as $memberUid) {
+            $member = $this->memberRepository->findByUid($memberUid);
+            if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
+                continue;
+            }
+            $member->setMembershipStatus(MembershipStatus::Inactive);
+            $this->memberRepository->update($member);
+        }
+        $this->persistenceManager->persistAll();
+    }
 }
