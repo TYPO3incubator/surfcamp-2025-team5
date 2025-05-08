@@ -55,12 +55,13 @@ class Member extends AbstractEntity
     protected string $city = '';
     #[Validate(['validator' => 'NotEmpty'])]
     protected string $country = '';
-    #[Validate(['validator' => 'NotEmpty'])]
     #[Validate([
         'validator' => IbanValidator::class,
     ])]
     protected string $iban = '';
     protected string $bic = '';
+    #[Validate(['validator' => 'DateTime'])]
+    protected ?DateTime $sepaAcceptedAt = null;
     protected string $notes = '';
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
@@ -199,6 +200,16 @@ class Member extends AbstractEntity
     public function setBic(string $bic): void
     {
         $this->bic = $bic;
+    }
+
+    public function getSepaAcceptedAt(): ?DateTime
+    {
+        return $this->sepaAcceptedAt;
+    }
+
+    public function setSepaAcceptedAt(?DateTime $sepaAcceptedAt): void
+    {
+        $this->sepaAcceptedAt = $sepaAcceptedAt;
     }
 
     public function getNotes(): string

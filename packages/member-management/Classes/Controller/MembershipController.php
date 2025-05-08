@@ -95,6 +95,10 @@ final class MembershipController extends ActionController
     {
         $member->setPrivacyAcceptedAt(new \DateTime());
 
+        if ($member->getSepaAcceptedAt()) {
+            $member->setPrivacyAcceptedAt(new \DateTime());
+        }
+
         // Hash given password
         $member->setPassword(
             $this->passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($member->getPassword()),
