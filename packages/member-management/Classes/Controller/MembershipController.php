@@ -104,6 +104,8 @@ final class MembershipController extends ActionController
         $member->setPasswordRepeat('');
         $member->setUsername($member->getEmail());
 
+        // @todo create mandate reference (uuid? -> suggestion from Jochen, The Brain)
+
         // Disable member until consent was given
         $member->setDisabled(true);
         $member->setMembershipStatus(MembershipStatus::Unconfirmed);
