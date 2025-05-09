@@ -142,6 +142,7 @@ final class PaymentService
         $payment->setDueBy($dueDate);
         $payment->setAmount($membership->getPrice());
         $payment->setState(PaymentState::Pending);
+        $payment->setPid((int) $site->getSettings()->get('memberManagement.storage.paymentsFolderPid'));
 
         $this->persistenceManager->add($payment);
         $this->persistenceManager->persistAll();
