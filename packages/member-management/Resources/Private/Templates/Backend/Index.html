@@ -213,14 +213,14 @@
     </f:form>
 
     <f:if condition="{pagination.allPageNumbers -> f:count()} > 1">
-        <nav aria-labelledby="recordlist-pagination">
+        <nav aria-labelledby="recordlist-pagination" class="mt-3 d-flex justify-content-center">
             <ul class="pagination mb-0">
                 <f:for each="{pagination.allPageNumbers}" as="page">
                     <li class="page-item">
                         <f:link.action
                             arguments="{currentPageNumber:page}"
                             addQueryString="true"
-                            class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+                            class="page-link {f:if(condition:'{pagination.paginator.currentPageNumber} == {page}',then:'active')}"
                         >
                             {page}
                         </f:link.action>
