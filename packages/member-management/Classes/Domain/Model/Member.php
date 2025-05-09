@@ -417,7 +417,18 @@ class Member extends AbstractEntity
 
     public function getMembershipStatusLabel(): string
     {
-        return $this->membershipStatus->label();
+        $badge = fn (string $severity) => sprintf(
+            '<span class="badge badge-%s">%s</span>',
+            $severity,
+            $this->membershipStatus->label(),
+        );
+
+        return match ($this->membershipStatus) {
+            MembershipStatus::Unconfirmed => $badge('notice'),
+            MembershipStatus::Pending => $badge('warning'),
+            MembershipStatus::Active => $badge('success'),
+            MembershipStatus::Inactive => $badge('danger'),
+        };
     }
 
     public function getLastPayment(): ?Payment
