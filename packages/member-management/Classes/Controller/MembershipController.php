@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Controller;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
@@ -199,6 +201,10 @@ final class MembershipController extends ActionController
         return $this->htmlResponse();
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     protected function cancelAction(): ResponseInterface
     {
         /** @var FrontendUserAuthentication $user */
@@ -211,7 +217,9 @@ final class MembershipController extends ActionController
         }
 
         $member = $this->memberRepository->findByUid($user->getUserId());
-        $this->membershipService->cancel($member);
+        if ($member) {
+            $this->membershipService->cancel($member);
+        }
 
         return $this->htmlResponse();
     }

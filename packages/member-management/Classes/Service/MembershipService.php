@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Service;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -31,6 +33,7 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
@@ -171,12 +174,24 @@ final class MembershipService
         return $this->mailer->getSentMessage() !== null;
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function cancel(Member $member): bool
     {
+        if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
+            $this->logger->error(
+                'Member status is already inactive',
+            );
+            return false;
+        }
+
         // Set member to cancel by setting it inactive and setting a member_until date
         $this->setMembersInactive([$member->getUid()]);
-        // @todo no hardcoded date
+        // @todo no hardcoded date → will be done with payment logic
         $member->setMemberUntil(new \DateTime('1.9.2026'));
+
         try {
             $this->persistenceManager->update($member);
         } catch (UnknownObjectException $exception) {
@@ -188,16 +203,16 @@ final class MembershipService
         }
 
         // Confirmation mail
-        $emailUser = $this->createEmail(
+        $memberConfirmationEmail = $this->createEmail(
             'CancelMembershipConfirmation',
             $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.cancelMembershipConfirmation.subject'),
             $member,
         );
 
         // Mail to person in charge
-        $emailManager = new FluidEmail();
-        $emailManager
-            ->to($this->getSiteSettings()->get('memberManagement.organization.emailOfPersonInCharge'))
+        $memberInfoEmail = new FluidEmail();
+        $memberInfoEmail
+            ->to($this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge'))
             ->subject($this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject'),)
             ->format(FluidEmail::FORMAT_BOTH)
             ->setTemplate('CanceledMembership')
@@ -205,15 +220,16 @@ final class MembershipService
         ;
 
         if ($this->request !== null) {
-            $emailUser->setRequest($this->request);
-            $emailManager->setRequest($this->request);
+            $memberConfirmationEmail->setRequest($this->request);
+            $memberInfoEmail->setRequest($this->request);
         }
 
         try {
-            $this->mailer->send($emailUser);
-            $this->mailer->send($emailManager);
+            $this->mailer->send($memberConfirmationEmail);
+            $this->mailer->send($memberInfoEmail);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
+                // TODO: ??? what is this error message?
                 'Error while sending membership double-opt-in mail: {message}',
                 ['message' => $exception->getMessage()],
             );
@@ -267,9 +283,18 @@ final class MembershipService
         }
     }
 
-    public function setMembersInactive(array $memberUids) {
+    /**
+     * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
+     */
+    public function setMembersInactive(array $memberUids): void
+    {
         foreach ($memberUids as $memberUid) {
             $member = $this->memberRepository->findByUid($memberUid);
+            if (!$member) {
+                continue;
+            }
+
             if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
                 continue;
             }
