@@ -97,10 +97,7 @@
                 <source>Membership cancellation</source>
             </trans-unit>
             <trans-unit id="email.canceledMembership.main.body">
-                <source>Main Body</source>
-            </trans-unit>
-            <trans-unit id="email.canceledMembership.main.body.txt">
-                <source>Main Body Text</source>
+                <source>The member ? cancelled his membership.</source>
             </trans-unit>
 			<trans-unit id="payment-reason">
 				<source>Reason for payment</source>

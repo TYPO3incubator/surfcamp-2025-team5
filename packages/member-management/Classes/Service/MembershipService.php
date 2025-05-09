@@ -229,8 +229,7 @@ final class MembershipService
             $this->mailer->send($memberInfoEmail);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
-                // TODO: ??? what is this error message?
-                'Error while sending membership double-opt-in mail: {message}',
+                'Error while sending cancellation membership mail: {message}',
                 ['message' => $exception->getMessage()],
             );
             return false;
