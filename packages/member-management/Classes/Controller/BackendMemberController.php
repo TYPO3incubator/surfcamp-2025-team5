@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -56,14 +57,21 @@ final class BackendMemberController extends ActionController
     protected function initializeAction(): void
     {
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->getDocHeaderButtons($this->moduleTemplate);
         $this->membershipService->setRequest($this->request);
-        $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
-        $this->pageRenderer->addCssFile('EXT:member_management/Resources/Public/Css/backend.css');
     }
 
     public function indexAction(): ResponseInterface
     {
+        $site = $this->request->getAttribute('site');
+
+        if (!($site instanceof Site)) {
+            return $this->moduleTemplate->renderResponse('Backend/Overview');
+        }
+
+        $this->getDocHeaderButtons($this->moduleTemplate);
+        $this->pageRenderer->loadJavaScriptModule('@vendor/typo3-incubator/member-management/backend.js');
+        $this->pageRenderer->addCssFile('EXT:member_management/Resources/Public/Css/backend.css');
+
         // filter fields
         $filters = [];
         $search = '';
@@ -117,8 +125,6 @@ final class BackendMemberController extends ActionController
         $orderings = [
             $realField => $sortDirection,
         ];
-
-        $site = $this->request->getAttribute('site');
         $siteSettings = $site->getSettings();
         $membersPid = (int)$siteSettings->get('felogin.pid');
         $membershipPid = (int)$siteSettings->get('memberManagement.storage.membershipsFolderPid');
