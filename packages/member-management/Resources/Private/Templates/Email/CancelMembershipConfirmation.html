@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="SystemEmail" />
+
+<f:section name="Title"><f:translate key="email.cancelMembershipConfirmation.subject" /></f:section>
+
+<f:section name="Main">
+    <style type="text/css">
+        .bodyContainer .textContent p .button {
+            margin: 10px 0;
+            padding: 7px 10px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
+    <p>
+        <f:translate key="email.main.salutation" arguments="{0: '{member.firstName} {member.lastName}'}" />,
+    </p>
+    <p>
+        <f:translate key="email.cancelMembershipConfirmation.main.body" />
+    </p>
+</f:section>
+
+</html>

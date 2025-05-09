@@ -84,6 +84,12 @@
             <trans-unit id="plugins.confirm_membership.title">
                 <source>Confirm Membership</source>
             </trans-unit>
+            <trans-unit id="plugins.membership_settings.description">
+                <source>Change settings of a member</source>
+            </trans-unit>
+            <trans-unit id="plugins.membership_settings.title">
+                <source>Membership Settings</source>
+            </trans-unit>
             <trans-unit id="tx_membermanagement_domain_model_membership">
                 <source>Membership</source>
             </trans-unit>

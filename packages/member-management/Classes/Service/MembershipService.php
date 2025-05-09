@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Service;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -31,6 +33,8 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
@@ -166,6 +170,70 @@ final class MembershipService
 
             return false;
         }
+
+        return $this->mailer->getSentMessage() !== null;
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function cancel(Member $member): bool
+    {
+        if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
+            $this->logger->error(
+                'Member status is already inactive',
+            );
+            return false;
+        }
+
+        // Set member to cancel by setting it inactive and setting a member_until date
+        $this->setMembersInactive([$member->getUid()]);
+        // @todo no hardcoded date → will be done with payment logic
+        $member->setMemberUntil(new \DateTime('1.9.2026'));
+
+        try {
+            $this->persistenceManager->update($member);
+        } catch (UnknownObjectException $exception) {
+            $this->logger->error(
+                'Error while updating the member field member_until: {message}',
+                ['message' => $exception->getMessage()],
+            );
+            return false;
+        }
+
+        // Confirmation mail
+        $memberConfirmationEmail = $this->emailService->createEmail(
+            'CancelMembershipConfirmation',
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.cancelMembershipConfirmation.subject',
+            $member,
+        );
+
+        // Mail to person in charge
+        $memberInfoEmail = $this->emailService->createEmail(
+            'CanceledMembership',
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject',
+            $member,
+            new Address($this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge'))
+        );
+
+        if ($this->request !== null) {
+            $memberConfirmationEmail->setRequest($this->request);
+            $memberInfoEmail->setRequest($this->request);
+        }
+
+        try {
+            $this->emailService->sendEmail($memberConfirmationEmail);
+            $this->emailService->sendEmail($memberInfoEmail);
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error(
+                'Error while sending cancellation membership mail: {message}',
+                ['message' => $exception->getMessage()],
+            );
+            return false;
+        }
+
+        return true;
     }
 
     public function setRequest(ServerRequestInterface $request): void
@@ -214,9 +282,18 @@ final class MembershipService
         }
     }
 
-    public function setMembersInactive(array $memberUids) {
+    /**
+     * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
+     */
+    public function setMembersInactive(array $memberUids): void
+    {
         foreach ($memberUids as $memberUid) {
             $member = $this->memberRepository->findByUid($memberUid);
+            if (!$member) {
+                continue;
+            }
+
             if ($member->getMembershipStatus() === MembershipStatus::Inactive) {
                 continue;
             }

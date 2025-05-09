@@ -30,6 +30,9 @@
 			<trans-unit id="city">
 				<source>City</source>
 			</trans-unit>
+            <trans-unit id="cancel.message">
+                <source>Your membership has been successfully cancelled. You will soon get a confirmation mail.</source>
+            </trans-unit>
 			<trans-unit id="confirm.message">
 				<source>Your registration has been successfully saved, our contact person will check your enquiry and approve you as a new member soon.</source>
 			</trans-unit>
@@ -81,12 +84,24 @@
 			<trans-unit id="email.membershipActivated.main.transfer">
 				<source>When you registered, you indicated that you would like to make the payment manually. Please transfer the following amount within the next 14 days:</source>
 			</trans-unit>
-            <trans-unit id="email.paymentReminder.subject">
-                <source>Reminder for your membership payment</source>
-            </trans-unit>
-            <trans-unit id="email.paymentReminder.title">
-                <source>Reminder for your membership payment</source>
-            </trans-unit>
+      <trans-unit id="email.paymentReminder.subject">
+          <source>Reminder for your membership payment</source>
+      </trans-unit>
+      <trans-unit id="email.paymentReminder.title">
+          <source>Reminder for your membership payment</source>
+      </trans-unit>
+      <trans-unit id="email.cancelMembershipConfirmation.subject">
+          <source>Membership cancellation confirmation</source>
+      </trans-unit>
+      <trans-unit id="email.cancelMembershipConfirmation.main.body">
+          <source>You have successfully canceled your membership. You can still log in to our website with your e-mail address and password and view membership information.</source>
+      </trans-unit>
+      <trans-unit id="email.canceledMembership.subject">
+          <source>Membership cancellation</source>
+      </trans-unit>
+      <trans-unit id="email.canceledMembership.main.body">
+          <source>The member %s cancelled his membership.</source>
+      </trans-unit>
 			<trans-unit id="email.paymentReminder.main.body">
 				<source>The membership fee for this year is due again, please transfer the fee with the following data:</source>
 			</trans-unit>
@@ -176,6 +191,9 @@
             </trans-unit>
             <trans-unit id="per-year">
                 <source>per year</source>
+            </trans-unit>
+            <trans-unit id="member.settings.cancel">
+                <source>Cancel membership</source>
             </trans-unit>
 			<trans-unit id="email.main.salutation">
                 <source>Dear %s</source>
