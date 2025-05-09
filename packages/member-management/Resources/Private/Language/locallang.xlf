@@ -93,11 +93,14 @@
             <trans-unit id="email.cancelMembershipConfirmation.subject">
                 <source>Membership cancellation confirmation</source>
             </trans-unit>
+            <trans-unit id="email.cancelMembershipConfirmation.main.body">
+                <source>You have successfully canceled your membership. You can still log in to our website with your e-mail address and password and view membership information.</source>
+            </trans-unit>
             <trans-unit id="email.canceledMembership.subject">
                 <source>Membership cancellation</source>
             </trans-unit>
             <trans-unit id="email.canceledMembership.main.body">
-                <source>The member ? cancelled his membership.</source>
+                <source>The member %s cancelled his membership.</source>
             </trans-unit>
 			<trans-unit id="payment-reason">
 				<source>Reason for payment</source>

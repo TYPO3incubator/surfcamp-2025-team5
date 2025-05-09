@@ -6,7 +6,19 @@
 <f:section name="Title"><f:translate key="email.canceledMembership.subject" /></f:section>
 
 <f:section name="Main">
-    <f:translate key="email.canceledMembership.main.body" />
+    <style type="text/css">
+        .bodyContainer .textContent p .button {
+            margin: 10px 0;
+            padding: 7px 10px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
+    <p>
+        <f:translate key="email.canceledMembership.main.body" arguments="{0: '{member.firstName} {member.lastName}'}" />
+    </p>
 </f:section>
 
 </html>
