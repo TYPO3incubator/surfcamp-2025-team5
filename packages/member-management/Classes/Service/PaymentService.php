@@ -66,8 +66,11 @@ final class PaymentService
                 return new PaymentManagementResult(PaymentManagementAction::ManualActionRequired, $member, $lastPayment);
             }
 
-            // @todo convert to site setting
-            $reminderPeriod = 'P14D'; // 14 days
+            $site = $this->siteFinder->getSiteByPageId((int) $member->getPid());
+            $reminderPeriod = $site->getSettings()->get(
+                'memberManagement.organization.paymentInformation.paymentReminderPeriod',
+                'P14D',
+            );
             $reminderInterval = new \DateInterval($reminderPeriod);
             $dueBy = $lastPayment->getDueBy();
 
@@ -79,7 +82,7 @@ final class PaymentService
                     $member,
                 );
                 $email->assign('payment', $lastPayment);
-                $email->assign('sitesets', $this->siteFinder->getSiteByPageId((int) $member->getPid())->getSettings()->getAll());
+                $email->assign('sitesets', $site->getSettings()->getAll());
 
                 try {
                     $this->emailService->sendEmail($email);
@@ -121,8 +124,10 @@ final class PaymentService
         $dueDate = $this->getDueDate($site);
 
         if (!$ignoreGracePeriod) {
-            // @todo convert to site setting
-            $gracePeriod = 'P3M'; // 3 months
+            $gracePeriod = $site->getSettings()->get(
+                'memberManagement.organization.paymentInformation.paymentGracePeriod',
+                'P3M',
+            );
             $interval = new \DateInterval($gracePeriod);
 
             // No payment needed if outside of grace period

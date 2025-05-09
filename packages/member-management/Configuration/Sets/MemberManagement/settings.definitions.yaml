@@ -109,3 +109,13 @@ settings:
         10: 'October'
         11: 'November'
         12: 'December'
+  memberManagement.organization.paymentInformation.paymentReminderPeriod:
+    label: 'Payment reminder period (when to send reminder emails; in DateInterval format)'
+    category: MemberManagement.organization.paymentInformation
+    type: string
+    default: 'P14D' # 14 days
+  memberManagement.organization.paymentInformation.paymentGracePeriod:
+    label: 'Payment grace period (when to create new payments before next payment due date; in DateInterval format)'
+    category: MemberManagement.organization.paymentInformation
+    type: string
+    default: 'P3M' # 3 months
