@@ -30,6 +30,6 @@ memberManagement:
     membershipsFolderPid: 113
     paymentsFolderPid: 114
 felogin:
-  pid: 1
+  pid: 112
   view:
     templateRootPath: 'EXT:member_management/Resources/Private/Templates'
