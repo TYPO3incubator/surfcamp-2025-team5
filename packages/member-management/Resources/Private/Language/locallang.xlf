@@ -111,6 +111,9 @@
 			<trans-unit id="gender-other">
 				<source>Other</source>
 			</trans-unit>
+			<trans-unit id="gender-noSelection">
+				<source>No selection</source>
+			</trans-unit>
 			<trans-unit id="iban">
 				<source>IBAN</source>
 			</trans-unit>
