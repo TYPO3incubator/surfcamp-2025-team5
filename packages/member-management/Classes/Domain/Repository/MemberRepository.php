@@ -110,6 +110,16 @@ final class MemberRepository extends Repository
         return $this->createQueryForSite($site)->execute();
     }
 
+    public function findDeregisteredBySite(Site $site): QueryResultInterface
+    {
+        $query = $this->createQueryForSite($site);
+        $query->matching(
+            $query->lessThanOrEqual('memberUntil', new \DateTime()),
+        );
+
+        return $query->execute();
+    }
+
     private function createQueryForSite(Site $site): QueryInterface
     {
         $storagePid = $site->getSettings()->get('felogin.pid');
