@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */
+/*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: db    Database: db
@@ -220,7 +220,7 @@ CREATE TABLE `cache_pages` (
   `content` longblob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(180),`expires`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,7 @@ CREATE TABLE `cache_pages_tags` (
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(191)),
   KEY `cache_tag` (`tag`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `cache_rootline` (
   `content` longblob DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(180),`expires`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +271,7 @@ CREATE TABLE `cache_rootline_tags` (
   PRIMARY KEY (`id`),
   KEY `cache_id` (`identifier`(191)),
   KEY `cache_tag` (`tag`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1129,7 +1129,7 @@ CREATE TABLE `sys_log` (
   KEY `errorcount` (`tstamp`,`error`),
   KEY `index_channel` (`channel`),
   KEY `index_level` (`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1836,6 +1836,9 @@ CREATE TABLE `tx_membermanagement_domain_model_payment` (
   `member` int(10) unsigned NOT NULL DEFAULT 0,
   `paid_at` bigint(20) NOT NULL DEFAULT 0,
   `amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `due_by` bigint(20) NOT NULL DEFAULT 0,
+  `state` int(10) unsigned NOT NULL DEFAULT 0,
+  `reminder_mail_sent_at` bigint(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `parent` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -1863,7 +1866,7 @@ CREATE TABLE `tx_scheduler_task` (
   `task_group` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   KEY `index_nextexecution` (`nextexecution`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1897,8 +1900,8 @@ CREATE TABLE `tx_scheduler_task_group` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 23:29:37
-/*M!999999\- enable the sandbox mode */
+-- Dump completed on 2025-05-09 11:15:34
+/*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: db    Database: db
@@ -1955,7 +1958,7 @@ UNLOCK TABLES;
 LOCK TABLES `be_users` WRITE;
 /*!40000 ALTER TABLE `be_users` DISABLE KEYS */;
 INSERT INTO `be_users` VALUES
-(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:1:{s:32:\"4bea4f3ecb1ecc3b24449a10256334a8\";a:5:{i:0;s:25:\"alex.beispiel@example.com\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:33;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:32:\"&edit%5Bfe_users%5D%5B33%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:33;s:3:\"pid\";i:112;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=33f58ba07b2364dec7adcd37e701d3eb80be54c0&id=112&table=&pointer=1\";}}i:1;s:32:\"4bea4f3ecb1ecc3b24449a10256334a8\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"f6e0d9e5e25bd8e127ef37cf400aafcc\";a:5:{i:0;s:22:\"jean.dupont@example.fr\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:6;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B6%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:6;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=19d496eac103a35fb1da9e35dd746eceecf17a90&id=16&table=&pointer=1\";}s:32:\"eed2902fe26944fd1a97520e84fe9de4\";a:5:{i:0;s:25:\"alex.beispiel@example.com\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:32:\"&edit%5Bfe_users%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:10;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=19d496eac103a35fb1da9e35dd746eceecf17a90&id=16&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}s:12:\"pagetsconfig\";a:1:{s:6:\"action\";s:19:\"pagetsconfig_active\";}s:6:\"web_ts\";a:1:{s:6:\"action\";s:25:\"web_typoscript_infomodify\";}s:25:\"web_typoscript_infomodify\";a:1:{s:23:\"selectedTemplatePerPage\";a:1:{i:1;i:-1;}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"9c0a58b26e7ee7d5d44440b8702bde78572f54c8\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"9c0a58b26e7ee7d5d44440b8702bde78572f54c8\";s:16:\"opendocs::recent\";s:40:\"fb0d12de30db0a6480abbf45b95426598238e8b3\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";s:12:\"pagetsconfig\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:6:\"web_ts\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:25:\"web_typoscript_infomodify\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:5:\"false\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746742643,NULL),
+(1,0,1744013612,1744013612,0,0,0,0,NULL,'default','a:7:{s:10:\"moduleData\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"faacf8dc927e44b8c4a076ea597850984919bb89\";s:10:\"FormEngine\";a:2:{i:0;a:1:{s:32:\"4bea4f3ecb1ecc3b24449a10256334a8\";a:5:{i:0;s:25:\"alex.beispiel@example.com\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:33;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:32:\"&edit%5Bfe_users%5D%5B33%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:33;s:3:\"pid\";i:112;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=33f58ba07b2364dec7adcd37e701d3eb80be54c0&id=112&table=&pointer=1\";}}i:1;s:32:\"4bea4f3ecb1ecc3b24449a10256334a8\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:16:\"opendocs::recent\";a:8:{s:32:\"f6e0d9e5e25bd8e127ef37cf400aafcc\";a:5:{i:0;s:22:\"jean.dupont@example.fr\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:6;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B6%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:6;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=19d496eac103a35fb1da9e35dd746eceecf17a90&id=16&table=&pointer=1\";}s:32:\"eed2902fe26944fd1a97520e84fe9de4\";a:5:{i:0;s:25:\"alex.beispiel@example.com\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:32:\"&edit%5Bfe_users%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:10;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=19d496eac103a35fb1da9e35dd746eceecf17a90&id=16&table=&pointer=1\";}s:32:\"a6f8072c291b2c91bc692d91977ed3f8\";a:5:{i:0;s:0:\"\";i:1;a:5:{s:4:\"edit\";a:1:{s:8:\"fe_users\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:31:\"&edit%5Bfe_users%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:8:\"fe_users\";s:3:\"uid\";i:2;s:3:\"pid\";i:16;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:92:\"/typo3/module/web/list?token=ad37019de8d519b73b1e5c983e563523dec06c0d&id=16&table=&pointer=1\";}s:32:\"587489f07f1738cd2c00f59cf0530a4a\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:10;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:67:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B10%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:10;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"0468302d648188db8ea7e210793fff3f\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:9;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B9%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:9;s:3:\"pid\";i:113;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=113&table=&pointer=1\";}s:32:\"2b105c2fc1acb78b93da947a3af0e957\";a:5:{i:0;s:14:\"Senior citizen\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:8;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B8%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:8;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"f20df31d513080c35c6d284581dc05ba\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:7;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=e501e85c8fdc221b91efec8b2f202103dbc458aa&id=109&table=&pointer=1\";}s:32:\"62492b7813a76c8942e93cad2da6577b\";a:5:{i:0;s:7:\"Student\";i:1;a:5:{s:4:\"edit\";a:1:{s:43:\"tx_membermanagement_domain_model_membership\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:66:\"&edit%5Btx_membermanagement_domain_model_membership%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:43:\"tx_membermanagement_domain_model_membership\";s:3:\"uid\";i:1;s:3:\"pid\";i:109;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}i:4;s:93:\"/typo3/module/web/list?token=2997c81e309d713174ae58aae19f4bf5a634c288&id=109&table=&pointer=1\";}}s:16:\"browse_links.php\";N;s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:14:\"tt_content|254\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}s:12:\"pagetsconfig\";a:1:{s:6:\"action\";s:19:\"pagetsconfig_active\";}s:6:\"web_ts\";a:1:{s:6:\"action\";s:25:\"web_typoscript_infomodify\";}s:25:\"web_typoscript_infomodify\";a:1:{s:23:\"selectedTemplatePerPage\";a:1:{i:1;i:-1;}}}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";s:15:\"moduleSessionID\";a:9:{s:28:\"dashboard/current_dashboard/\";s:40:\"e8ee6d5cc4b82bec1c405eb23bf4aafdd8c48ce8\";s:10:\"FormEngine\";s:40:\"9c0a58b26e7ee7d5d44440b8702bde78572f54c8\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"9c0a58b26e7ee7d5d44440b8702bde78572f54c8\";s:16:\"opendocs::recent\";s:40:\"fb0d12de30db0a6480abbf45b95426598238e8b3\";s:16:\"browse_links.php\";s:40:\"6ffa6abd0eee25ef6b3dfdf96d444e8b45413c06\";s:9:\"clipboard\";s:40:\"6c7620f04c5e4f7db7474da41fbb2d9533f7582f\";s:12:\"pagetsconfig\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:6:\"web_ts\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";s:25:\"web_typoscript_infomodify\";s:40:\"0bc5fdffb8c5d71cf90cdd18be499bb4443aa412\";}s:10:\"modulemenu\";s:27:\"{\"system\":true,\"file\":true}\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:17:\"typo3-module-menu\";a:1:{s:9:\"collapsed\";s:5:\"false\";}}}}',0,NULL,'','admin','$argon2id$v=19$m=65536,t=16,p=1$UW05T093U1JQS2liR1lLRA$z0I5XCRD58aCJ/ftNFV/FTe7FppNaYrYuuLpJhfoz5Q','',0,NULL,'','info@typo3.com','',1,3,NULL,1,NULL,'',NULL,1746785694,NULL),
 (2,0,1744014582,1744014582,0,0,0,0,NULL,'default','a:4:{s:10:\"moduleData\";a:0:{}s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";i:50;s:20:\"edit_docModuleUpload\";s:1:\"1\";}',0,NULL,'','_cli_','$argon2id$v=19$m=65536,t=16,p=1$Qk41RG10QTUxUGQzclc3dA$9bxBcygWFXt9U5WuxRJLFP3866mFPYZjpkdwMrS98sg','',0,NULL,'','','',1,3,NULL,1,NULL,'',NULL,0,NULL);
 /*!40000 ALTER TABLE `be_users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -5691,7 +5694,8 @@ INSERT INTO `sys_log` VALUES
 (178,1746743228,1,3,27,'fe_users',0,0,'Record {table}:{uid} was deleted from pages:{pid}',1,'content',0,'172.18.0.5','{\"table\":\"fe_users\",\"uid\":27,\"pid\":1}',1,0,'',0,'','info',NULL,NULL),
 (179,1746743232,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
 (180,1746743246,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"all\"}',-1,0,'',0,'','info',NULL,NULL),
-(181,1746743247,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"pages\"}',-1,0,'',0,'','info',NULL,NULL);
+(181,1746743247,1,1,0,'',0,0,'User {username} has cleared the cache (cacheCmd={command})',3,'default',0,'172.18.0.5','{\"username\":\"admin\",\"command\":\"pages\"}',-1,0,'',0,'','info',NULL,NULL),
+(182,1746785694,1,1,0,'',0,0,'User %s logged in from ###IP###',255,'user',0,'172.18.0.5','[\"admin\"]',-1,-99,'',0,'','info',NULL,NULL);
 /*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -6590,7 +6594,7 @@ INSERT INTO `sys_registry` VALUES
 (10,'installUpdate','TYPO3\\CMS\\Install\\Updates\\SysTemplateNoWorkspaceMigration','i:1;'),
 (11,'installUpdate','TYPO3\\CMS\\Extensionmanager\\Updates\\FeLoginModeExtractionUpdate','i:1;'),
 (12,'installUpdateRows','rowUpdatersDone','a:1:{i:0;s:69:\"TYPO3\\CMS\\Install\\Updates\\RowUpdater\\SysRedirectRootPageMoveMigration\";}'),
-(13,'core','formProtectionSessionToken:1','s:64:\"b2e59e156dcc895c0a7a1512f6d9f239d5fc1e0697fe3cf61018557306dd4333\";'),
+(13,'core','formProtectionSessionToken:1','s:64:\"11742a37c30152c8f7268f7cf275b6a6258e62e9da63b1c754965ad7b2148d81\";'),
 (14,'extensionDataImport','typo3/cms-core/ext_tables_static+adt.sql','s:0:\"\";'),
 (15,'extensionDataImport','typo3/cms-scheduler/ext_tables_static+adt.sql','s:0:\"\";'),
 (16,'extensionDataImport','typo3/cms-extbase/ext_tables_static+adt.sql','s:0:\"\";'),
@@ -7163,4 +7167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 23:29:37
+-- Dump completed on 2025-05-09 11:15:34
