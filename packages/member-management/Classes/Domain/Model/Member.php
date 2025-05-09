@@ -77,25 +77,25 @@ class Member extends AbstractEntity
     protected string $sepaDebtorMandate = '';
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeInterface $sepaDebtorMandateSignDate = null;
+    protected ?\DateTime $sepaDebtorMandateSignDate = null;
 
     protected string $notes = '';
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeInterface $dateOfBirth = null;
+    protected ?\DateTime $dateOfBirth = null;
 
     protected Gender $gender = Gender::Other;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeInterface $privacyAcceptedAt = null;
+    protected ?\DateTime $privacyAcceptedAt = null;
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeInterface $memberSince = null;
+    protected ?\DateTime $memberSince = null;
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeInterface $memberUntil = null;
+    protected ?\DateTime $memberUntil = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     protected ?Membership $membership = null;
@@ -245,12 +245,12 @@ class Member extends AbstractEntity
         $this->sepaDebtorMandate = $sepaDebtorMandate;
     }
 
-    public function getSepaDebtorMandateSignDate(): ?\DateTimeInterface
+    public function getSepaDebtorMandateSignDate(): ?\DateTime
     {
-        return $this->sepaDebtorMandateSignDate;
+        return clone $this->sepaDebtorMandateSignDate;
     }
 
-    public function setSepaDebtorMandateSignDate(?\DateTimeInterface $sepaDebtorMandateSignDate): void
+    public function setSepaDebtorMandateSignDate(?\DateTime $sepaDebtorMandateSignDate): void
     {
         $this->sepaDebtorMandateSignDate = $sepaDebtorMandateSignDate;
     }
@@ -265,12 +265,12 @@ class Member extends AbstractEntity
         $this->notes = $notes;
     }
 
-    public function getDateOfBirth(): ?\DateTimeInterface
+    public function getDateOfBirth(): ?\DateTime
     {
-        return $this->dateOfBirth;
+        return clone $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): void
+    public function setDateOfBirth(?\DateTime $dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }
@@ -285,32 +285,32 @@ class Member extends AbstractEntity
         $this->gender = $gender;
     }
 
-    public function getPrivacyAcceptedAt(): ?\DateTimeInterface
+    public function getPrivacyAcceptedAt(): ?\DateTime
     {
-        return $this->privacyAcceptedAt;
+        return clone $this->privacyAcceptedAt;
     }
 
-    public function setPrivacyAcceptedAt(?\DateTimeInterface $privacyAcceptedAt): void
+    public function setPrivacyAcceptedAt(?\DateTime $privacyAcceptedAt): void
     {
         $this->privacyAcceptedAt = $privacyAcceptedAt;
     }
 
-    public function getMemberSince(): ?\DateTimeInterface
+    public function getMemberSince(): ?\DateTime
     {
-        return $this->memberSince;
+        return clone $this->memberSince;
     }
 
-    public function setMemberSince(?\DateTimeInterface $memberSince): void
+    public function setMemberSince(?\DateTime $memberSince): void
     {
         $this->memberSince = $memberSince;
     }
 
-    public function getMemberUntil(): ?\DateTimeInterface
+    public function getMemberUntil(): ?\DateTime
     {
-        return $this->memberUntil;
+        return clone $this->memberUntil;
     }
 
-    public function setMemberUntil(?\DateTimeInterface $memberUntil): void
+    public function setMemberUntil(?\DateTime $memberUntil): void
     {
         $this->memberUntil = $memberUntil;
     }

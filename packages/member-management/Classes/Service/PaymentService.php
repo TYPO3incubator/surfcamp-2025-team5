@@ -91,7 +91,7 @@ final class PaymentService
                     return new PaymentManagementResult(PaymentManagementAction::ReminderMailCouldNotBeSent, $member, $lastPayment);
                 }
 
-                $lastPayment->setReminderMailSentAt(new \DateTimeImmutable());
+                $lastPayment->setReminderMailSentAt(new \DateTime());
 
                 $this->persistenceManager->update($lastPayment);
                 $this->persistenceManager->persistAll();
@@ -232,7 +232,7 @@ final class PaymentService
         return $directDebit->asXML();
     }
 
-    private function getDueDate(Site $site): DateTimeImmutable
+    private function getDueDate(Site $site): \DateTime
     {
         $dueMonth = (int)$site->getSettings()->get('memberManagement.organization.paymentInformation.paymentDueMonth', 1);
         $now = new DateTimeImmutable();
@@ -241,7 +241,7 @@ final class PaymentService
 
         $year = ($currentMonth >= $dueMonth) ? $currentYear + 1 : $currentYear;
 
-        return (new DateTimeImmutable())
+        return (new \DateTime())
             ->setDate($year, $dueMonth, 1)
             ->setTime(0, 0)
         ;
