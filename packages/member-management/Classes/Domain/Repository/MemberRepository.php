@@ -172,6 +172,17 @@ final class MemberRepository extends Repository
         return $query->execute()->getFirst();
     }
 
+    public function findAll(int $storagePid = 0): array|QueryResultInterface
+    {
+        $query = $this->createQuery();
+        if ($storagePid > 0) {
+            $query->getQuerySettings()->setStoragePageIds([$storagePid]);
+        } else {
+            $query->getQuerySettings()->setRespectStoragePage(false);
+        }
+        return $query->execute();
+    }
+
     private function getServerRequest(): ?ServerRequestInterface
     {
         $serverRequest = $GLOBALS['TYPO3_REQUEST'] ?? null;

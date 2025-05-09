@@ -289,7 +289,7 @@ final class PaymentService
         $this->emailService->setRequest($request);
     }
 
-    public function markMembersAsPaid(array $memberUids)
+    public function markMembersAsPaid(array $memberUids): void
     {
         foreach ($memberUids as $memberUid) {
             $member = $this->memberRepository->findByUid($memberUid);

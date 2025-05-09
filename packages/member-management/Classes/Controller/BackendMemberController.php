@@ -24,6 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MemberRepository;
 use TYPO3Incubator\MemberManagement\Domain\Repository\MembershipRepository;
+use TYPO3Incubator\MemberManagement\Payment\PaymentManagementAction;
 use TYPO3Incubator\MemberManagement\Service\MembershipService;
 use TYPO3Incubator\MemberManagement\Service\PaymentService;
 
@@ -33,9 +34,9 @@ final class BackendMemberController extends ActionController
     private ModuleTemplate $moduleTemplate;
     private LanguageService $languageService;
 
-    protected const MEMBER_ACTION_SET_ACTIVE = 'setActive';
-    protected const MEMBER_ACTION_SET_INACTIVE = 'setInactive';
-    protected const MEMBER_ACTION_MARK_AS_PAID = 'markAsPaid';
+    protected const  string MEMBER_ACTION_SET_ACTIVE = 'setActive';
+    protected const string MEMBER_ACTION_SET_INACTIVE = 'setInactive';
+    protected const string MEMBER_ACTION_MARK_AS_PAID = 'markAsPaid';
 
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
@@ -219,6 +220,7 @@ final class BackendMemberController extends ActionController
         $buttonBar = $view->getDocHeaderComponent()->getButtonBar();
 
         $buttonBar->addButton($this->getDocHeaderButtonForGeneratingSepaXml($buttonBar), ButtonBar::BUTTON_POSITION_LEFT, 10);
+        $buttonBar->addButton($this->getDocHeaderButtonForSendingPaymentReminder($buttonBar), ButtonBar::BUTTON_POSITION_LEFT, 10);
     }
 
     private function getDocHeaderButtonForGeneratingSepaXml(ButtonBar $buttonBar): LinkButton
@@ -251,6 +253,42 @@ final class BackendMemberController extends ActionController
 
         }
         return $this->redirect('index');
+    }
+
+    public function sendPaymentReminderAction(): ResponseInterface
+    {
+        $this->paymentService->setRequest($this->request);
+        if ($this->request->hasArgument('memberUid')) {
+            $memberUid = (int)$this->request->getArgument('memberUid');
+            $member = $this->memberRepository->findByUid($memberUid);
+            $members = [$member];
+        } else {
+            $members = $this->memberRepository->findAll();
+        }
+        $allSent = true;
+        foreach ($members as $member) {
+            $result = $this->paymentService->processMemberPayments($member);
+            if ($result->action->name == PaymentManagementAction::ReminderMailCouldNotBeSent) {
+                $allSent = false;
+            }
+        }
+        if ($allSent) {
+            $this->addFlashMessage('All payment reminders have been sent out');
+        } else {
+            $this->addFlashMessage('There was an error in sending out some payment reminders');
+        }
+        return $this->redirect('index');
+    }
+
+    private function getDocHeaderButtonForSendingPaymentReminder(ButtonBar $buttonBar): LinkButton
+    {
+        $href = $this->uriBuilder->reset()->uriFor('sendPaymentReminder');
+
+        return $buttonBar->makeLinkButton()
+            ->setHref($href)
+            ->setTitle($this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang_mod_member.xlf:sendPaymentReminder'))
+            ->setShowLabelText(true)
+            ->setIcon($this->iconFactory->getIcon('actions-paperplane', IconSize::SMALL));
     }
 
 }

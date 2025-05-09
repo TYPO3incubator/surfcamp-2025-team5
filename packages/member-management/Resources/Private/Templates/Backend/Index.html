@@ -195,6 +195,15 @@
                                    title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')}">
                                     <core:icon identifier="actions-open" size="small"/>
                                 </a>
+                                <f:if condition="{member.lastPayment.stateLabel} === 'Overdue' && {member.iban} == ''">
+                                    <f:link.action action="sendPaymentReminder" class="btn btn-default btn-sm"
+                                                   arguments="{memberUid: member.uid}"
+                                                   title="Send payment reminder">
+                                        <core:icon identifier="actions-paperplane" size="small"/>
+
+                                    </f:link.action>
+                                </f:if>
+
                             </td>
                         </tr>
                     </f:for>
