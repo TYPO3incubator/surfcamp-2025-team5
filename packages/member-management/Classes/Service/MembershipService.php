@@ -203,21 +203,19 @@ final class MembershipService
         }
 
         // Confirmation mail
-        $memberConfirmationEmail = $this->createEmail(
+        $memberConfirmationEmail = $this->emailService->createEmail(
             'CancelMembershipConfirmation',
-            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.cancelMembershipConfirmation.subject'),
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.cancelMembershipConfirmation.subject',
             $member,
         );
 
         // Mail to person in charge
-        $memberInfoEmail = new FluidEmail();
-        $memberInfoEmail
-            ->to($this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge'))
-            ->subject($this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject'),)
-            ->format(FluidEmail::FORMAT_BOTH)
-            ->setTemplate('CanceledMembership')
-            ->assign('member', $member)
-        ;
+        $memberInfoEmail = $this->emailService->createEmail(
+            'CanceledMembership',
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject',
+            $member,
+            new Address($this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge'))
+        );
 
         if ($this->request !== null) {
             $memberConfirmationEmail->setRequest($this->request);
@@ -225,8 +223,8 @@ final class MembershipService
         }
 
         try {
-            $this->mailer->send($memberConfirmationEmail);
-            $this->mailer->send($memberInfoEmail);
+            $this->emailService->sendEmail($memberConfirmationEmail);
+            $this->emailService->sendEmail($memberInfoEmail);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
                 'Error while sending cancellation membership mail: {message}',
@@ -234,6 +232,8 @@ final class MembershipService
             );
             return false;
         }
+
+        return true;
     }
 
     public function setRequest(ServerRequestInterface $request): void
