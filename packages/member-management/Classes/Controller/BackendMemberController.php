@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -237,18 +238,34 @@ final class BackendMemberController extends ActionController
     public function memberBulkActionAction(array $memberUids = [], string $memberAction = null): ResponseInterface
     {
         if (empty($memberUids) || $memberAction === null) {
-            $this->addFlashMessage('No items selected or no action specified.');
+            $this->addFlashMessage(
+                'No items selected or no action specified.',
+                '',
+                ContextualFeedbackSeverity::INFO,
+            );
             return $this->redirect('index');
         }
         switch ($memberAction) {
             case self::MEMBER_ACTION_SET_ACTIVE:
                 $this->membershipService->setMembersActive($memberUids);
+                $this->addFlashMessage(
+                    'Successfully marked all selected members as active.',
+                    'Set members active',
+                );
                 break;
             case self::MEMBER_ACTION_SET_INACTIVE:
                 $this->membershipService->setMembersInactive($memberUids);
+                $this->addFlashMessage(
+                    'Successfully marked all selected members as inactive.',
+                    'Set members inactive',
+                );
                 break;
             case self::MEMBER_ACTION_MARK_AS_PAID:
                 $this->paymentService->markMembersAsPaid($memberUids);
+                $this->addFlashMessage(
+                    'Successfully marked payments of all selected members as paid.',
+                    'Mark as paid',
+                );
                 break;
 
         }

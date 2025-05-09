@@ -53,11 +53,12 @@ $tmp_membermanagement_columns = [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
+                ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.noSelection', 'value' => -1],
                 ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.other', 'value' => 0],
                 ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.male', 'value' => 1],
                 ['label' => 'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:fe_users.gender.female', 'value' => 2],
             ],
-            'default' => 0,
+            'default' => -1,
             'size' => 1,
             'maxitems' => 1,
         ],
