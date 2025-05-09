@@ -1,5 +1,5 @@
 <f:layout name="SystemEmail" />
-<f:section name="Title">Jemand hat seine Membership gecancelled :(</f:section>
+<f:section name="Title"><f:translate key="email.canceledMembership.subject" /></f:section>
 <f:section name="Main">
-Jemand hat seine Membership gecancelled :(
+<f:translate key="email.canceledMembership.main.body.txt" />
 </f:section>
