@@ -30,6 +30,18 @@ ExtensionUtility::configurePlugin(
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
+ExtensionUtility::configurePlugin(
+    'MemberManagement',
+    'MembershipSettings',
+    [
+        MembershipController::class => 'edit, cancel',
+    ],
+    [
+        MembershipController::class => 'edit, cancel',
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1746439249]
     = 'EXT:member_management/Resources/Private/Templates/Email/';
 

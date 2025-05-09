@@ -24,6 +24,15 @@ defined('TYPO3') or die();
         'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:plugins.confirm_membership.description',
     );
 
+    ExtensionUtility::registerPlugin(
+        'MemberManagement',
+        'MembershipSettings',
+        'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:plugins.membership_settings.title',
+        'status-user-frontend',
+        'plugins',
+        'LLL:EXT:member_management/Resources/Private/Language/locallang_db.xlf:plugins.membership_settings.description',
+    );
+
     ExtensionManagementUtility::addTCAcolumns('tt_content', [
         'tx_membermanagement_confirmation_pid' => [
             'exclude' => true,

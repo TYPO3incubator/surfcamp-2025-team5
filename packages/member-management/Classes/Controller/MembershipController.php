@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Controller;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
@@ -31,6 +33,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
 use TYPO3Incubator\MemberManagement\Domain\Model\MembershipStatus;
@@ -188,6 +191,34 @@ final class MembershipController extends ActionController
             }
         } catch (Exception $exception) {
             return $this->errorResponse($exception->getCode());
+        }
+
+        return $this->htmlResponse();
+    }
+
+    protected function editAction(): ResponseInterface
+    {
+        return $this->htmlResponse();
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function cancelAction(): ResponseInterface
+    {
+        /** @var FrontendUserAuthentication $user */
+        $user = $this->request->getAttribute('frontend.user');
+        $userId = $user->getUserId();
+
+        // No user is logged in
+        if ($userId === null) {
+            return $this->redirectToUri('/');
+        }
+
+        $member = $this->memberRepository->findByUid($user->getUserId());
+        if ($member) {
+            $this->membershipService->cancel($member);
         }
 
         return $this->htmlResponse();

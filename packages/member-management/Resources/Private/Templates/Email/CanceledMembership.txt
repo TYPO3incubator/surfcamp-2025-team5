@@ -1,0 +1,5 @@
+<f:layout name="SystemEmail" />
+<f:section name="Title"><f:translate key="email.canceledMembership.subject" /></f:section>
+<f:section name="Main">
+<f:translate key="email.canceledMembership.main.body" arguments="{0: '{member.firstName} {member.lastName}'}" />
+</f:section>
