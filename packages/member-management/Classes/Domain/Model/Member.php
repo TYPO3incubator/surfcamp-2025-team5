@@ -85,7 +85,7 @@ class Member extends AbstractEntity
     #[Validate(['validator' => 'DateTime'])]
     protected ?\DateTime $dateOfBirth = null;
 
-    protected Gender $gender = Gender::Other;
+    protected Gender $gender = Gender::NoSelection;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
