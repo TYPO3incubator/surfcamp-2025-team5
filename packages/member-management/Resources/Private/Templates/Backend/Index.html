@@ -11,6 +11,8 @@
 <f:section name="Content">
     <h1>Members</h1>
 
+    <f:flashMessages />
+
     <f:form action="index" class="filter-form mb-4 row g-3 align-items-end">
         <div class="col-sm-4">
             <label for="filterSearch" class="form-label">Search</label>
@@ -148,24 +150,34 @@
                                 {member.membership.title}
                             </a>
                         </td>
-                        <td>{member.membershipStatusLabel}</td>
+                        <td>{member.membershipStatusLabel -> f:format.raw()}</td>
                         <td>
                             <f:switch expression="{member.lastPayment.stateLabel}">
                                 <f:case value="Pending">
-                                    <core:icon identifier="actions-clock" size="small"/>
+                                    <span class="badge badge-warning align-items-center gap-1">
+                                        <core:icon identifier="actions-clock" size="small"/>
+                                        {member.lastPayment.stateLabel}
+                                    </span>
                                 </f:case>
                                 <f:case value="Paid">
-                                    <core:icon identifier="actions-check-badge" size="small"/>
+                                    <span class="badge badge-success align-items-center gap-1">
+                                        <core:icon identifier="actions-check-badge" size="small"/>
+                                        {member.lastPayment.stateLabel}
+                                    </span>
                                 </f:case>
                                 <f:case value="Overdue">
-                                    <core:icon identifier="actions-exclamation-triangle" size="small"/>
+                                    <span class="badge badge-danger align-items-center gap-1">
+                                        <core:icon identifier="actions-exclamation-triangle" size="small"/>
+                                        {member.lastPayment.stateLabel}
+                                    </span>
                                 </f:case>
                                 <f:case value="Cancelled">
-                                    <core:icon identifier="actions-ban" size="small"/>
+                                    <span class="badge badge-notice align-items-center gap-1">
+                                        <core:icon identifier="actions-ban" size="small"/>
+                                        {member.lastPayment.stateLabel}
+                                    </span>
                                 </f:case>
                             </f:switch>
-
-                            {member.lastPayment.stateLabel}
                         </td>
                         <td>
                             <f:if condition="{member.lastPayment}">
@@ -177,7 +189,7 @@
                                 <f:else>-</f:else>
                             </f:if>
                         </td>
-                        <td>
+                        <td class="col-control">
                             <a href="{mm:editLink(table: 'fe_users', uid: member.uid)}"
                                 class="btn btn-default btn-sm"
                                 title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')}">
