@@ -67,7 +67,7 @@ final class PaymentService
             }
 
             // @todo convert to site setting
-            $reminderPeriod = 'P6M'; // 14 days
+            $reminderPeriod = 'P14D'; // 14 days
             $reminderInterval = new \DateInterval($reminderPeriod);
             $dueBy = $lastPayment->getDueBy();
 
