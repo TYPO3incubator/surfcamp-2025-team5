@@ -52,7 +52,7 @@ final class PaymentService
         }
 
         /** @var Payment|null $lastPayment */
-        $lastPayment = $this->paymentRepository->findByMember($member)->getFirst();
+        $lastPayment = $member->getLastPayment();
 
         // Create first payment for new active member
         if ($lastPayment === null) {
