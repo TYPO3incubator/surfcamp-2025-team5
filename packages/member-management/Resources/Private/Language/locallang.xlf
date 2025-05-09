@@ -87,6 +87,9 @@
             <trans-unit id="email.paymentReminder.title">
                 <source>Reminder for your membership payment</source>
             </trans-unit>
+			<trans-unit id="email.paymentReminder.main.body">
+				<source>The membership fee for this year is due again, please transfer the fee with the following data:</source>
+			</trans-unit>
 			<trans-unit id="payment-reason">
 				<source>Reason for payment</source>
 			</trans-unit>
