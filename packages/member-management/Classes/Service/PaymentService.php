@@ -304,7 +304,7 @@ final class PaymentService
             }
 
             $payment->setState(PaymentState::Paid);
-            $payment->setPaidAt(new DateTime());
+            $payment->setPaidAt(new \DateTime());
             $this->persistenceManager->update($payment);
         }
         $this->persistenceManager->persistAll();
