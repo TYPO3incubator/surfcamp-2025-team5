@@ -268,7 +268,7 @@ final class BackendMemberController extends ActionController
         $allSent = true;
         foreach ($members as $member) {
             $result = $this->paymentService->processMemberPayments($member);
-            if ($result->action->name == PaymentManagementAction::ReminderMailCouldNotBeSent) {
+            if ($result->action === PaymentManagementAction::ReminderMailCouldNotBeSent) {
                 $allSent = false;
             }
         }
