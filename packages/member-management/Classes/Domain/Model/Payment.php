@@ -30,11 +30,11 @@ class Payment extends AbstractEntity
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeImmutable $paidAt = null;
+    protected ?\DateTimeInterface $paidAt = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTimeImmutable $dueBy = null;
+    protected ?\DateTimeInterface $dueBy = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'Float'])]
@@ -43,7 +43,7 @@ class Payment extends AbstractEntity
     protected PaymentState $state = PaymentState::Pending;
 
     #[Validate(['validator' => 'NotEmpty'])]
-    protected ?\DateTimeImmutable $reminderMailSentAt = null;
+    protected ?\DateTimeInterface $reminderMailSentAt = null;
 
     public function getMember(): Member
     {
@@ -55,22 +55,22 @@ class Payment extends AbstractEntity
         $this->member = $member;
     }
 
-    public function getPaidAt(): ?\DateTimeImmutable
+    public function getPaidAt(): ?\DateTimeInterface
     {
         return $this->paidAt;
     }
 
-    public function setPaidAt(?\DateTimeImmutable $paidAt): void
+    public function setPaidAt(?\DateTimeInterface $paidAt): void
     {
         $this->paidAt = $paidAt;
     }
 
-    public function getDueBy(): ?\DateTimeImmutable
+    public function getDueBy(): ?\DateTimeInterface
     {
         return $this->dueBy;
     }
 
-    public function setDueBy(?\DateTimeImmutable $dueBy): void
+    public function setDueBy(?\DateTimeInterface $dueBy): void
     {
         $this->dueBy = $dueBy;
     }
@@ -95,12 +95,12 @@ class Payment extends AbstractEntity
         $this->state = $state;
     }
 
-    public function getReminderMailSentAt(): ?\DateTimeImmutable
+    public function getReminderMailSentAt(): ?\DateTimeInterface
     {
         return $this->reminderMailSentAt;
     }
 
-    public function setReminderMailSentAt(?\DateTimeImmutable $reminderMailSentAt): void
+    public function setReminderMailSentAt(?\DateTimeInterface $reminderMailSentAt): void
     {
         $this->reminderMailSentAt = $reminderMailSentAt;
     }

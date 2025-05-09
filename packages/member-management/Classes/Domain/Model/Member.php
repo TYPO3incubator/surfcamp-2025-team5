@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Domain\Model;
 
-use DateTimeImmutable;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -78,25 +77,25 @@ class Member extends AbstractEntity
     protected string $sepaDebtorMandate = '';
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTimeImmutable $sepaDebtorMandateSignDate = null;
+    protected ?\DateTimeInterface $sepaDebtorMandateSignDate = null;
 
     protected string $notes = '';
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTimeImmutable $dateOfBirth = null;
+    protected ?\DateTimeInterface $dateOfBirth = null;
 
     protected Gender $gender = Gender::Other;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTimeImmutable $privacyAcceptedAt = null;
+    protected ?\DateTimeInterface $privacyAcceptedAt = null;
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTimeImmutable $memberSince = null;
+    protected ?\DateTimeInterface $memberSince = null;
 
     #[Validate(['validator' => 'DateTime'])]
-    protected ?DateTimeImmutable $memberUntil = null;
+    protected ?\DateTimeInterface $memberUntil = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     protected ?Membership $membership = null;
@@ -246,12 +245,12 @@ class Member extends AbstractEntity
         $this->sepaDebtorMandate = $sepaDebtorMandate;
     }
 
-    public function getSepaDebtorMandateSignDate(): ?DateTimeImmutable
+    public function getSepaDebtorMandateSignDate(): ?\DateTimeInterface
     {
         return $this->sepaDebtorMandateSignDate;
     }
 
-    public function setSepaDebtorMandateSignDate(?DateTimeImmutable $sepaDebtorMandateSignDate): void
+    public function setSepaDebtorMandateSignDate(?\DateTimeInterface $sepaDebtorMandateSignDate): void
     {
         $this->sepaDebtorMandateSignDate = $sepaDebtorMandateSignDate;
     }
@@ -266,12 +265,12 @@ class Member extends AbstractEntity
         $this->notes = $notes;
     }
 
-    public function getDateOfBirth(): ?DateTimeImmutable
+    public function getDateOfBirth(): ?\DateTimeInterface
     {
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(?DateTimeImmutable $dateOfBirth): void
+    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }
@@ -286,32 +285,32 @@ class Member extends AbstractEntity
         $this->gender = $gender;
     }
 
-    public function getPrivacyAcceptedAt(): ?DateTimeImmutable
+    public function getPrivacyAcceptedAt(): ?\DateTimeInterface
     {
         return $this->privacyAcceptedAt;
     }
 
-    public function setPrivacyAcceptedAt(?DateTimeImmutable $privacyAcceptedAt): void
+    public function setPrivacyAcceptedAt(?\DateTimeInterface $privacyAcceptedAt): void
     {
         $this->privacyAcceptedAt = $privacyAcceptedAt;
     }
 
-    public function getMemberSince(): ?DateTimeImmutable
+    public function getMemberSince(): ?\DateTimeInterface
     {
         return $this->memberSince;
     }
 
-    public function setMemberSince(?DateTimeImmutable $memberSince): void
+    public function setMemberSince(?\DateTimeInterface $memberSince): void
     {
         $this->memberSince = $memberSince;
     }
 
-    public function getMemberUntil(): ?DateTimeImmutable
+    public function getMemberUntil(): ?\DateTimeInterface
     {
         return $this->memberUntil;
     }
 
-    public function setMemberUntil(?DateTimeImmutable $memberUntil): void
+    public function setMemberUntil(?\DateTimeInterface $memberUntil): void
     {
         $this->memberUntil = $memberUntil;
     }
