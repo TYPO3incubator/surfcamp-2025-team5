@@ -104,4 +104,13 @@ class Payment extends AbstractEntity
     {
         $this->reminderMailSentAt = $reminderMailSentAt;
     }
+
+    public function getStateLabel(): string
+    {
+        $now = new \DateTimeImmutable();
+        if ($this->state === PaymentState::Pending && $this->dueBy && $this->dueBy < $now) {
+            return 'Overdue';
+        }
+        return $this->state->label();
+    }
 }
