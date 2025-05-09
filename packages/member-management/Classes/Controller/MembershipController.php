@@ -207,7 +207,7 @@ final class MembershipController extends ActionController
 
         // No user is logged in
         if ($userId === null) {
-            return $this->htmlResponse();
+            return $this->redirectToUri('/');
         }
 
         $member = $this->memberRepository->findByUid($user->getUserId());
