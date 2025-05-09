@@ -47,11 +47,6 @@ final class MemberObjectValidator extends AbstractGenericObjectValidator
                             $value->_getProperty($propertyValidator->getPropertyToCompare()),
                         );
                     }
-                    if ($propertyValidator instanceof IbanValidator) {
-                        $propertyValidator->setSepaDebtorMandateSignDate(
-                            $value->_getProperty($propertyValidator->getPropertyThatNeedsToBeSet()),
-                        );
-                    }
                 }
             }
         }
