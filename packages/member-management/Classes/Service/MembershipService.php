@@ -125,6 +125,7 @@ final class MembershipService
      */
     public function confirm(Member $member): bool
     {
+        $managerName = $this->getSiteSettings()?->get('memberManagement.organization.personInCharge');
         $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
 
         if ($member->getMembershipStatus() !== MembershipStatus::Unconfirmed) {
@@ -155,7 +156,7 @@ final class MembershipService
             'NewMembership',
             'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject',
             $member,
-            new Address($managerEmailAddress),
+            new Address($managerEmailAddress, $managerName),
         );
 
         $email->assign('beMemberPid', $this->getSiteSettings()?->get('felogin.pid'));
@@ -210,11 +211,13 @@ final class MembershipService
         );
 
         // Mail to person in charge
+        $managerName = $this->getSiteSettings()?->get('memberManagement.organization.personInCharge');
+        $managerEmailAddress = $this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge');
         $memberInfoEmail = $this->emailService->createEmail(
             'CanceledMembership',
             'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.canceledMembership.subject',
             $member,
-            new Address($this->getSiteSettings()?->get('memberManagement.organization.emailOfPersonInCharge'))
+            new Address($managerEmailAddress, $managerName)
         );
 
         if ($this->request !== null) {
