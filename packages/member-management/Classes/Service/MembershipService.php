@@ -29,12 +29,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\HashService;
-use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use TYPO3\CMS\Core\Mail\FluidEmail;
-use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
-use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Site\Entity\SiteSettings;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3Incubator\MemberManagement\Domain\Model\Member;
@@ -53,18 +48,15 @@ use TYPO3Incubator\MemberManagement\Exception\MemberIsNotProperlyPersisted;
  */
 final class MembershipService
 {
-    private LanguageService $languageService;
     private ?ServerRequestInterface $request = null;
 
     public function __construct(
+        private readonly EmailService $emailService,
         private readonly HashService $hashService,
-        private readonly LanguageServiceFactory $languageServiceFactory,
         private readonly LoggerInterface $logger,
-        private readonly MailerInterface $mailer,
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly MemberRepository $memberRepository,
     ) {
-        $this->languageService = $this->languageServiceFactory->createFromUserPreferences($this->getBackendUserAuthentication());
     }
 
     /**
@@ -101,9 +93,9 @@ final class MembershipService
         $this->persistenceManager->persistAll();
 
         // Send mail to new member
-        $email = $this->createEmail(
+        $email = $this->emailService->createEmail(
             'CreateMembership',
-            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject'),
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.createMembership.subject',
             $member,
         );
         $email->assignMultiple([
@@ -112,7 +104,7 @@ final class MembershipService
         ]);
 
         try {
-            $this->mailer->send($email);
+            return $this->emailService->sendEmail($email);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
                 'Error while sending membership double-opt-in mail: {message}',
@@ -121,8 +113,6 @@ final class MembershipService
 
             return false;
         }
-
-        return $this->mailer->getSentMessage() !== null;
     }
 
     /**
@@ -157,9 +147,9 @@ final class MembershipService
             return true;
         }
 
-        $email = $this->createEmail(
+        $email = $this->emailService->createEmail(
             'NewMembership',
-            $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject'),
+            'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.newMembership.subject',
             $member,
             new Address($managerEmailAddress),
         );
@@ -167,7 +157,7 @@ final class MembershipService
         $email->assign('beMemberPid', $this->getSiteSettings()?->get('felogin.pid'));
 
         try {
-            $this->mailer->send($email);
+            return $this->emailService->sendEmail($email);
         } catch (TransportExceptionInterface $exception) {
             $this->logger->error(
                 'Error while sending membership confirmation mail to manager: {message}',
@@ -176,48 +166,12 @@ final class MembershipService
 
             return false;
         }
-
-        return $this->mailer->getSentMessage() !== null;
-    }
-
-    private function createEmail(
-        string $template,
-        string $subject,
-        Member $member,
-        ?Address $recipient = null,
-    ): FluidEmail {
-        if ($recipient === null) {
-            $recipient = new Address(
-                $member->getEmail(),
-                $member->getFirstName() . ' ' . $member->getLastName(),
-            );
-        }
-
-        $email = new FluidEmail();
-        $email
-            ->to($recipient)
-            ->subject($subject)
-            ->format(FluidEmail::FORMAT_BOTH)
-            ->setTemplate($template)
-            ->assign('member', $member)
-        ;
-
-        if ($this->request !== null) {
-            $email->setRequest($this->request);
-        }
-
-        return $email;
     }
 
     public function setRequest(ServerRequestInterface $request): void
     {
         $this->request = $request;
-
-        $siteLanguage = $request->getAttribute('language');
-
-        if ($siteLanguage instanceof SiteLanguage) {
-            $this->languageService = $this->languageServiceFactory->createFromSiteLanguage($siteLanguage);
-        }
+        $this->emailService->setRequest($request);
     }
 
     private function getSiteSettings(): ?SiteSettings
@@ -241,16 +195,16 @@ final class MembershipService
             $member->setDisabled(false);
             $this->memberRepository->update($member);
 
-            $email = $this->createEmail(
+            $email = $this->emailService->createEmail(
                 'MembershipActivated',
-                $this->languageService->sL('LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.membershipActivated.subject'),
+                'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.membershipActivated.subject',
                 $member,
             );
 
             $email->assign('sitesets', $this->getSiteSettings()->getAll());
 
             try {
-                $this->mailer->send($email);
+                $this->emailService->sendEmail($email);
             } catch (TransportExceptionInterface $exception) {
                 $this->logger->error(
                     'Error while sending new membership confirmatiomn mail: {message}',
@@ -258,7 +212,6 @@ final class MembershipService
                 );
             }
         }
-        $this->persistenceManager->persistAll();
     }
 
     public function setMembersInactive(array $memberUids) {

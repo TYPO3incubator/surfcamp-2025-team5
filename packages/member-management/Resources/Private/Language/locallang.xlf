@@ -81,6 +81,12 @@
 			<trans-unit id="email.membershipActivated.main.transfer">
 				<source>When you registered, you indicated that you would like to make the payment manually. Please transfer the following amount within the next 14 days:</source>
 			</trans-unit>
+            <trans-unit id="email.paymentReminder.subject">
+                <source>Reminder for your membership payment</source>
+            </trans-unit>
+            <trans-unit id="email.paymentReminder.title">
+                <source>Reminder for your membership payment</source>
+            </trans-unit>
 			<trans-unit id="payment-reason">
 				<source>Reason for payment</source>
 			</trans-unit>

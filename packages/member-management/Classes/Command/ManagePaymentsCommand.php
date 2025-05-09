@@ -111,7 +111,7 @@ final class ManagePaymentsCommand extends Command
 
             if ($results !== []) {
                 $this->io->table(
-                    ['Member name', 'Action', 'Payment'],
+                    ['Member', 'Action', 'Payment'],
                     array_map($this->mapResultToTableRow(...), $results),
                 );
             } else {
@@ -130,7 +130,8 @@ final class ManagePaymentsCommand extends Command
                 PaymentManagementAction::ManualActionRequired => '<error>Manual action required</error>',
                 PaymentManagementAction::NewPaymentCreated => '<info>New payment created</info>',
                 PaymentManagementAction::Nothing => 'Nothing to do',
-                PaymentManagementAction::RememberMailSent => '<warn>Remember mail sent</warn>',
+                PaymentManagementAction::ReminderMailCouldNotBeSent => '<error>Error while sending reminder mail</error>',
+                PaymentManagementAction::ReminderMailSent => '<comment>Reminder mail sent</comment>',
             },
             match ($result->payment) {
                 null => 'No associated payment',

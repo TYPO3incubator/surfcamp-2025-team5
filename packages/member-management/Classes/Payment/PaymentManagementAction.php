@@ -34,5 +34,6 @@ enum PaymentManagementAction
     case ManualActionRequired;
     case NewPaymentCreated;
     case Nothing;
-    case RememberMailSent;
+    case ReminderMailCouldNotBeSent;
+    case ReminderMailSent;
 }

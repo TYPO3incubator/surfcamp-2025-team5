@@ -123,8 +123,8 @@
             <trans-unit id="tx_membermanagement_domain_model_payment.state.cancelled">
                 <source>Cancelled</source>
             </trans-unit>
-            <trans-unit id="tx_membermanagement_domain_model_payment.remember_mail_sent_at">
-                <source>"Remember" mail sent at</source>
+            <trans-unit id="tx_membermanagement_domain_model_payment.reminder_mail_sent_at">
+                <source>"Reminder" mail sent at</source>
             </trans-unit>
 
             <trans-unit id="tt_content.bodytext.membermanagement_createmember">

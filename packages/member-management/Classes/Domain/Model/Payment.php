@@ -30,11 +30,11 @@ class Payment extends AbstractEntity
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTime $paidAt = null;
+    protected ?\DateTimeImmutable $paidAt = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'DateTime'])]
-    protected ?\DateTime $dueBy = null;
+    protected ?\DateTimeImmutable $dueBy = null;
 
     #[Validate(['validator' => 'NotEmpty'])]
     #[Validate(['validator' => 'Float'])]
@@ -43,7 +43,7 @@ class Payment extends AbstractEntity
     protected PaymentState $state = PaymentState::Pending;
 
     #[Validate(['validator' => 'NotEmpty'])]
-    protected ?\DateTime $rememberMailSentAt = null;
+    protected ?\DateTimeImmutable $reminderMailSentAt = null;
 
     public function getMember(): Member
     {
@@ -55,22 +55,22 @@ class Payment extends AbstractEntity
         $this->member = $member;
     }
 
-    public function getPaidAt(): ?\DateTime
+    public function getPaidAt(): ?\DateTimeImmutable
     {
         return $this->paidAt;
     }
 
-    public function setPaidAt(?\DateTime $paidAt): void
+    public function setPaidAt(?\DateTimeImmutable $paidAt): void
     {
         $this->paidAt = $paidAt;
     }
 
-    public function getDueBy(): ?\DateTime
+    public function getDueBy(): ?\DateTimeImmutable
     {
         return $this->dueBy;
     }
 
-    public function setDueBy(?\DateTime $dueBy): void
+    public function setDueBy(?\DateTimeImmutable $dueBy): void
     {
         $this->dueBy = $dueBy;
     }
@@ -95,13 +95,13 @@ class Payment extends AbstractEntity
         $this->state = $state;
     }
 
-    public function getRememberMailSentAt(): ?\DateTime
+    public function getReminderMailSentAt(): ?\DateTimeImmutable
     {
-        return $this->rememberMailSentAt;
+        return $this->reminderMailSentAt;
     }
 
-    public function setRememberMailSentAt(?\DateTime $rememberMailSentAt): void
+    public function setReminderMailSentAt(?\DateTimeImmutable $reminderMailSentAt): void
     {
-        $this->rememberMailSentAt = $rememberMailSentAt;
+        $this->reminderMailSentAt = $reminderMailSentAt;
     }
 }
