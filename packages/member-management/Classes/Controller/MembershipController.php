@@ -103,14 +103,14 @@ final class MembershipController extends ActionController
 
     protected function saveAction(Member $member): ResponseInterface
     {
-        $member->setPrivacyAcceptedAt(new \DateTimeImmutable());
+        $member->setPrivacyAcceptedAt(new \DateTime());
 
         if ($member->getSepaDebtorMandateSignDate()) {
             // Max allowed characters for mandate reference number is 35
             // UUID v4 is 128 numbers, hex is 32 hex numbers
             $newRandomMandateReferenceNumber = strtoupper(UUID::v4()->toHex());
             $member->setSepaDebtorMandate($newRandomMandateReferenceNumber);
-            $member->setSepaDebtorMandateSignDate(new \DateTimeImmutable());
+            $member->setSepaDebtorMandateSignDate(new \DateTime());
         } else {
             $member->setSepaDebtorMandateSignDate(null);
         }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TYPO3Incubator\MemberManagement\Service;
 
-use DateTimeImmutable;
 use Digitick\Sepa\Exception\InvalidArgumentException;
 use Doctrine\DBAL\Exception;
 use Psr\Container\ContainerExceptionInterface;
@@ -70,9 +69,10 @@ final class PaymentService
             // @todo convert to site setting
             $reminderPeriod = 'P14D'; // 14 days
             $reminderInterval = new \DateInterval($reminderPeriod);
+            $dueBy = $lastPayment->getDueBy();
 
             // Send "reminder" mail if not done yet
-            if ($member->getIban() === '' && $lastPayment->getDueBy()?->sub($reminderInterval)->getTimestamp() < time()) {
+            if ($member->getIban() === '' && $dueBy !== null && (clone $dueBy)->sub($reminderInterval)->getTimestamp() < time()) {
                 $email = $this->emailService->createEmail(
                     'PaymentReminder',
                     'LLL:EXT:member_management/Resources/Private/Language/locallang.xlf:email.paymentReminder.subject',
@@ -235,7 +235,7 @@ final class PaymentService
     private function getDueDate(Site $site): \DateTime
     {
         $dueMonth = (int)$site->getSettings()->get('memberManagement.organization.paymentInformation.paymentDueMonth', 1);
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $currentMonth = (int)$now->format('n');
         $currentYear = (int)$now->format('Y');
 
@@ -251,7 +251,7 @@ final class PaymentService
      * @return array<Member>
      * @throws Exception
      */
-    private function getMembersWithOpenPayments(int $membersFolderPid, int $paymentsFolderPid, DateTimeImmutable $dueDate): array
+    private function getMembersWithOpenPayments(int $membersFolderPid, int $paymentsFolderPid, \DateTime $dueDate): array
     {
         $members = $this->memberRepository->findActiveInFolder($membersFolderPid);
         if (count($members) === 0) {

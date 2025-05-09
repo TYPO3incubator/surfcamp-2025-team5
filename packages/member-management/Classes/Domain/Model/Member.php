@@ -247,7 +247,7 @@ class Member extends AbstractEntity
 
     public function getSepaDebtorMandateSignDate(): ?\DateTime
     {
-        return clone $this->sepaDebtorMandateSignDate;
+        return $this->sepaDebtorMandateSignDate;
     }
 
     public function setSepaDebtorMandateSignDate(?\DateTime $sepaDebtorMandateSignDate): void
@@ -267,7 +267,7 @@ class Member extends AbstractEntity
 
     public function getDateOfBirth(): ?\DateTime
     {
-        return clone $this->dateOfBirth;
+        return $this->dateOfBirth;
     }
 
     public function setDateOfBirth(?\DateTime $dateOfBirth): void
@@ -287,7 +287,7 @@ class Member extends AbstractEntity
 
     public function getPrivacyAcceptedAt(): ?\DateTime
     {
-        return clone $this->privacyAcceptedAt;
+        return $this->privacyAcceptedAt;
     }
 
     public function setPrivacyAcceptedAt(?\DateTime $privacyAcceptedAt): void
@@ -297,7 +297,7 @@ class Member extends AbstractEntity
 
     public function getMemberSince(): ?\DateTime
     {
-        return clone $this->memberSince;
+        return $this->memberSince;
     }
 
     public function setMemberSince(?\DateTime $memberSince): void
@@ -307,7 +307,7 @@ class Member extends AbstractEntity
 
     public function getMemberUntil(): ?\DateTime
     {
-        return clone $this->memberUntil;
+        return $this->memberUntil;
     }
 
     public function setMemberUntil(?\DateTime $memberUntil): void

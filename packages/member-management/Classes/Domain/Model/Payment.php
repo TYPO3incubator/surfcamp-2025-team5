@@ -57,7 +57,7 @@ class Payment extends AbstractEntity
 
     public function getPaidAt(): ?\DateTime
     {
-        return clone $this->paidAt;
+        return $this->paidAt;
     }
 
     public function setPaidAt(?\DateTime $paidAt): void
@@ -67,7 +67,7 @@ class Payment extends AbstractEntity
 
     public function getDueBy(): ?\DateTime
     {
-        return clone $this->dueBy;
+        return $this->dueBy;
     }
 
     public function setDueBy(?\DateTime $dueBy): void
@@ -97,7 +97,7 @@ class Payment extends AbstractEntity
 
     public function getReminderMailSentAt(): ?\DateTime
     {
-        return clone $this->reminderMailSentAt;
+        return $this->reminderMailSentAt;
     }
 
     public function setReminderMailSentAt(?\DateTime $reminderMailSentAt): void
