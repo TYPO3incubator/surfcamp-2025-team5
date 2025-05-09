@@ -4,8 +4,8 @@ import { members } from '../utils/members.js';
 for (const index in members) {
     test('Registration ' + members[index].firstName, async ({ page }) => {
         await page.goto('/register-membership');
-        if (members[index].titel) {
-            await page.locator('#title').fill(members[index].titel);
+        if (members[index].title) {
+            await page.locator('#title').fill(members[index].title);
         }
 
         if (members[index].gender) {

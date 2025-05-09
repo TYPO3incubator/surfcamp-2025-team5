@@ -1,6 +1,6 @@
 const members = [
     {
-        "titel": "",
+        "title": "",
         "gender": 1,
         "firstName": "Max",
         "lastName": "Mustermann",
@@ -18,7 +18,7 @@ const members = [
         "password": "Test1234!"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 0,
         "firstName": "Erika",
         "lastName": "Musterfrau",
@@ -36,7 +36,7 @@ const members = [
         "password": "Passwort!2024"
     },
     {
-        "titel": "Dr.",
+        "title": "Dr.",
         "gender": 2,
         "firstName": "Alex",
         "lastName": "Beispiel",
@@ -54,7 +54,7 @@ const members = [
         "password": "SafePass123!"
     },
     {
-        "titel": "Dr.",
+        "title": "Dr.",
         "gender": 1,
         "firstName": "Jean",
         "lastName": "Dupont",
@@ -72,7 +72,7 @@ const members = [
         "password": "Motdepasse@123"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 0,
         "firstName": "Sophie",
         "lastName": "de Vries",
@@ -90,7 +90,7 @@ const members = [
         "password": "Welkom2025!"
     },
     {
-        "titel": "BSc.",
+        "title": "BSc.",
         "gender": 2,
         "firstName": "Luca",
         "lastName": "Bianchi",
@@ -108,7 +108,7 @@ const members = [
         "password": "Italia@2025"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 1,
         "firstName": "Carlos",
         "lastName": "García",
@@ -126,7 +126,7 @@ const members = [
         "password": "España2025!"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 0,
         "firstName": "Anna",
         "lastName": "Larsen",
@@ -144,7 +144,7 @@ const members = [
         "password": "Sverige2025!"
     },
     {
-        "titel": "MSc",
+        "title": "MSc",
         "gender": 1,
         "firstName": "Jan",
         "lastName": "Kowalski",
@@ -162,7 +162,7 @@ const members = [
         "password": "Polska2025!"
     },
     {
-        "titel": "Dr.",
+        "title": "Dr.",
         "gender": 2,
         "firstName": "Kari",
         "lastName": "Hansen",
@@ -180,7 +180,7 @@ const members = [
         "password": "Norge2025!"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 1,
         "firstName": "Anders",
         "lastName": "Nielsen",
@@ -198,7 +198,7 @@ const members = [
         "password": "Danmark2025!"
     },
     {
-        "titel": "",
+        "title": "",
         "gender": 0,
         "firstName": "Laura",
         "lastName": "Virtanen",
