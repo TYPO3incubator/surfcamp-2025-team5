@@ -1,4 +1,4 @@
-memberManagement:
+memsy:
   organization:
     name: 'Bootstrap Test'
     personInCharge: 'Jane Doe'
@@ -21,4 +21,4 @@ memberManagement:
 felogin:
   pid: 16
   view:
-    templateRootPath: 'EXT:member_management/Resources/Private/Templates'
+    templateRootPath: 'EXT:memsy/Resources/Private/Templates'
