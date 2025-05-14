@@ -37,8 +37,6 @@
     "require": {
         "php": ">=8.3.0",
         "bk2k/bootstrap-package": "^15.0",
-        "digitick/sepa-xml": "^2.2",
-        "globalcitizen/php-iban": "^4.2",
         "symfony/uid": "^7.2",
         "typo3-incubator/member-management": "dev-main",
         "typo3-incubator/surfcamp-base": "dev-main",
@@ -50,7 +48,6 @@
         "typo3/cms-dashboard": "^13.4",
         "typo3/cms-extbase": "^13.4",
         "typo3/cms-extensionmanager": "^13.4",
-        "typo3/cms-felogin": "^13.4",
         "typo3/cms-filelist": "^13.4",
         "typo3/cms-filemetadata": "^13.4",
         "typo3/cms-fluid": "^13.4",
