@@ -8,7 +8,7 @@ fcbigfoot:
     channels:
       instagram:
         link: 'https://www.instagram.com/typo3_official/'
-memberManagement:
+memsy:
   organization:
     name: 'FC Bigfoot'
     personInCharge: 'Muster Person'
@@ -32,4 +32,4 @@ memberManagement:
 felogin:
   pid: 112
   view:
-    templateRootPath: 'EXT:member_management/Resources/Private/Templates'
+    templateRootPath: 'EXT:memsy/Resources/Private/Templates'
