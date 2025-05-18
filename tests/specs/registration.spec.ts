@@ -42,6 +42,6 @@ for (const index in members) {
         await page.locator('#privacy').check();
 
         await page.locator('#submit').click();
-        await expect(page.locator('.frame-type-membermanagement_createmembership')).toContainText('confirm your registration');
+        await expect(page.locator('.frame-type-memsy_createmembership')).toContainText('confirm your registration');
     });
 }

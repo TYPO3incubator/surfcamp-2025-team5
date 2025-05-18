@@ -1,6 +1,0 @@
-<f:layout name="SystemEmail" />
-<f:section name="Title"><f:translate key="email.cancelMembershipConfirmation.subject" /></f:section>
-<f:section name="Main">
-<f:translate key="email.main.salutation" arguments="{0: '{member.firstName} {member.lastName}'}" />,
-<f:translate key="email.cancelMembershipConfirmation.main.body" />
-</f:section>

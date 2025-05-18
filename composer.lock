@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae308e4a0db59b631be42e50384b7bcd",
+    "content-hash": "826f5564342ae9732a7d20e45947035b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5392,34 +5392,65 @@
             "time": "2025-04-04T10:10:11+00:00"
         },
         {
-            "name": "typo3-incubator/member-management",
+            "name": "typo3-incubator/memsy",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3incubator/ext-memsy.git",
+                "reference": "4e5677f2cfdc086082e753cbbe1c72b50ab3eb92"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/member-management",
-                "reference": "812336b5765b410fba997d74cd7c644889912b09"
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3incubator/ext-memsy/zipball/4e5677f2cfdc086082e753cbbe1c72b50ab3eb92",
+                "reference": "4e5677f2cfdc086082e753cbbe1c72b50ab3eb92",
+                "shasum": ""
             },
             "require": {
-                "typo3/cms-core": "^13.4"
+                "digitick/sepa-xml": "^2.2",
+                "globalcitizen/php-iban": "^4.2",
+                "psr/http-message": "^1.0 || ^2.0",
+                "psr/log": "^3.0",
+                "symfony/console": "^7.0",
+                "symfony/mailer": "^7.0",
+                "symfony/mime": "^7.0",
+                "symfony/polyfill-php83": "^1.31",
+                "typo3/cms-backend": "^13.4",
+                "typo3/cms-core": "^13.4",
+                "typo3/cms-extbase": "^13.4",
+                "typo3/cms-frontend": "^13.4",
+                "typo3/cms-install": "^13.4",
+                "typo3fluid/fluid": "^4.1"
             },
+            "require-dev": {
+                "typo3/cms-felogin": "^13.4",
+                "typo3/cms-scheduler": "^13.4"
+            },
+            "suggest": {
+                "typo3/cms-felogin": "Can be used to authenticate to an internal member area (^13.4)",
+                "typo3/cms-scheduler": "Can be used to perform garbage collection of deregistered members (^13.4)"
+            },
+            "default-branch": true,
             "type": "typo3-cms-extension",
             "extra": {
                 "typo3/cms": {
-                    "extension-key": "member_management"
+                    "extension-key": "memsy"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "TYPO3Incubator\\MemberManagement\\": "Classes/"
+                    "TYPO3Incubator\\Memsy\\": "Classes/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
-            "description": "Member management",
-            "transport-options": {
-                "relative": true
-            }
+            "description": "Member management extension for TYPO3 CMS",
+            "support": {
+                "issues": "https://github.com/TYPO3incubator/ext-memsy/issues",
+                "source": "https://github.com/TYPO3incubator/ext-memsy/tree/main"
+            },
+            "time": "2025-05-18T10:42:42+00:00"
         },
         {
             "name": "typo3-incubator/surfcamp-base",
@@ -7518,7 +7549,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "typo3-incubator/member-management": 20,
+        "typo3-incubator/memsy": 20,
         "typo3-incubator/surfcamp-base": 20
     },
     "prefer-stable": true,

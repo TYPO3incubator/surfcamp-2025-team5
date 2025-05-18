@@ -1,4 +1,0 @@
-<div class="mb-3">
-    <label for="{id}" class="form-label">{f:translate(key:id)}<f:if condition="!{required}"> <small {f:if(condition: '{id} == "iban"', then: 'class="sepa-required-js"')}>{f:translate(key: 'input-optional')}</small></f:if></label>
-    <f:form.textfield property="{name}" type="{type}" class="form-control" id="{id}" required="{required}" />
-</div>
