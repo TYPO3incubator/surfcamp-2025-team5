@@ -5397,12 +5397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3incubator/ext-memsy.git",
-                "reference": "2a9959421c325834b9b6e3ac19f18702a07e244b"
+                "reference": "4e5677f2cfdc086082e753cbbe1c72b50ab3eb92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3incubator/ext-memsy/zipball/2a9959421c325834b9b6e3ac19f18702a07e244b",
-                "reference": "2a9959421c325834b9b6e3ac19f18702a07e244b",
+                "url": "https://api.github.com/repos/TYPO3incubator/ext-memsy/zipball/4e5677f2cfdc086082e753cbbe1c72b50ab3eb92",
+                "reference": "4e5677f2cfdc086082e753cbbe1c72b50ab3eb92",
                 "shasum": ""
             },
             "require": {
@@ -5449,7 +5449,7 @@
                 "source": "https://github.com/TYPO3incubator/ext-memsy/tree/main",
                 "issues": "https://github.com/TYPO3incubator/ext-memsy/issues"
             },
-            "time": "2025-05-14T13:26:27+00:00"
+            "time": "2025-05-18T10:42:42+00:00"
         },
         {
             "name": "typo3-incubator/surfcamp-base",
