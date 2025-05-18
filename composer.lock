@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "065d4348f6a887071e034cbd711771e7",
+    "content-hash": "826f5564342ae9732a7d20e45947035b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5441,13 +5441,14 @@
                     "TYPO3Incubator\\Memsy\\": "Classes/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "description": "Member management extension for TYPO3 CMS",
             "support": {
-                "source": "https://github.com/TYPO3incubator/ext-memsy/tree/main",
-                "issues": "https://github.com/TYPO3incubator/ext-memsy/issues"
+                "issues": "https://github.com/TYPO3incubator/ext-memsy/issues",
+                "source": "https://github.com/TYPO3incubator/ext-memsy/tree/main"
             },
             "time": "2025-05-18T10:42:42+00:00"
         },
