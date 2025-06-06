@@ -1,6 +1,6 @@
-memberManagement:
+memsy:
   organization:
-    name: 'Membership Management Test'
+    name: 'Memsy Test'
     personInCharge: 'Team High 5'
     emailOfPersonInCharge: surfcamp@typo3.org
     defaultCountry: 'GB'
@@ -13,12 +13,12 @@ memberManagement:
     paymentInformation:
       iban: DE75512108001245126199
       bic: AUTOATW1XXX
-      paymentReason: 'Membership fee for Membership Management Test'
+      paymentReason: 'Membership fee for Memsy Test'
       paymentDueMonth: '9'
   storage:
     membershipsFolderPid: 1
     paymentsFolderPid: 1
 felogin:
   pid: 1
-  view: 
-    templateRootPath: EXT:member_management/Resources/Private/Templates
+  view:
+    templateRootPath: EXT:memsy/Resources/Private/Templates
